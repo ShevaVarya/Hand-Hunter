@@ -32,7 +32,8 @@ val dataModule = module {
         .addInterceptor(authInterceptor)
         .build()
 
-//    TODO - раскоментить после создания интерфейса API и вставить вместо NetworkApi название созданного интерфейса
+//    раскоментить после создания интерфейса API и вставить вместо NetworkApi название созданного интерфейса
+
 //    single<NetworkApi> {
 //        Retrofit.Builder()
 //            .baseUrl(BASE_URL)
