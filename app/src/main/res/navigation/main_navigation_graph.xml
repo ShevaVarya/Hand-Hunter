@@ -58,4 +58,9 @@
         android:name="ru.practicum.android.diploma.features.favourite.presentation.ui.FavouriteVacanciesFragment"
         android:label="fragment_favourite_vacancies"
         tools:layout="@layout/fragment_favourite_vacancies" />
+    <fragment
+        android:id="@+id/teamInfoFragment"
+        android:name="ru.practicum.android.diploma.features.team.presentation.ui.TeamInfoFragment"
+        android:label="fragment_team_info"
+        tools:layout="@layout/fragment_team_info" />
 </navigation>
