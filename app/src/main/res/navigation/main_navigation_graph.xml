@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_searchFragment_to_searchFiltersFragment"
             app:destination="@id/searchFiltersFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_vacancyInfoFragment"
+            app:destination="@id/vacancyInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFiltersFragment"
@@ -45,4 +48,9 @@
         android:name="ru.practicum.android.diploma.features.specialization_selection.presentation.ui.SpecializationSelectionFragment"
         android:label="fragment_specialization_selection"
         tools:layout="@layout/fragment_specialization_selection" />
+    <fragment
+        android:id="@+id/vacancyInfoFragment"
+        android:name="ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment"
+        android:label="fragment_vacancy_info"
+        tools:layout="@layout/fragment_vacancy_info" />
 </navigation>
