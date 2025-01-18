@@ -14,9 +14,7 @@
 
     <dimen name="radius_1x">4dp</dimen>
     <dimen name="radius_2x">8dp</dimen>
-    <dimen name="radius_4x">16dp</dimen>
-    <dimen name="radius_6x">24dp</dimen>
-    <dimen name="radius_8x">32dp</dimen>
+    <dimen name="radius_3x">12dp</dimen>
 
     <dimen name="text_size_3x">12sp</dimen>
     <dimen name="text_size_4x">16sp</dimen>
