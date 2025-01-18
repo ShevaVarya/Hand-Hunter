@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.root
+package ru.practicum.android.diploma.features.root
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
