@@ -27,5 +27,14 @@
         android:id="@+id/workplaceSelectionFragment"
         android:name="ru.practicum.android.diploma.features.workplace_selection.presentation.ui.WorkplaceSelectionFragment"
         android:label="fragment_workplace_selection"
-        tools:layout="@layout/fragment_workplace_selection" />
+        tools:layout="@layout/fragment_workplace_selection" >
+        <action
+            android:id="@+id/action_workplaceSelectionFragment_to_locationSelectionFragment"
+            app:destination="@id/locationSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.location_selection.presentation.ui.LocationSelectionFragment"
+        android:label="fragment_location_selection"
+        tools:layout="@layout/fragment_location_selection" />
 </navigation>

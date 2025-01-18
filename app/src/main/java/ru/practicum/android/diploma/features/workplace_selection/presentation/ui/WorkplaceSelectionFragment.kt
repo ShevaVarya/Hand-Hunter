@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.databinding.FragmentWorkplaceSelectionBinding
 
 class WorkplaceSelectionFragment : Fragment() {
+
     private var _binding: FragmentWorkplaceSelectionBinding? = null
     private val binding get() = _binding!!
 
