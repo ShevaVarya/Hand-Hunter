@@ -18,5 +18,14 @@
         android:id="@+id/searchFiltersFragment"
         android:name="ru.practicum.android.diploma.features.search_filters.presentation.ui.SearchFiltersFragment"
         android:label="fragment_search_filters"
-        tools:layout="@layout/fragment_search_filters" />
+        tools:layout="@layout/fragment_search_filters" >
+        <action
+            android:id="@+id/action_searchFiltersFragment_to_workplaceSelectionFragment"
+            app:destination="@id/workplaceSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workplaceSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.workplace_selection.presentation.ui.WorkplaceSelectionFragment"
+        android:label="fragment_workplace_selection"
+        tools:layout="@layout/fragment_workplace_selection" />
 </navigation>
