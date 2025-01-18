@@ -9,5 +9,14 @@
         android:id="@+id/searchFragment"
         android:name="ru.practicum.android.diploma.features.search.presentation.ui.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_searchFiltersFragment"
+            app:destination="@id/searchFiltersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFiltersFragment"
+        android:name="ru.practicum.android.diploma.features.search_filters.presentation.ui.SearchFiltersFragment"
+        android:label="fragment_search_filters"
+        tools:layout="@layout/fragment_search_filters" />
 </navigation>

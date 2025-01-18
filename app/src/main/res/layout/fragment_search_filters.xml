@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".features.search.presentation.ui.SearchFragment">
+    tools:context=".features.search_filters.presentation.ui.SearchFiltersFragment">
 
     <TextView
         android:id="@+id/test_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/name_search_fragment" />
+        android:text="@string/name_search_filters_fragment" />
 
 </LinearLayout>

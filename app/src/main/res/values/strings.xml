@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="name_search_fragment">Search Fragment</string>
+    <string name="name_search_filters_fragment">Search Filters Fragment</string>
 </resources>
