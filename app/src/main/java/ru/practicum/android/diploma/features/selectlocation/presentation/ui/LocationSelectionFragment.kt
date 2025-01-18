@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.location_selection.presentation.ui
+package ru.practicum.android.diploma.features.selectlocation.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

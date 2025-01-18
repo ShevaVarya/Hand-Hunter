@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".features.workplace_selection.presentation.ui.WorkplaceSelectionFragment">
+    tools:context=".features.selectworkplace.presentation.ui.WorkplaceSelectionFragment">
 
     <TextView
         android:id="@+id/test_text"

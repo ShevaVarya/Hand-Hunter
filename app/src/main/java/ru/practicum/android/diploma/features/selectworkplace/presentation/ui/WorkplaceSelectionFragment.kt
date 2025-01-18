@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.workplace_selection.presentation.ui
+package ru.practicum.android.diploma.features.selectworkplace.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

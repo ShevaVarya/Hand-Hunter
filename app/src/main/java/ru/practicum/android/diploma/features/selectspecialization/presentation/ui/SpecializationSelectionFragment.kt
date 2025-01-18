@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.specialization_selection.presentation.ui
+package ru.practicum.android.diploma.features.selectspecialization.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,8 @@ class SpecializationSelectionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentSpecializationSelectionBinding.inflate(inflater, container, false)
         return binding.root
     }

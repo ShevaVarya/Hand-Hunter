@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFiltersFragment"
-        android:name="ru.practicum.android.diploma.features.search_filters.presentation.ui.SearchFiltersFragment"
+        android:name="ru.practicum.android.diploma.features.filters.presentation.ui.SearchFiltersFragment"
         android:label="fragment_search_filters"
         tools:layout="@layout/fragment_search_filters">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/workplaceSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.workplace_selection.presentation.ui.WorkplaceSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.selectworkplace.presentation.ui.WorkplaceSelectionFragment"
         android:label="fragment_workplace_selection"
         tools:layout="@layout/fragment_workplace_selection">
         <action
@@ -60,12 +60,12 @@
     </fragment>
     <fragment
         android:id="@+id/locationSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.location_selection.presentation.ui.LocationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.selectlocation.presentation.ui.LocationSelectionFragment"
         android:label="fragment_location_selection"
         tools:layout="@layout/fragment_location_selection" />
     <fragment
         android:id="@+id/specializationSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.specialization_selection.presentation.ui.SpecializationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.selectspecialization.presentation.ui.SpecializationSelectionFragment"
         android:label="fragment_specialization_selection"
         tools:layout="@layout/fragment_specialization_selection" />
     <fragment

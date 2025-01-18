@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".features.location_selection.presentation.ui.LocationSelectionFragment">
+    tools:context=".features.selectlocation.presentation.ui.LocationSelectionFragment">
 
     <TextView
         android:id="@+id/test_text"
