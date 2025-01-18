@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
     app:startDestination="@id/searchFragment">
@@ -9,34 +9,54 @@
         android:id="@+id/searchFragment"
         android:name="ru.practicum.android.diploma.features.search.presentation.ui.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_searchFiltersFragment"
-            app:destination="@id/searchFiltersFragment" />
+            app:destination="@id/searchFiltersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_searchFragment_to_vacancyInfoFragment"
-            app:destination="@id/vacancyInfoFragment" />
+            app:destination="@id/vacancyInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/searchFiltersFragment"
         android:name="ru.practicum.android.diploma.features.search_filters.presentation.ui.SearchFiltersFragment"
         android:label="fragment_search_filters"
-        tools:layout="@layout/fragment_search_filters" >
+        tools:layout="@layout/fragment_search_filters">
         <action
             android:id="@+id/action_searchFiltersFragment_to_workplaceSelectionFragment"
-            app:destination="@id/workplaceSelectionFragment" />
+            app:destination="@id/workplaceSelectionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_searchFiltersFragment_to_specializationSelectionFragment"
-            app:destination="@id/specializationSelectionFragment" />
+            app:destination="@id/specializationSelectionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/workplaceSelectionFragment"
         android:name="ru.practicum.android.diploma.features.workplace_selection.presentation.ui.WorkplaceSelectionFragment"
         android:label="fragment_workplace_selection"
-        tools:layout="@layout/fragment_workplace_selection" >
+        tools:layout="@layout/fragment_workplace_selection">
         <action
             android:id="@+id/action_workplaceSelectionFragment_to_locationSelectionFragment"
-            app:destination="@id/locationSelectionFragment" />
+            app:destination="@id/locationSelectionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/locationSelectionFragment"
