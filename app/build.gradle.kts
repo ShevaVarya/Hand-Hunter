@@ -1,7 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -35,6 +36,7 @@ android {
     }
 
     buildFeatures {
+        viewBinding = true
         buildConfig = true
     }
 }
@@ -42,17 +44,41 @@ android {
 dependencies {
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
+    implementation(libs.androidX.activity)
+    implementation(libs.androidX.fragment)
 
     // UI layer libraries
     implementation(libs.ui.material)
     implementation(libs.ui.constraintLayout)
 
-    // region Unit tests
-    testImplementation(libs.unitTests.junit)
+    // region AndroidX Navigation
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     // endregion
 
-    // region UI tests
-    androidTestImplementation(libs.uiTests.junitExt)
-    androidTestImplementation(libs.uiTests.espressoCore)
+    // Gson
+    implementation(libs.gson)
+
+    // region Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     // endregion
+
+    // region OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    // endregion
+
+    // region Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    // endregion
+
+    // Koin
+    implementation(libs.koin.android)
+
+    // Glide
+    implementation(libs.glide)
+
 }
