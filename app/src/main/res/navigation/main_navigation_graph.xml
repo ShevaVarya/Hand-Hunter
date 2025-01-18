@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_searchFiltersFragment_to_workplaceSelectionFragment"
             app:destination="@id/workplaceSelectionFragment" />
+        <action
+            android:id="@+id/action_searchFiltersFragment_to_specializationSelectionFragment"
+            app:destination="@id/specializationSelectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/workplaceSelectionFragment"
@@ -37,4 +40,9 @@
         android:name="ru.practicum.android.diploma.features.location_selection.presentation.ui.LocationSelectionFragment"
         android:label="fragment_location_selection"
         tools:layout="@layout/fragment_location_selection" />
+    <fragment
+        android:id="@+id/specializationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.specialization_selection.presentation.ui.SpecializationSelectionFragment"
+        android:label="fragment_specialization_selection"
+        tools:layout="@layout/fragment_specialization_selection" />
 </navigation>
