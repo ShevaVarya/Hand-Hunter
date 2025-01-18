@@ -7,5 +7,5 @@ import androidx.room.OnConflictStrategy
 @Dao
 interface FavouritesDao {
     @Insert(entity = FavouriteVacancyDbEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToFavourites(vacancy:FavouriteVacancyDbEntity)
+    suspend fun addToFavourites(vacancy: FavouriteVacancyDbEntity)
 }

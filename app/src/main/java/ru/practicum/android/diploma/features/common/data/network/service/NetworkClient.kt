@@ -17,21 +17,19 @@ class NetworkClientImpl(private val hhApi: HHApi) : NetworkClient {
                 params = params
             ).awaitResponse()
 
-            if (!response.isSuccessful){
-                return Result.failure(Exception(response.code().toString()))
-            }
+            return if (response.isSuccessful) {
+                val vacancies = response.body()
 
-            val vacancies = response.body()
-
-            return if (vacancies != null) {
-                Result.success(vacancies)
+                if (vacancies != null) {
+                    Result.success(vacancies)
+                } else {
+                    Result.failure(IllegalStateException("response is null"))
+                }
             } else {
-                Result.failure(IllegalStateException("response is null"))
+                Result.failure(IllegalStateException(response.errorBody().toString()))
             }
-        } catch (t: Throwable){
-            return Result.failure(t)
+        } catch (exception: IllegalStateException) {
+            return Result.failure(exception)
         }
     }
 }
-
-

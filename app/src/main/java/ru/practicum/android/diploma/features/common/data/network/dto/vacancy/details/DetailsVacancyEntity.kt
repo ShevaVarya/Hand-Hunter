@@ -21,7 +21,7 @@ data class DetailsVacancyEntity(
         val name: String
     )
 
-    data class EmploymentFormEntity (
+    data class EmploymentFormEntity(
         val id: String,
         val name: String
     )

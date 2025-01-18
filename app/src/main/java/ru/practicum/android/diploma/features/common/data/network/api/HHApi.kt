@@ -5,11 +5,11 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
-import ru.practicum.android.diploma.features.common.data.network.dto.industry.IndustryEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.area.CountryEntity
-import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
+import ru.practicum.android.diploma.features.common.data.network.dto.industry.IndustryEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacanciesEntity
+import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
 
 interface HHApi {
     /**
@@ -110,5 +110,3 @@ interface HHApi {
         @QueryMap params: Map<String, Any>
     ): Call<List<IndustryEntity>>
 }
-
-
