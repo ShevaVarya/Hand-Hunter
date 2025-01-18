@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.root.ui
+package ru.practicum.android.diploma.feature_specific_name.presentation.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
