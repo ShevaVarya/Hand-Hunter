@@ -1,13 +1,24 @@
 [versions]
 
-java = "VERSION_1_8"
-gson = "2.11.0"
+activity = "1.7.2"
+appcompat = "1.6.1"
+constraintLayout = "2.1.4"
+coreKtx = "1.12.0"
+fragment = "1.6.1"
 glide = "4.16.0"
+gson = "2.11.0"
+java = "VERSION_1_8"
 koinAndroid = "4.0.1"
+material = "1.10.0"
 navigationFragmentKtx = "2.8.5"
 okhttp = "4.10.0"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
+
+#plugins
+application = "8.0.2"
+kotlin = "2.1.0"
+ksp = "2.0.21-1.0.27"
 
 # Build constants
 minSdk = "26"
@@ -19,9 +30,9 @@ detekt = "1.23.3"
 detektTwitterComposeRules = "0.0.26"
 
 [plugins]
-ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.27" }
-android-application = { id = "com.android.application", version = "8.0.2" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.1.0" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-application = { id = "com.android.application", version.ref = "application" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [libraries]
 
@@ -35,18 +46,18 @@ staticAnalysis-detektLibraries = { module = "io.gitlab.arturbosch.detekt:detekt-
 staticAnalysis-detektTwitterComposeRules = { module = "com.twitter.compose.rules:detekt", version.ref = "detektTwitterComposeRules" }
 
 # AndroidX
-androidX-core = "androidx.core:core-ktx:1.12.0"
-androidX-appCompat = "androidx.appcompat:appcompat:1.6.1"
-androidX-activity = "androidx.activity:activity-ktx:1.7.2"
-androidX-fragment = "androidx.fragment:fragment-ktx:1.6.1"
+androidX-core = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidX-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidX-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidX-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
 
 # AndroidX Navigation
 navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 
 # UI layer libraries
-ui-material = "com.google.android.material:material:1.10.0"
-ui-constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+ui-material = { module = "com.google.android.material:material", version.ref = "material" }
+ui-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 
 # Gson
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -69,8 +80,5 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 
 # Glide
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-
-# Unit tests
-unitTests-junit = "junit:junit:4.13.2"
 
 [bundles]

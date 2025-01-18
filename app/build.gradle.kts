@@ -81,7 +81,4 @@ dependencies {
     // Glide
     implementation(libs.glide)
 
-    // region Unit tests
-    testImplementation(libs.unitTests.junit)
-    // endregion
 }
