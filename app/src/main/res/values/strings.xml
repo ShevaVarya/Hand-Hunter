@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="app_name">Hand Hunter</string>
     <string name="name_search_fragment">Search Fragment</string>
     <string name="name_search_filters_fragment">Search Filters Fragment</string>
     <string name="name_fragment_workplace_selection">Fragment workplace selection</string>
