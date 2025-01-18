@@ -20,4 +20,9 @@ class LocationSelectionFragment : Fragment() {
         _binding = FragmentLocationSelectionBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
