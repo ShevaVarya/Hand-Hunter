@@ -15,6 +15,10 @@ import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClientImpl
 
+private const val BASE_URL = "https://api.hh.ru/"
+private const val BASE_EMAIL = "Kazesteam@yandex.ru"
+private const val APP_NAME = "Hand Hunter"
+
 val dataModule = module {
 
     val logging = HttpLoggingInterceptor().apply {
@@ -63,7 +67,3 @@ val dataModule = module {
         db.favouritesDao()
     }
 }
-
-private const val BASE_URL = "https://api.hh.ru/"
-private const val BASE_EMAIL = "Kazesteam@yandex.ru"
-private const val APP_NAME = "Hand Hunter"

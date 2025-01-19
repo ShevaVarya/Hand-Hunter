@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
     version = 1,
     entities = [
         VacancyDbEntity::class,
-        KeySkillsEntity::class
+        KeySkillEntity::class
     ]
 )
 abstract class AppDatabase : RoomDatabase() {

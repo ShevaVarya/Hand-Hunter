@@ -10,11 +10,11 @@ interface FavouritesDao {
     @Insert(entity = VacancyDbEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun addVacancyToFavourites(vacancy: VacancyDbEntity)
 
-    @Insert(entity = KeySkillsEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addKeySkillsToFavourites(keySkills: KeySkillsEntity)
+    @Insert(entity = KeySkillEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addKeySkillsToFavourites(keySkills: KeySkillEntity)
 
     @Transaction
-    suspend fun addToFavourites(vacancy: VacancyDbEntity, keySkills: KeySkillsEntity) {
+    suspend fun addToFavourites(vacancy: VacancyDbEntity, keySkills: KeySkillEntity) {
         addVacancyToFavourites(vacancy)
         addKeySkillsToFavourites(keySkills)
     }
