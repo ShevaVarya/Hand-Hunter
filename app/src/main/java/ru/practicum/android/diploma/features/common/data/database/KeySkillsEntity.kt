@@ -5,12 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class FavouriteVacancyDbEntity(
-    @PrimaryKey
+data class KeySkillsEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     @ColumnInfo(name = "vacancy_id")
     val vacancyId: String,
-    val title: String,
-    val location: String,
-    val employer: String,
-    val salary: String
+    @ColumnInfo(name = "key_skill")
+    val keySkill: String
 )

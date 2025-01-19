@@ -12,7 +12,6 @@ class NetworkClientImpl(
     private val hhApi: HHApi
 ) : NetworkClient {
     override suspend fun getVacanciesList(page: Int, params: Map<String, String>): Result<VacanciesEntity> {
-        // можем в корутине сразу обрабатывать ошибку через tryLaunch()
         try {
             val response = hhApi.getVacancies(
                 page = page,
