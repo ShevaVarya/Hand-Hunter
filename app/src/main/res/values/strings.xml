@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="app_name">Hand Hunter</string>
+    <string name="name_search_fragment">Search Fragment</string>
+    <string name="name_search_filters_fragment">Search Filters Fragment</string>
+    <string name="name_fragment_workplace_selection">Fragment workplace selection</string>
+    <string name="name_fragment_location_selection">Fragment with selection country and region</string>
+    <string name="name_fragment_specialization_selection">Fragment specialization selection</string>
+    <string name="name_fragment_vacancy_info">Fragment vacancy info</string>
+    <string name="name_fragment_favourite_vacancies">Fragment favourite vacancies</string>
+    <string name="name_fragment_team_info">Fragment team info</string>
 </resources>
