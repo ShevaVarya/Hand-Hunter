@@ -13,4 +13,7 @@
     <attr name="buttonBackgroundColor" format="reference"/>
     <attr name="buttonApproveTextColor" format="reference"/>
     <attr name="buttonAbortTextColor" format="reference"/>
+    <declare-styleable name="BottomNavigationView">
+        <attr name="bottomNavigationItemColor" format="reference"/>
+    </declare-styleable>
 </resources>
