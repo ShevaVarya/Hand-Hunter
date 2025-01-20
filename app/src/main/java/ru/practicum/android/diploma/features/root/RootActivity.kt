@@ -26,7 +26,7 @@ class RootActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id){
+            when (destination.id) {
                 R.id.favouriteVacanciesFragment -> showBottomNav()
                 R.id.searchFragment -> showBottomNav()
                 R.id.teamInfoFragment -> showBottomNav()
@@ -38,11 +38,11 @@ class RootActivity : AppCompatActivity() {
         networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
     }
 
-    private fun showBottomNav(){
+    private fun showBottomNav() {
         binding.bottomNavigationView.isVisible = true
     }
 
-    private fun hideBottomNav(){
+    private fun hideBottomNav() {
         binding.bottomNavigationView.isGone = true
     }
 
