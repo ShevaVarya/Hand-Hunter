@@ -22,14 +22,9 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        style="@style/MainBottomNavigationView"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
-        app:backgroundTint="?attr/mainBackgroundColor"
-        app:itemIconTint="?attr/bottomNavigationItemColor"
-        app:itemTextColor="?attr/bottomNavigationItemColor"
-        app:itemRippleColor="@color/blue"
-        app:itemActiveIndicatorStyle="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

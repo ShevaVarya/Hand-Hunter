@@ -26,4 +26,12 @@
         <item name="android:textAppearance">@font/ys_display_regular</item>
     </style>
 
+    <style name="MainBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="backgroundTint">?attr/mainBackgroundColor</item>
+        <item name="itemTextColor">?attr/bottomNavigationItemColor</item>
+        <item name="itemIconTint">?attr/bottomNavigationItemColor</item>
+        <item name="itemActiveIndicatorStyle">@color/blue</item>
+        <item name="itemRippleColor">@color/blue</item>
+    </style>
+
 </resources>
