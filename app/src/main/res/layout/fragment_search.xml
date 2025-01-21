@@ -9,14 +9,14 @@
     tools:context=".features.search.presentation.ui.SearchFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/leftBoarder"
+        android:id="@+id/left_boarder_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="@dimen/margin_4x" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/rightBoarder"
+        android:id="@+id/right_boarder_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -26,11 +26,11 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/vacancies_search"
-        app:titleTextAppearance="@style/textToolbarStyle">
+        app:titleTextAppearance="@style/toolbarTextStyle">
 
 
         <ImageView
@@ -43,43 +43,43 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/editTextSearch"
+        android:id="@+id/search_edit_text"
         style="@style/editTextSearchStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="@string/search"
         android:singleLine="true"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="LabelFor" />
 
     <ImageView
-        android:id="@+id/imageViewSearch"
+        android:id="@+id/search_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_4x"
         android:contentDescription="@string/search_icon"
         android:src="@drawable/search_24px"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSearch"
-        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+        app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintEnd_toEndOf="@+id/search_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
 
     <ImageView
-        android:id="@+id/imageViewClear"
+        android:id="@+id/clear_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_4x"
         android:contentDescription="@string/search_icon"
         android:src="@drawable/close_24px"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSearch"
-        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+        app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintEnd_toEndOf="@+id/search_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progress_bar"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center"
@@ -88,132 +88,132 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
 
     <TextView
-        android:id="@+id/textViewMessage"
+        android:id="@+id/message_text_view"
         style="@style/textViewMessageStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         tools:text="Найдено 286 вакансий" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContent"
+        android:id="@+id/content_recycler_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMessage"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/message_text_view"
         tools:itemCount="7"
         tools:listitem="@layout/item_search" />
 
     <ImageView
-        android:id="@+id/imageViewEmptySearch"
+        android:id="@+id/empty_search_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/empty_search"
         android:src="@drawable/empty_search"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text" />
 
     <ImageView
-        android:id="@+id/imageViewBadInternet"
+        android:id="@+id/bad_internet_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/bad_internet"
         android:src="@drawable/no_internet"
-        app:layout_constraintBottom_toTopOf="@+id/textViewBadInternet"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintBottom_toTopOf="@+id/bad_internet_text_view"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textViewBadInternet"
+        android:id="@+id/bad_internet_text_view"
         style="@style/errorsTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bad_internet"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewBadInternet" />
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bad_internet_image_view" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupBadInternet"
+        android:id="@+id/bad_internet_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="imageViewBadInternet, textViewBadInternet" />
+        app:constraint_referenced_ids="bad_internet_image_view, bad_internet_text_view" />
 
     <ImageView
-        android:id="@+id/imageViewBadRequest"
+        android:id="@+id/bad_request_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/bad_request"
         android:src="@drawable/bad_search"
-        app:layout_constraintBottom_toTopOf="@+id/textViewBadRequest"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintBottom_toTopOf="@+id/bad_request_text_view"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textViewBadRequest"
+        android:id="@+id/bad_request_text_view"
         style="@style/errorsTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bad_request"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewBadRequest" />
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bad_request_image_view" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupBadRequest"
+        android:id="@+id/bad_request_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="imageViewBadRequest, textViewBadRequest" />
+        app:constraint_referenced_ids="bad_request_image_view, bad_request_text_view" />
 
     <ImageView
-        android:id="@+id/imageViewServerError"
+        android:id="@+id/server_error_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/server_error"
         android:src="@drawable/server_error"
-        app:layout_constraintBottom_toTopOf="@+id/textViewServerError"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintBottom_toTopOf="@+id/server_error_text_view"
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textViewServerError"
+        android:id="@+id/server_error_text_view"
         style="@style/errorsTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/server_error"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
-        app:layout_constraintStart_toEndOf="@id/leftBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewServerError" />
+        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/server_error_image_view" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupServerError"
+        android:id="@+id/server_error_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="imageViewServerError, textViewServerError" />
+        app:constraint_referenced_ids="server_error_image_view, server_error_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

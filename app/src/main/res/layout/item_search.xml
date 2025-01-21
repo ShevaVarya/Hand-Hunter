@@ -35,7 +35,7 @@
         android:id="@+id/textViewProfession"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/textStyleMedium24"
+        android:textAppearance="@style/textStyleMedium22"
         android:textColor="?attr/mainTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
