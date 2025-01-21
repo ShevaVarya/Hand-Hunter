@@ -1,18 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".features.favourite.presentation.ui.FavouriteVacanciesFragment">
 
-    <TextView
-        android:id="@+id/test_text"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/favourite_title_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/name_fragment_favourite_vacancies" />
+        app:title="@string/favourite_title"
+        app:titleTextAppearance="@style/toolbarTextStyle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favourite_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_4x"
+        android:layout_weight="1"
+        android:visibility="gone" />
+    <!--tools:listitem=""-->
+
+    <LinearLayout
+        android:id="@+id/group_of_error_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/error_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4x"
+            android:contentDescription="@string/content_description_error_message"
+            android:src="@drawable/empty_list" />
+
+        <TextView
+            android:id="@+id/message_error_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4x"
+            android:layout_marginTop="@dimen/margin_4x"
+            android:gravity="center"
+            android:textAppearance="@style/textStyleMedium22"
+            tools:text="Список пуст" />
+
+    </LinearLayout>
 
 </LinearLayout>
 
