@@ -11,12 +11,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/team_title"
-        style="@style/toolbarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_6x"
         app:title="@string/team_title"
-        app:titleTextAppearance="@style/toolbarTitleTextAppearance"
+        app:titleTextAppearance="@style/toolbarTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
