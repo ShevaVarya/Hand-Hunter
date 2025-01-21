@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentTeamInfoBinding
+import ru.practicum.android.diploma.features.team.presentation.ui.adapter.MemberAdapter
 
 class TeamInfoFragment : Fragment() {
 

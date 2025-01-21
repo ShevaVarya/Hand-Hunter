@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.team.presentation.ui
+package ru.practicum.android.diploma.features.team.presentation.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
