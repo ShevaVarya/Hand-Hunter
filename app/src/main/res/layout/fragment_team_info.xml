@@ -13,7 +13,6 @@
         android:id="@+id/team_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_6x"
         app:title="@string/team_title"
         app:titleTextAppearance="@style/toolbarTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
