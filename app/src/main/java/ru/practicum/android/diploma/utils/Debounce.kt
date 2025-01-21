@@ -14,13 +14,11 @@ fun <T> debounce(
     var debounceJob: Job? = null
 
     return { data: T ->
-        if (shouldCancelPrevious) {
-            if (debounceJob?.isActive == true) {
-                debounceJob?.cancel()
-            }
+        if (shouldCancelPrevious && debounceJob?.isActive == true) {
+            debounceJob?.cancel()
         }
 
-        if (shouldCancelPrevious || debounceJob?.isCompleted != false) {
+        if ((shouldCancelPrevious || debounceJob?.isCompleted != false)) {
             debounceJob = coroutineScope.launch {
                 delay(delayMillis)
                 listener.invoke(data)
