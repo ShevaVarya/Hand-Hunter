@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Hand Hunter</string>
     <string name="team_title">Team</string>
-    <string name="team_subtitle">The following people worked on the application</string>
+    <string name="team_subtitle">The following people worked\non the application</string>
     <string name="dev_name1">Igor Starkov</string>
     <string name="dev_name2">Varvara Shevchik</string>
     <string name="dev_name3">Olga Devyatlovskaya</string>
