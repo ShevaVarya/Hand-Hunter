@@ -18,7 +18,7 @@ fun <T> debounce(
             debounceJob?.cancel()
         }
 
-        if ((shouldCancelPrevious || debounceJob?.isCompleted != false)) {
+        if (shouldCancelPrevious || debounceJob?.isCompleted != false) {
             debounceJob = coroutineScope.launch {
                 delay(delayMillis)
                 listener.invoke(data)
