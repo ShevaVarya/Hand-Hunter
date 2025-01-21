@@ -5,10 +5,12 @@
     <string name="item_bottom_navigation_menu_favorites">Favorites</string>
     <string name="item_bottom_navigation_menu_team">Team</string>
     <string name="team_title">Team</string>
+    <string name="favourite_title">Favourites</string>
     <string name="team_subtitle">The following people worked\non the application</string>
     <string name="dev_name1">Igor Starkov</string>
     <string name="dev_name2">Varvara Shevchik</string>
     <string name="dev_name3">Olga Devyatlovskaya</string>
     <string name="dev_name4">Nikita Stepanenko</string>
     <string name="dev_name5">Kirill Matveev</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
