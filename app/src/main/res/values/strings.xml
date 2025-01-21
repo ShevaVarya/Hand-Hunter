@@ -19,7 +19,7 @@
     <string name="dev_name3">Ольга Девятловская</string>
     <string name="dev_name4">Никита Степаненко</string>
     <string name="dev_name5">Кирилл Матвеев</string>
-    <string name="something_went_wrong">Произошла ошибка</string>
-    <string name="empty_list">Список пуст</string>
-    <string name="could_not_get_vacancy_list">Не удалось получить список вакансий</string>
+    <string name="content_description_error_message">Произошла ошибка</string>
+    <string name="message_error_empty_data">Список пуст</string>
+    <string name="message_error_could_not_get_data">Не удалось получить список вакансий</string>
 </resources>

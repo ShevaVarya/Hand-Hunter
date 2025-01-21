@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/favourite_title"
-        app:titleTextAppearance="@style/toolbarTextStyle"
-        tools:ignore="RtlSymmetry" />
+        app:titleTextAppearance="@style/toolbarTextStyle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favourite_recycler_view"
@@ -35,10 +34,10 @@
 
         <ImageView
             android:id="@+id/error_image"
-            android:layout_width="328dp"
-            android:layout_height="223dp"
-            android:layout_marginHorizontal="16dp"
-            android:contentDescription="@string/something_went_wrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4x"
+            android:contentDescription="@string/content_description_error_message"
             android:src="@drawable/empty_list" />
 
         <TextView

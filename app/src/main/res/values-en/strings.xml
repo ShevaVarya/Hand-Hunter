@@ -12,7 +12,7 @@
     <string name="dev_name3">Olga Devyatlovskaya</string>
     <string name="dev_name4">Nikita Stepanenko</string>
     <string name="dev_name5">Kirill Matveev</string>
-    <string name="something_went_wrong">Something went wrong</string>
-    <string name="empty_list">Empty list</string>
-    <string name="could_not_get_vacancy_list">Couldn\'t get a list of vacancies</string>
+    <string name="content_description_error_message">Something went wrong</string>
+    <string name="message_error_empty_data">Empty list</string>
+    <string name="message_error_could_not_get_data">Couldn\'t get a list of vacancies</string>
 </resources>
