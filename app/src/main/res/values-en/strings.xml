@@ -22,4 +22,7 @@
     <string name="vacancy_info_title_experience">Required experience</string>
     <string name="vacancy_info_title_description">Vacancy description</string>
     <string name="vacancy_info_title_key_skills">Key skills</string>
+    <string name="vacancy_info_menu_share">Share</string>
+    <string name="vacancy_info_menu_favourite">Favourite</string>
+    <string name="employer_logo_description">Employer logo</string>
 </resources>

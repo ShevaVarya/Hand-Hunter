@@ -4,11 +4,11 @@
     <item
         android:id="@+id/share"
         android:icon="@drawable/sharing_24px"
-        android:title="Share"
-        app:showAsAction="always" />
+        android:title="@string/vacancy_info_menu_share"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/favourite"
         android:icon="@drawable/favorites_off_24px"
-        android:title="@string/name_fragment_favourite_vacancies"
-        app:showAsAction="always" />
+        android:title="@string/vacancy_info_menu_favourite"
+        app:showAsAction="ifRoom" />
 </menu>

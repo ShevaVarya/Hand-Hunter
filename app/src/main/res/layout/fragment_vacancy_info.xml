@@ -11,10 +11,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:titleTextAppearance="@style/toolbarTextStyle"
         app:menu="@menu/vacancy_info_toolbar_menu"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:title="@string/vacancy_info_title" />
+        app:title="@string/vacancy_info_title"
+        app:titleTextAppearance="@style/toolbarTextStyle" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,16 +32,18 @@
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_6x"
                 android:layout_marginBottom="@dimen/margin_1x"
-                android:textAppearance="@style/toolbarTextStyle"
+                android:textAppearance="@style/textStyleBold32"
+                android:textColor="?attr/mainTextColor"
                 tools:text="Android-разработчик" />
 
             <TextView
                 android:id="@+id/vacancy_salary_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/textStyleMedium24"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginBottom="@dimen/margin_6x"
+                android:textAppearance="@style/textStyleMedium22"
+                android:textColor="?attr/mainTextColor"
                 tools:text="от 100 000 ₽" />
 
             <include
@@ -54,7 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_6x"
-                android:text="@string/vacancy_info_title_experience" />
+                android:text="@string/vacancy_info_title_experience"
+                android:textAppearance="@style/textStyleMedium16"
+                android:textColor="?attr/mainTextColor" />
 
             <TextView
                 android:id="@+id/experience_text_view"
@@ -62,6 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_1x"
+                android:textAppearance="@style/textStyleRegular16"
+                android:textColor="?attr/mainTextColor"
                 tools:text="от 1 года до 3 лет" />
 
             <TextView
@@ -70,6 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_2x"
+                android:textAppearance="@style/textStyleRegular16"
+                android:textColor="?attr/mainTextColor"
                 tools:text="Полная занятость, Удаленная работа" />
 
             <TextView
@@ -78,7 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_8x"
-                android:text="@string/vacancy_info_title_description" />
+                android:text="@string/vacancy_info_title_description"
+                android:textAppearance="@style/textStyleMedium22"
+                android:textColor="?attr/mainTextColor" />
 
             <TextView
                 android:id="@+id/description_text_view"
@@ -86,6 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_4x"
+                android:textAppearance="@style/textStyleRegular16"
+                android:textColor="?attr/mainTextColor"
                 tools:text="Текст вакансии" />
 
             <TextView
@@ -94,7 +106,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_6x"
-                android:text="@string/vacancy_info_title_key_skills" />
+                android:text="@string/vacancy_info_title_key_skills"
+                android:textAppearance="@style/textStyleMedium22"
+                android:textColor="?attr/mainTextColor" />
 
             <TextView
                 android:id="@+id/key_skills_text_view"
@@ -102,6 +116,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4x"
                 android:layout_marginTop="@dimen/margin_4x"
+                android:layout_marginBottom="@dimen/margin_6x"
+                android:textAppearance="@style/textStyleRegular16"
+                android:textColor="?attr/mainTextColor"
                 tools:text="Перечисление ключевых навыков" />
         </LinearLayout>
     </ScrollView>

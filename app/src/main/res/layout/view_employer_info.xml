@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_4x"
     android:layout_marginHorizontal="@dimen/margin_4x"
-    android:background="@drawable/bg_employer_info">
+    android:background="@drawable/bg_employer_info"
+    android:padding="@dimen/padding_4x">
 
     <ImageView
         android:id="@+id/employer_logo_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="@string/employer_logo_description"
         android:src="@drawable/placeholder_32px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
-        android:textColor="?attr/mainTextColor"
+        android:textAppearance="@style/textStyleMedium22"
         app:layout_constraintStart_toEndOf="@+id/employer_logo_image_view"
         app:layout_constraintTop_toTopOf="@+id/employer_logo_image_view"
         tools:text="Имя работодателя" />
@@ -34,6 +35,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
+        android:textAppearance="@style/textStyleRegular16"
         app:layout_constraintStart_toEndOf="@+id/employer_logo_image_view"
         app:layout_constraintTop_toBottomOf="@+id/employer_name_text_view"
         tools:text="Локация" />
