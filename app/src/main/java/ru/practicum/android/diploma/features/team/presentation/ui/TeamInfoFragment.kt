@@ -14,8 +14,8 @@ class TeamInfoFragment : Fragment() {
 
     private var _binding: FragmentTeamInfoBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: MemberAdapter
+    private var recyclerView: RecyclerView? = null
+    private var adapter: MemberAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,13 +35,15 @@ class TeamInfoFragment : Fragment() {
                 requireContext().getString(R.string.dev_name5)
             )
         )
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView?.adapter = adapter
         return view
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        recyclerView = null
+        adapter = null
     }
 }

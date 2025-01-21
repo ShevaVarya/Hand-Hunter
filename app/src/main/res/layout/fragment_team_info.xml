@@ -13,9 +13,8 @@
         android:id="@+id/team_title"
         style="@style/toolbarTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_6x"
-        android:text="@string/team_title"
         app:title="@string/team_title"
         app:titleTextAppearance="@style/toolbarTitleTextAppearance"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +31,6 @@
         android:textColor="?attr/mainTextColor"
         android:text="@string/team_subtitle"
         android:paddingStart="@dimen/margin_4x"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/team_title"
         tools:ignore="RtlSymmetry" />
@@ -43,12 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_6x"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/team_subtitle"
-        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/fragment_team_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
