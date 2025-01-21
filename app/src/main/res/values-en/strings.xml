@@ -13,4 +13,6 @@
     <string name="dev_name4">Nikita Stepanenko</string>
     <string name="dev_name5">Kirill Matveev</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="empty_list">Empty list</string>
+    <string name="could_not_get_vacancy_list">Couldn\'t get a list of vacancies</string>
 </resources>
