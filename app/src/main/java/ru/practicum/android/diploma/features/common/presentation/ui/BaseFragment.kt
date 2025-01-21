@@ -8,16 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<T : ViewBinding> : Fragment() {
+    @Suppress("LateinitUsage")
     lateinit var viewBinding: T
 
-    protected abstract fun createViewBinding(): T
+    protected abstract fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): T
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding = createViewBinding()
+        viewBinding = createViewBinding(inflater, container)
         return viewBinding.root
     }
 
