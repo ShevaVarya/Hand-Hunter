@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalBoarder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_16x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalBoarder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/margin_2x" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/margin_4x"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/placeholder_32px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalBoarder" />
+
+    <TextView
+        android:id="@+id/textViewProfession"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/textStyleMedium24"
+        android:textColor="?attr/mainTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalBoarder"
+        tools:text="Андроид разработчик, Москва Андроид разработчик, Москва Андроид разработ" />
+
+    <TextView
+        android:id="@+id/textViewField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/textStyleRegular16"
+        android:textColor="?attr/mainTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProfession"
+        tools:text="Еда" />
+
+    <TextView
+        android:id="@+id/textViewWages"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/textStyleRegular16"
+        android:textColor="?attr/mainTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/textViewField"
+        tools:text="от 100 000 рублей" />
+</androidx.constraintlayout.widget.ConstraintLayout>

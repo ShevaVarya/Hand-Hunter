@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hand Hunter</string>
+    <string name="vacancies_search">Vacancies search</string>
+    <string name="filter_button">Search filter</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Enter your request</string>
+    <string name="search_icon">Search icon</string>
+    <string name="logo">Logotype</string>
+    <string name="empty_search">Empty_search</string>
+    <string name="bad_internet">Bad internet</string>
+    <string name="bad_request">Failed to get \nlist of vacancies</string>
+    <string name="server_error">Server error</string>
 </resources>

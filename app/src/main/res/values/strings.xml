@@ -8,4 +8,14 @@
     <string name="name_fragment_vacancy_info">Fragment vacancy info</string>
     <string name="name_fragment_favourite_vacancies">Fragment favourite vacancies</string>
     <string name="name_fragment_team_info">Fragment team info</string>
+    <string name="vacancies_search">Поиск вакансий</string>
+    <string name="filter_button">Фильтр поиска</string>
+    <string name="search">Поиск</string>
+    <string name="search_hint">Введите запрос</string>
+    <string name="search_icon">Иконка поиска</string>
+    <string name="logo">Логотип</string>
+    <string name="empty_search">Изображение без поиска</string>
+    <string name="bad_internet">Нет интернета</string>
+    <string name="bad_request">Не удалось получить \nсписок вакансий</string>
+    <string name="server_error">Ошибка сервера</string>
 </resources>

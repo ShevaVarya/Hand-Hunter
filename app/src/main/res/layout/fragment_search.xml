@@ -1,17 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="?attr/mainBackgroundColor"
     android:orientation="vertical"
     tools:context=".features.search.presentation.ui.SearchFragment">
 
-    <TextView
-        android:id="@+id/test_text"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBoarder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/name_search_fragment" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_4x" />
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBoarder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_4x" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/vacancies_search"
+        app:titleTextAppearance="@style/textToolbarStyle">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@string/filter_button"
+            android:src="@drawable/filter_off_24px" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/editTextSearch"
+        style="@style/editTextSearchStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/search"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="LabelFor" />
+
+    <ImageView
+        android:id="@+id/imageViewSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_4x"
+        android:contentDescription="@string/search_icon"
+        android:src="@drawable/search_24px"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintEnd_toEndOf="@+id/editTextSearch"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+
+    <ImageView
+        android:id="@+id/imageViewClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_4x"
+        android:contentDescription="@string/search_icon"
+        android:src="@drawable/close_24px"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintEnd_toEndOf="@+id/editTextSearch"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        style="@style/textViewMessageStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        tools:text="Найдено 286 вакансий" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMessage"
+        tools:itemCount="7"
+        tools:listitem="@layout/item_search" />
+
+    <ImageView
+        android:id="@+id/imageViewEmptySearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/empty_search"
+        android:src="@drawable/empty_search"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
+
+    <ImageView
+        android:id="@+id/imageViewBadInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/bad_internet"
+        android:src="@drawable/no_internet"
+        app:layout_constraintBottom_toTopOf="@+id/textViewBadInternet"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/textViewBadInternet"
+        style="@style/errorsTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bad_internet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBadInternet" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupBadInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageViewBadInternet, textViewBadInternet" />
+
+    <ImageView
+        android:id="@+id/imageViewBadRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/bad_request"
+        android:src="@drawable/bad_search"
+        app:layout_constraintBottom_toTopOf="@+id/textViewBadRequest"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/textViewBadRequest"
+        style="@style/errorsTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bad_request"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBadRequest" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupBadRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageViewBadRequest, textViewBadRequest" />
+
+    <ImageView
+        android:id="@+id/imageViewServerError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/server_error"
+        android:src="@drawable/server_error"
+        app:layout_constraintBottom_toTopOf="@+id/textViewServerError"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/textViewServerError"
+        style="@style/errorsTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/server_error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rightBoarder"
+        app:layout_constraintStart_toEndOf="@id/leftBoarder"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewServerError" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupServerError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageViewServerError, textViewServerError" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
