@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Hand Hunter</string>
-    <string name="name_search_fragment">Search Fragment</string>
-    <string name="name_search_filters_fragment">Search Filters Fragment</string>
-    <string name="name_fragment_workplace_selection">Fragment workplace selection</string>
-    <string name="name_fragment_location_selection">Fragment with selection country and region</string>
-    <string name="name_fragment_specialization_selection">Fragment specialization selection</string>
-    <string name="name_fragment_vacancy_info">Fragment vacancy info</string>
-    <string name="name_fragment_favourite_vacancies">Fragment favourite vacancies</string>
-    <string name="name_fragment_team_info">Fragment team info</string>
+    <string name="name_search_fragment" translatable="false">Search Fragment</string>
+    <string name="name_search_filters_fragment" translatable="false">Search Filters Fragment</string>
+    <string name="name_fragment_workplace_selection" translatable="false">Fragment workplace selection</string>
+    <string name="name_fragment_location_selection" translatable="false">Fragment with selection country and region</string>
+    <string name="name_fragment_specialization_selection" translatable="false">Fragment specialization selection</string>
+    <string name="name_fragment_vacancy_info" translatable="false">Fragment vacancy info</string>
+    <string name="name_fragment_favourite_vacancies" translatable="false">Fragment favourite vacancies</string>
+    <string name="name_fragment_team_info" translatable="false">Fragment team info</string>
 
     <string name="item_bottom_navigation_menu_home">Главная</string>
     <string name="item_bottom_navigation_menu_favorites">Избранное</string>
@@ -20,6 +20,11 @@
     <string name="dev_name3">Ольга Девятловская</string>
     <string name="dev_name4">Никита Степаненко</string>
     <string name="dev_name5">Кирилл Матвеев</string>
+
+    <string name="favourite_title">Избранное</string>
+    <string name="content_description_error_message">Произошла ошибка</string>
+    <string name="message_error_empty_data">Список пуст</string>
+    <string name="message_error_could_not_get_data">Не удалось получить список вакансий</string>
 
     <string name="vacancy_info_title">Вакансия</string>
     <string name="vacancy_info_title_experience">Требуемый опыт</string>

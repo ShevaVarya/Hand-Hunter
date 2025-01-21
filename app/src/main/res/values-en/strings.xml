@@ -13,6 +13,11 @@
     <string name="dev_name4">Nikita Stepanenko</string>
     <string name="dev_name5">Kirill Matveev</string>
 
+    <string name="favourite_title">Favourites</string>
+    <string name="content_description_error_message">Something went wrong</string>
+    <string name="message_error_empty_data">Empty list</string>
+    <string name="message_error_could_not_get_data">Couldn\'t get a list of vacancies</string>
+
     <string name="vacancy_info_title">Vacancy</string>
     <string name="vacancy_info_title_experience">Required experience</string>
     <string name="vacancy_info_title_description">Vacancy description</string>
