@@ -8,7 +8,7 @@
     tools:context=".features.favourite.presentation.ui.FavouriteVacanciesFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/favourite_title"
+        android:id="@+id/favourite_title_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/favourite_title"
