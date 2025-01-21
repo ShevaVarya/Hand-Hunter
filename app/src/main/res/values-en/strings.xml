@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hand Hunter</string>
+    <string name="item_bottom_navigation_menu_home">Home</string>
+    <string name="item_bottom_navigation_menu_favorites">Favorites</string>
+    <string name="item_bottom_navigation_menu_team">Team</string>
     <string name="team_title">Team</string>
     <string name="team_subtitle">The following people worked\non the application</string>
     <string name="dev_name1">Igor Starkov</string>

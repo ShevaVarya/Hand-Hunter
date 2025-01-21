@@ -37,4 +37,12 @@
         <item name="android:textColor">?attr/mainTextColor</item>
     </style>
 
+    <style name="MainBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="backgroundTint">?attr/mainBackgroundColor</item>
+        <item name="itemTextColor">@color/bottom_navigation_menu_color</item>
+        <item name="itemIconTint">@color/bottom_navigation_menu_color</item>
+        <item name="itemActiveIndicatorStyle">?attr/secondIconColor</item>
+        <item name="itemRippleColor">?attr/secondIconColor</item>
+    </style>
+
 </resources>
