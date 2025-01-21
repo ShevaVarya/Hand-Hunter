@@ -8,9 +8,11 @@
     <string name="name_fragment_vacancy_info">Fragment vacancy info</string>
     <string name="name_fragment_favourite_vacancies">Fragment favourite vacancies</string>
     <string name="name_fragment_team_info">Fragment team info</string>
+
     <string name="item_bottom_navigation_menu_home">Главная</string>
     <string name="item_bottom_navigation_menu_favorites">Избранное</string>
     <string name="item_bottom_navigation_menu_team">Команда</string>
+
     <string name="team_title">Команда</string>
     <string name="team_subtitle">Над приложением\nработали</string>
     <string name="dev_name1">Игорь Старков</string>
@@ -18,4 +20,9 @@
     <string name="dev_name3">Ольга Девятловская</string>
     <string name="dev_name4">Никита Степаненко</string>
     <string name="dev_name5">Кирилл Матвеев</string>
+
+    <string name="vacancy_info_title">Вакансия</string>
+    <string name="vacancy_info_title_experience">Требуемый опыт</string>
+    <string name="vacancy_info_title_description">Описание вакансии</string>
+    <string name="vacancy_info_title_key_skills">Ключевые навыки</string>
 </resources>

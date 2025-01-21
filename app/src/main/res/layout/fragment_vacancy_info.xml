@@ -1,17 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".features.vacancy.presentation.ui.VacancyInfoFragment">
 
-    <TextView
-        android:id="@+id/test_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/name_fragment_vacancy_info" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:titleTextAppearance="@style/toolbarTextStyle"
+        app:menu="@menu/vacancy_info_toolbar_menu"
+        app:navigationIcon="@drawable/arrow_back_24px"
+        app:title="@string/vacancy_info_title" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/vacancy_name_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_6x"
+                android:layout_marginBottom="@dimen/margin_1x"
+                android:textAppearance="@style/toolbarTextStyle"
+                tools:text="Android-разработчик" />
+
+            <TextView
+                android:id="@+id/vacancy_salary_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/textStyleMedium24"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginBottom="@dimen/margin_6x"
+                tools:text="от 100 000 ₽" />
+
+            <include
+                android:id="@+id/employer_info_view"
+                layout="@layout/view_employer_info" />
+
+            <TextView
+                android:id="@+id/experience_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_6x"
+                android:text="@string/vacancy_info_title_experience" />
+
+            <TextView
+                android:id="@+id/experience_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_1x"
+                tools:text="от 1 года до 3 лет" />
+
+            <TextView
+                android:id="@+id/employment_form_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_2x"
+                tools:text="Полная занятость, Удаленная работа" />
+
+            <TextView
+                android:id="@+id/description_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_8x"
+                android:text="@string/vacancy_info_title_description" />
+
+            <TextView
+                android:id="@+id/description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_4x"
+                tools:text="Текст вакансии" />
+
+            <TextView
+                android:id="@+id/key_skills_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_6x"
+                android:text="@string/vacancy_info_title_key_skills" />
+
+            <TextView
+                android:id="@+id/key_skills_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4x"
+                android:layout_marginTop="@dimen/margin_4x"
+                tools:text="Перечисление ключевых навыков" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

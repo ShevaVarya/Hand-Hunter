@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/sharing_24px"
+        android:title="Share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/favourite"
+        android:icon="@drawable/favorites_off_24px"
+        android:title="@string/name_fragment_favourite_vacancies"
+        app:showAsAction="always" />
+</menu>
