@@ -16,6 +16,6 @@
         <item name="buttonBackgroundColor">@color/blue</item>
         <item name="buttonApproveTextColor">@color/white</item>
         <item name="buttonAbortTextColor">@color/red</item>
-        <item name="bottomNavigationItemColor">@color/bottom_navigation_menu_color_light</item>
+        <item name="bottomNavigationItemColor">@color/bottom_navigation_menu_color</item>
     </style>
 </resources>
