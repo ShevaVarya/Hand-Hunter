@@ -30,6 +30,19 @@
         <item name="android:textColor">?attr/mainTextColor</item>
     </style>
 
+    <style name="teamTextStyleMedium16">
+        <item name="android:textAppearance">@style/textStyleMedium16</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
+    </style>
+
+    <style name="MainBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="backgroundTint">?attr/mainBackgroundColor</item>
+        <item name="itemTextColor">@color/bottom_navigation_menu_color</item>
+        <item name="itemIconTint">@color/bottom_navigation_menu_color</item>
+        <item name="itemActiveIndicatorStyle">?attr/secondIconColor</item>
+        <item name="itemRippleColor">?attr/secondIconColor</item>
+    </style>
+
     <style name="editTextSearchStyle" >
         <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:hint">@string/search_hint</item>
@@ -58,19 +71,6 @@
         <item name="android:layout_marginVertical">@dimen/margin_3x</item>
         <item name="android:textColor">?attr/mainTextColor</item>
         <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="teamTextStyleMedium16">
-        <item name="android:textAppearance">@style/textStyleMedium16</item>
-        <item name="android:textColor">?attr/mainTextColor</item>
-    </style>
-
-    <style name="MainBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="backgroundTint">?attr/mainBackgroundColor</item>
-        <item name="itemTextColor">@color/bottom_navigation_menu_color</item>
-        <item name="itemIconTint">@color/bottom_navigation_menu_color</item>
-        <item name="itemActiveIndicatorStyle">?attr/secondIconColor</item>
-        <item name="itemRippleColor">?attr/secondIconColor</item>
     </style>
 
 </resources>
