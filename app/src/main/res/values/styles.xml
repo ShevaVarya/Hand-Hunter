@@ -27,7 +27,7 @@
     </style>
 
     <style name="toolbarTextStyle" >
-        <item name="android:textColorPrimary">?attr/mainTextColor</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">22sp</item>
     </style>
