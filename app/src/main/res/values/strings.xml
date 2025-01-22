@@ -19,6 +19,8 @@
     <string name="bad_internet">Нет интернета</string>
     <string name="bad_request">Не удалось получить \nсписок вакансий</string>
     <string name="server_error">Ошибка сервера</string>
+    <string name="error_image">Изображение ошибки</string>
+    <string name="error_text">Текст ошибки</string>
 
     <string name="item_bottom_navigation_menu_home">Главная</string>
     <string name="item_bottom_navigation_menu_favorites">Избранное</string>
@@ -43,8 +45,7 @@
     <string name="vacancy_info_title_key_skills">Ключевые навыки</string>
     <string name="vacancy_info_menu_share">Поделиться</string>
     <string name="vacancy_info_menu_favourite">Избранное</string>
-    <string name="employer_logo_description">Логотип работодателя</string>
-
-    <string name="error_image">Изображение ошибки</string>
-    <string name="error_text">Текст ошибки</string>
+    <string name="vacancy_info_employer_logo_description">Логотип работодателя</string>
+    <string name="vacancy_info_no_data_error">Вакансия не найдена или\nудалена</string>
+    <string name="vacancy_info_server_error">Ошибка сервера</string>
 </resources>

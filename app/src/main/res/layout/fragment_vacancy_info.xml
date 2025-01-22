@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/mainBackgroundColor"
     tools:context=".features.vacancy.presentation.ui.VacancyInfoFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -16,102 +17,149 @@
         app:title="@string/vacancy_info_title"
         app:titleTextAppearance="@style/toolbarTextStyle" />
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ScrollView
+            android:id="@+id/vacancy_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/padding_4x">
+
+                <TextView
+                    android:id="@+id/vacancy_name_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_6x"
+                    android:layout_marginBottom="@dimen/margin_1x"
+                    android:textAppearance="@style/textStyleBold32"
+                    android:textColor="?attr/mainTextColor"
+                    tools:text="Android-разработчик" />
+
+                <TextView
+                    android:id="@+id/vacancy_salary_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_6x"
+                    android:textAppearance="@style/textStyleMedium22"
+                    android:textColor="?attr/mainTextColor"
+                    tools:text="от 100 000 ₽" />
+
+                <include
+                    android:id="@+id/employer_info_view"
+                    layout="@layout/view_employer_info" />
+
+                <TextView
+                    android:id="@+id/experience_title_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_6x"
+                    android:text="@string/vacancy_info_title_experience"
+                    android:textAppearance="@style/textStyleMedium16"
+                    android:textColor="?attr/mainTextColor" />
+
+                <TextView
+                    android:id="@+id/experience_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_1x"
+                    android:textAppearance="@style/textStyleRegular16"
+                    android:textColor="?attr/mainTextColor"
+                    tools:text="от 1 года до 3 лет" />
+
+                <TextView
+                    android:id="@+id/employment_form_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2x"
+                    android:textAppearance="@style/textStyleRegular16"
+                    android:textColor="?attr/mainTextColor"
+                    tools:text="Полная занятость, Удаленная работа" />
+
+                <TextView
+                    android:id="@+id/description_title_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8x"
+                    android:text="@string/vacancy_info_title_description"
+                    android:textAppearance="@style/textStyleMedium22"
+                    android:textColor="?attr/mainTextColor" />
+
+                <TextView
+                    android:id="@+id/description_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_4x"
+                    android:textAppearance="@style/textStyleRegular16"
+                    android:textColor="?attr/mainTextColor"
+                    tools:text="Текст вакансии" />
+
+                <TextView
+                    android:id="@+id/key_skills_title_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_6x"
+                    android:text="@string/vacancy_info_title_key_skills"
+                    android:textAppearance="@style/textStyleMedium22"
+                    android:textColor="?attr/mainTextColor" />
+
+                <TextView
+                    android:id="@+id/key_skills_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_4x"
+                    android:layout_marginBottom="@dimen/margin_6x"
+                    android:textAppearance="@style/textStyleRegular16"
+                    android:textColor="?attr/mainTextColor"
+                    tools:text="Перечисление ключевых навыков" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/blue"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
         <LinearLayout
+            android:id="@+id/error_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/padding_4x"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:ignore="UseCompoundDrawables">
 
-            <TextView
-                android:id="@+id/vacancy_name_text_view"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/error_image_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_6x"
-                android:layout_marginBottom="@dimen/margin_1x"
-                android:textAppearance="@style/textStyleBold32"
-                android:textColor="?attr/mainTextColor"
-                tools:text="Android-разработчик" />
+                android:layout_gravity="center"
+                android:contentDescription="@string/error_image"
+                android:src="@drawable/data_delete" />
 
             <TextView
-                android:id="@+id/vacancy_salary_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_6x"
-                android:textAppearance="@style/textStyleMedium22"
-                android:textColor="?attr/mainTextColor"
-                tools:text="от 100 000 ₽" />
-
-            <include
-                android:id="@+id/employer_info_view"
-                layout="@layout/view_employer_info" />
-
-            <TextView
-                android:id="@+id/experience_title_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_6x"
-                android:text="@string/vacancy_info_title_experience"
-                android:textAppearance="@style/textStyleMedium16"
-                android:textColor="?attr/mainTextColor" />
-
-            <TextView
-                android:id="@+id/experience_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_1x"
-                android:textAppearance="@style/textStyleRegular16"
-                android:textColor="?attr/mainTextColor"
-                tools:text="от 1 года до 3 лет" />
-
-            <TextView
-                android:id="@+id/employment_form_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_2x"
-                android:textAppearance="@style/textStyleRegular16"
-                android:textColor="?attr/mainTextColor"
-                tools:text="Полная занятость, Удаленная работа" />
-
-            <TextView
-                android:id="@+id/description_title_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8x"
-                android:text="@string/vacancy_info_title_description"
-                android:textAppearance="@style/textStyleMedium22"
-                android:textColor="?attr/mainTextColor" />
-
-            <TextView
-                android:id="@+id/description_text_view"
+                android:id="@+id/error_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_4x"
-                android:textAppearance="@style/textStyleRegular16"
-                android:textColor="?attr/mainTextColor"
-                tools:text="Текст вакансии" />
-
-            <TextView
-                android:id="@+id/key_skills_title_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_6x"
-                android:text="@string/vacancy_info_title_key_skills"
+                android:gravity="center_horizontal"
+                tools:text="@string/vacancy_info_no_data_error"
                 android:textAppearance="@style/textStyleMedium22"
                 android:textColor="?attr/mainTextColor" />
 
-            <TextView
-                android:id="@+id/key_skills_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_4x"
-                android:layout_marginBottom="@dimen/margin_6x"
-                android:textAppearance="@style/textStyleRegular16"
-                android:textColor="?attr/mainTextColor"
-                tools:text="Перечисление ключевых навыков" />
         </LinearLayout>
-    </ScrollView>
+
+    </FrameLayout>
+
 </LinearLayout>

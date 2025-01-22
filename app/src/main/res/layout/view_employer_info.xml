@@ -11,7 +11,7 @@
         android:id="@+id/employer_logo_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:contentDescription="@string/employer_logo_description"
+        android:contentDescription="@string/vacancy_info_employer_logo_description"
         android:src="@drawable/placeholder_32px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

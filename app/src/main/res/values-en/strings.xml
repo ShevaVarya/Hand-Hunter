@@ -38,5 +38,7 @@
     <string name="vacancy_info_title_key_skills">Key skills</string>
     <string name="vacancy_info_menu_share">Share</string>
     <string name="vacancy_info_menu_favourite">Favourite</string>
-    <string name="employer_logo_description">Employer logo</string>
+    <string name="vacancy_info_employer_logo_description">Employer logo</string>
+    <string name="vacancy_info_no_data_error">Vacancy not found or\ndeleted</string>
+    <string name="vacancy_info_server_error">Server error</string>
 </resources>

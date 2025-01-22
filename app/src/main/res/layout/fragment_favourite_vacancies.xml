@@ -48,6 +48,7 @@
             android:layout_marginTop="@dimen/margin_4x"
             android:gravity="center"
             android:textAppearance="@style/textStyleMedium22"
+            android:textColor="?attr/mainTextColor"
             tools:text="Список пуст" />
 
     </LinearLayout>
