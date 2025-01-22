@@ -97,14 +97,14 @@
         android:contentDescription="@string/error_image"
         android:src="@drawable/empty_search"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/bad_internet_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/errors_text_view"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/bad_internet_text_view"
+        android:id="@+id/errors_text_view"
         style="@style/errorsTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
