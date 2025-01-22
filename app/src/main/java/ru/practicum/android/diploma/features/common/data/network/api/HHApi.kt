@@ -57,9 +57,9 @@ interface HHApi {
      * @param params - список Query-параметров в виде Map<Key, Value>.
      */
     @GET("vacancies/{vacancyId}")
-    suspend fun getVacancyDetailsById(
+    fun getVacancyDetailsById(
         @Path("vacancyId") vacancyId: String,
-        @QueryMap params: Map<String, Any>
+        @QueryMap params: Map<String, String>
     ): Call<DetailsVacancyEntity>
 
     /**
