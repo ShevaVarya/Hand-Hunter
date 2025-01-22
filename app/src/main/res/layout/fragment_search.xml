@@ -9,14 +9,14 @@
     tools:context=".features.search.presentation.ui.SearchFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/left_boarder_guideline"
+        android:id="@+id/left_border_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="@dimen/margin_4x" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/right_boarder_guideline"
+        android:id="@+id/right_border_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -26,7 +26,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
+        app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/vacancies_search"
@@ -48,8 +48,8 @@
         android:layout_height="wrap_content"
         android:autofillHints="@string/search"
         android:singleLine="true"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="LabelFor" />
 
@@ -95,8 +95,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         tools:text="Найдено 286 вакансий" />
 
@@ -107,8 +107,8 @@
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/message_text_view"
         tools:itemCount="7"
         tools:listitem="@layout/item_search" />
@@ -121,8 +121,8 @@
         android:src="@drawable/empty_search"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bad_internet_text_view"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -133,8 +133,8 @@
         android:layout_height="wrap_content"
         tools:text="@string/error_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
+        app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
+        app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/errors_image_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

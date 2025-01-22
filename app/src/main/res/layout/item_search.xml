@@ -8,59 +8,59 @@
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/verticalBoarder"
+        android:id="@+id/vertical_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="@dimen/margin_16x" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalBoarder"
+        android:id="@+id/horizontal_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/margin_2x" />
 
     <ImageView
-        android:id="@+id/imageViewLogo"
+        android:id="@+id/logo_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="@dimen/margin_4x"
         android:contentDescription="@string/logo"
         android:src="@drawable/placeholder_32px"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalBoarder" />
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_border" />
 
     <TextView
-        android:id="@+id/textViewProfession"
+        android:id="@+id/profession_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/textStyleMedium22"
         android:textColor="?attr/mainTextColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalBoarder"
+        app:layout_constraintStart_toEndOf="@+id/vertical_border"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_border"
         tools:text="Андроид разработчик, Москва Андроид разработчик, Москва Андроид разработ" />
 
     <TextView
-        android:id="@+id/textViewField"
+        android:id="@+id/field_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/textStyleRegular16"
         android:textColor="?attr/mainTextColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfession"
+        app:layout_constraintStart_toEndOf="@+id/vertical_border"
+        app:layout_constraintTop_toBottomOf="@+id/profession_text_view"
         tools:text="Еда" />
 
     <TextView
-        android:id="@+id/textViewWages"
+        android:id="@+id/wages_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/textStyleRegular16"
         android:textColor="?attr/mainTextColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/verticalBoarder"
-        app:layout_constraintTop_toBottomOf="@+id/textViewField"
+        app:layout_constraintStart_toEndOf="@+id/vertical_border"
+        app:layout_constraintTop_toBottomOf="@+id/field_text_view"
         tools:text="от 100 000 рублей" />
 </androidx.constraintlayout.widget.ConstraintLayout>
