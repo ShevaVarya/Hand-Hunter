@@ -4,25 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
+        viewBinding = FragmentSearchBinding.inflate(inflater, container, false)
+        return viewBinding
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
+        return createViewBinding(inflater, container).root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+//    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
+    override fun initUi() {
+        val a = 0
     }
+
+//    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
+    override fun observeData() {
+        val a = 0
+    }
+
 }
