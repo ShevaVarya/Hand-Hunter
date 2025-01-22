@@ -9,6 +9,6 @@ sealed interface FavouriteVacanciesState {
     ) : FavouriteVacanciesState
 
     data class Content(
-        val favouriteVacancies: List<Vacancy>
+        val favouriteVacancies: List<VacancyUI>
     ) : FavouriteVacanciesState
 }
