@@ -48,34 +48,11 @@
         android:layout_height="wrap_content"
         android:autofillHints="@string/search"
         android:singleLine="true"
+        android:drawableEnd="@drawable/search_24px"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="LabelFor" />
-
-    <ImageView
-        android:id="@+id/search_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_4x"
-        android:contentDescription="@string/search_icon"
-        android:src="@drawable/search_24px"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
-        app:layout_constraintEnd_toEndOf="@+id/search_edit_text"
-        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
-
-    <ImageView
-        android:id="@+id/clear_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_4x"
-        android:contentDescription="@string/search_icon"
-        android:src="@drawable/close_24px"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
-        app:layout_constraintEnd_toEndOf="@+id/search_edit_text"
-        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

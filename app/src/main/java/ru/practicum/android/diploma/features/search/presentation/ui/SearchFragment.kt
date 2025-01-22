@@ -22,12 +22,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         return createViewBinding(inflater, container).root
     }
 
-    override fun initUi() {
+    override fun initUi() {}
 
-    }
-
-    override fun observeData() {
-
-    }
+    override fun observeData() {}
 
 }
