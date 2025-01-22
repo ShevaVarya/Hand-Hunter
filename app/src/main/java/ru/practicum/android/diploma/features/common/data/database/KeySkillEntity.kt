@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "key_skill_table")
 data class KeySkillEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
