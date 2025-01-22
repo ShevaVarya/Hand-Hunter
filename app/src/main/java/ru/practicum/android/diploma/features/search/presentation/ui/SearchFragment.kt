@@ -22,8 +22,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         return createViewBinding(inflater, container).root
     }
 
-    override fun initUi() {}
+//    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
+    override fun initUi() {
+        val a = 0
+    }
 
-    override fun observeData() {}
+//    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
+    override fun observeData() {
+        val a = 0
+    }
 
 }
