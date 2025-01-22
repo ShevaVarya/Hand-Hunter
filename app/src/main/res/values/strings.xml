@@ -8,6 +8,7 @@
     <string name="name_fragment_vacancy_info" translatable="false">Fragment vacancy info</string>
     <string name="name_fragment_favourite_vacancies" translatable="false">Fragment favourite vacancies</string>
     <string name="name_fragment_team_info" translatable="false">Fragment team info</string>
+
     <string name="vacancies_search">Поиск вакансий</string>
     <string name="filter_button">Фильтр поиска</string>
     <string name="search">Поиск</string>
@@ -18,20 +19,33 @@
     <string name="bad_internet">Нет интернета</string>
     <string name="bad_request">Не удалось получить \nсписок вакансий</string>
     <string name="server_error">Ошибка сервера</string>
+    <string name="error_image">Изображение ошибки</string>
+    <string name="error_text">Текст ошибки</string>
+
     <string name="item_bottom_navigation_menu_home">Главная</string>
     <string name="item_bottom_navigation_menu_favorites">Избранное</string>
     <string name="item_bottom_navigation_menu_team">Команда</string>
+
     <string name="team_title">Команда</string>
-    <string name="favourite_title">Избранное</string>
     <string name="team_subtitle">Над приложением\nработали</string>
     <string name="dev_name1">Игорь Старков</string>
     <string name="dev_name2">Варвара Шевчик</string>
     <string name="dev_name3">Ольга Девятловская</string>
     <string name="dev_name4">Никита Степаненко</string>
     <string name="dev_name5">Кирилл Матвеев</string>
+
+    <string name="favourite_title">Избранное</string>
     <string name="content_description_error_message">Произошла ошибка</string>
     <string name="message_error_empty_data">Список пуст</string>
     <string name="message_error_could_not_get_data">Не удалось получить список вакансий</string>
-    <string name="error_image">Изображение ошибки</string>
-    <string name="error_text">Текст ошибки</string>
+
+    <string name="vacancy_info_title">Вакансия</string>
+    <string name="vacancy_info_title_experience">Требуемый опыт</string>
+    <string name="vacancy_info_title_description">Описание вакансии</string>
+    <string name="vacancy_info_title_key_skills">Ключевые навыки</string>
+    <string name="vacancy_info_menu_share">Поделиться</string>
+    <string name="vacancy_info_menu_favourite">Избранное</string>
+    <string name="vacancy_info_employer_logo_description">Логотип работодателя</string>
+    <string name="vacancy_info_no_data_error">Вакансия не найдена или\nудалена</string>
+    <string name="vacancy_info_server_error">Ошибка сервера</string>
 </resources>
