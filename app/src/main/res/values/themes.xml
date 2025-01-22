@@ -16,5 +16,7 @@
         <item name="buttonBackgroundColor">@color/blue</item>
         <item name="buttonApproveTextColor">@color/white</item>
         <item name="buttonAbortTextColor">@color/red</item>
+
+        <item name="colorAccent">@color/blue</item>
     </style>
 </resources>
