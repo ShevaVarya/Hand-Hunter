@@ -32,8 +32,7 @@
         app:title="@string/vacancies_search"
         app:titleTextAppearance="@style/toolbarTextStyle">
 
-
-        <ImageView
+    <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -115,23 +114,12 @@
         tools:listitem="@layout/item_search" />
 
     <ImageView
-        android:id="@+id/empty_search_image_view"
+        android:id="@+id/errors_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/empty_search"
+        android:contentDescription="@string/error_image"
         android:src="@drawable/empty_search"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text" />
-
-    <ImageView
-        android:id="@+id/bad_internet_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/bad_internet"
-        android:src="@drawable/no_internet"
         app:layout_constraintBottom_toTopOf="@+id/bad_internet_text_view"
         app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
         app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
@@ -143,77 +131,10 @@
         style="@style/errorsTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bad_internet"
+        tools:text="@string/error_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
         app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/bad_internet_image_view" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/bad_internet_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="bad_internet_image_view, bad_internet_text_view" />
-
-    <ImageView
-        android:id="@+id/bad_request_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/bad_request"
-        android:src="@drawable/bad_search"
-        app:layout_constraintBottom_toTopOf="@+id/bad_request_text_view"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/bad_request_text_view"
-        style="@style/errorsTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bad_request"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/bad_request_image_view" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/bad_request_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="bad_request_image_view, bad_request_text_view" />
-
-    <ImageView
-        android:id="@+id/server_error_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/server_error"
-        android:src="@drawable/server_error"
-        app:layout_constraintBottom_toTopOf="@+id/server_error_text_view"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/server_error_text_view"
-        style="@style/errorsTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/server_error"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/right_boarder_guideline"
-        app:layout_constraintStart_toEndOf="@id/left_boarder_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/server_error_image_view" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/server_error_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="server_error_image_view, server_error_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/errors_image_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
