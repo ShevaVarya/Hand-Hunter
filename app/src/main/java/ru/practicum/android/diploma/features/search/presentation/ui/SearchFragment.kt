@@ -24,7 +24,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         return createViewBinding(inflater, container).root
     }
 
-//    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
 //    Мок для навигации на экран Вакансии
     override fun initUi() {
         viewBinding.filter.setOnClickListener {
