@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="textStyleBold32">
+        <item name="android:textSize">@dimen/text_size_8x</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+    </style>
+
+    <style name="textStyleMedium24">
+        <item name="android:textSize">@dimen/text_size_6x</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <style name="textStyleMedium16">
+        <item name="android:textSize">@dimen/text_size_4x</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <style name="textStyleRegular16">
+        <item name="android:textSize">@dimen/text_size_4x</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+    </style>
+
+    <style name="textStyleRegular12">
+        <item name="android:textSize">@dimen/text_size_3x</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+    </style>
+
+    <style name="toolbarTextStyle" >
+        <item name="android:textColor">?attr/mainTextColor</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="teamTextStyleMedium16">
+        <item name="android:textAppearance">@style/textStyleMedium16</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
+    </style>
+
+    <style name="MainBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="backgroundTint">?attr/mainBackgroundColor</item>
+        <item name="itemTextColor">@color/bottom_navigation_menu_color</item>
+        <item name="itemIconTint">@color/bottom_navigation_menu_color</item>
+        <item name="itemActiveIndicatorStyle">?attr/secondIconColor</item>
+        <item name="itemRippleColor">?attr/secondIconColor</item>
+    </style>
+
+</resources>
