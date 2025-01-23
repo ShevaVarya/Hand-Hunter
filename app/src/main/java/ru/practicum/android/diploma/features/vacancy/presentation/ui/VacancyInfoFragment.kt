@@ -23,7 +23,15 @@ import ru.practicum.android.diploma.features.vacancy.presentation.viewmodel.Vaca
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
+    private val vacancyId by lazy {
+        arguments?.getString(VACANCY_ID)
+    }
     private val viewModel by viewModel<VacancyInfoViewModel>()
+
+//    Заменить на:
+//    private val viewModel by viewModel<VacancyInfoViewModel> {
+//        parametersOf(vacancyId)
+//    }
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyInfoBinding {
         return FragmentVacancyInfoBinding.inflate(layoutInflater)
@@ -31,33 +39,12 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
 
     override fun initUi() {
         with(viewBinding) {
-            val vacancyId: String? = arguments?.getString(VACANCY_ID)
-
             toolbar.setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
             toolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.share -> {
-                        val vacancyInfo = viewModel.getVacancySharingText()
-                        val shareIntent = Intent(Intent.ACTION_SEND)
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, vacancyInfo)
-                        shareIntent.type = SEND_INTENT_TYPE
-
-                        val chooserIntent = Intent.createChooser(shareIntent, null)
-                        startActivity(chooserIntent)
-                        true
-                    }
-
-                    R.id.favourite -> {
-                        toggleFavouriteIcon(it)
-                        true
-                    }
-
-                    else -> {
-                        false
-                    }
-                }
+                handleMenuItemClick(it)
+                true
             }
 
             viewModel.getVacancyInfo(vacancyId)
@@ -68,6 +55,31 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
         viewModel.state.collectWithLifecycle(this) { state ->
             applyState(state)
         }
+    }
+
+    private fun handleMenuItemClick(item: MenuItem) {
+        when (item.itemId) {
+
+            R.id.share -> {
+                shareVacancy()
+            }
+
+            R.id.favourite -> {
+                toggleFavouriteIcon(item)
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun shareVacancy() {
+        val vacancyInfo = viewModel.getVacancySharingText()
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, vacancyInfo)
+        shareIntent.type = SEND_INTENT_TYPE
+
+        val chooserIntent = Intent.createChooser(shareIntent, null)
+        startActivity(chooserIntent)
     }
 
     private fun toggleFavouriteIcon(item: MenuItem) {
@@ -127,7 +139,8 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                         ).toInt()
                     )
                 )
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(employerInfoView.employerLogoImageView)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(employerInfoView.employerLogoImageView)
 
             employerInfoView.employerNameTextView.text = state.vacancyInfo.employerName
             employerInfoView.vacancyLocationTextView.text = state.vacancyInfo.location
