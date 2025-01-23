@@ -59,7 +59,6 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
 
     private fun handleMenuItemClick(item: MenuItem) {
         when (item.itemId) {
-
             R.id.share -> {
                 shareVacancy()
             }
