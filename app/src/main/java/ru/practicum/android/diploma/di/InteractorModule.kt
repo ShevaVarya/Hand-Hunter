@@ -8,5 +8,8 @@ import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDe
 
 val interactorModule = module {
     singleOf(::VacancyDetailsInteractorImpl).bind<VacancyDetailsInteractor>()
+
+    singleOf(::VacancySearchInteractorImpl) bind VacancySearchInteractor::class
+
 }
 

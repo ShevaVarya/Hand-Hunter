@@ -5,7 +5,12 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.practicum.android.diploma.features.vacancy.data.repository.VacancyDetailsRepositoryImpl
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsRepository
+import ru.practicum.android.diploma.features.search.data.repository.VacancySearchRepositoryImpl
+import ru.practicum.android.diploma.features.search.domain.api.VacancySearchRepository
 
 val repositoryModule = module {
     singleOf(::VacancyDetailsRepositoryImpl).bind<VacancyDetailsRepository>()
+
+    singleOf(::VacancySearchRepositoryImpl) bind VacancySearchRepository::class
+
 }
