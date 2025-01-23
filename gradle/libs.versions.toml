@@ -16,7 +16,7 @@ retrofit = "2.11.0"
 roomRuntime = "2.6.1"
 
 #plugins
-application = "8.8.0"
+application = "8.0.2"
 kotlin = "2.1.0"
 ksp = "2.0.21-1.0.27"
 
