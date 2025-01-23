@@ -31,7 +31,6 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
 
     override fun initUi() {
         with(viewBinding) {
-
             val vacancyId: String? = arguments?.getString(VACANCY_ID)
 
             toolbar.setNavigationOnClickListener {
@@ -107,13 +106,7 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     }
 
     private fun setErrorResource(@DrawableRes drawable: Int, @StringRes string: Int) {
-        viewBinding.errorImageView.setImageDrawable(
-            ResourcesCompat.getDrawable(
-                resources,
-                drawable,
-                null
-            )
-        )
+        viewBinding.errorImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, drawable, null))
         viewBinding.errorTextView.text = resources.getText(string)
     }
 
@@ -126,17 +119,22 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 .load(state.vacancyInfo.employerLogoUrl)
                 .placeholder(R.drawable.placeholder_32px)
                 .fitCenter()
-                .transform(RoundedCorners(dpToPx(12F, resources.displayMetrics).toInt()))
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .into(employerInfoView.employerLogoImageView)
+                .transform(
+                    RoundedCorners(
+                        dpToPx(
+                            resources.getDimension(R.dimen.radius_3x),
+                            resources.displayMetrics
+                        ).toInt()
+                    )
+                )
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(employerInfoView.employerLogoImageView)
 
             employerInfoView.employerNameTextView.text = state.vacancyInfo.employerName
             employerInfoView.vacancyLocationTextView.text = state.vacancyInfo.location
             experienceTextView.text = state.vacancyInfo.experience
             employmentFormTextView.text = state.vacancyInfo.employmentForm
             descriptionTextView.text = Html.fromHtml(
-                state.vacancyInfo.description,
-                Html.FROM_HTML_MODE_COMPACT
+                state.vacancyInfo.description, Html.FROM_HTML_MODE_COMPACT
             )
             keySkillsTextView.text = state.vacancyInfo.keySkills
         }

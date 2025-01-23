@@ -21,7 +21,7 @@ class VacancyInfoViewModel : ViewModel() {
     }
 
     fun getVacancySharingText(): String {
-        return ""
+        return EMPTY_STRING
     }
 
     fun toggleFavouriteVacancy(): Boolean {
@@ -35,5 +35,9 @@ class VacancyInfoViewModel : ViewModel() {
         data object NoData : State
         data object ServerError : State
         data object Loading : State
+    }
+
+    companion object {
+        private const val EMPTY_STRING = ""
     }
 }
