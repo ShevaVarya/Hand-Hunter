@@ -29,8 +29,8 @@ val dataModule = module {
         val request = chain
             .request()
             .newBuilder()
-            .addHeader(name = "Authorization:", value = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}")
-            .addHeader(name = "HH-User-Agent:", value = "$APP_NAME ($BASE_EMAIL)")
+            .addHeader(name = "Authorization", value = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}")
+            .addHeader(name = "HH-User-Agent", value = "$APP_NAME ($BASE_EMAIL)")
             .build()
 
         chain.proceed(request)
