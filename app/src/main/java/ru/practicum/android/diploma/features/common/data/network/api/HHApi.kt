@@ -38,11 +38,12 @@ interface HHApi {
      * @param params - список Query-параметров в виде Map<Key, Value>.
      */
     @GET("/vacancies")
-    fun getVacancies(
+    suspend fun getVacancies(
+        @Query("text") text: String,
         @Query("page") page: Int = 0,
         @Query("per_page") perPage: Int = 20,
         @QueryMap params: Map<String, String>
-    ): Call<VacanciesEntity>
+    ): VacanciesEntity
 
     /**
      * Запрос, возвращающий детализированный вариант конкретной вакансии.
