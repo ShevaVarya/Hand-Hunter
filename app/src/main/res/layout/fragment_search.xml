@@ -32,7 +32,8 @@
         app:title="@string/vacancies_search"
         app:titleTextAppearance="@style/toolbarTextStyle">
 
-    <ImageView
+        <ImageView
+            android:id="@+id/filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -47,8 +48,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="@string/search"
-        android:singleLine="true"
         android:drawableEnd="@drawable/search_24px"
+        android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -108,10 +109,10 @@
         style="@style/errorsTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/error_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/errors_image_view" />
+        app:layout_constraintTop_toBottomOf="@+id/errors_image_view"
+        tools:text="@string/error_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
