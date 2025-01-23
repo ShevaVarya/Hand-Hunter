@@ -9,4 +9,4 @@ data class VacanciesEntity(
     val page: Int,
     @SerializedName("per_page")
     val perPage: Int
-): Response()
+) : Response()

@@ -17,6 +17,6 @@ class VacancySearchRepositoryImpl(private val api: HHApi) : VacancySearchReposit
             page = page,
             perPage = perPage,
             params = params
-        ).items.map { it.toDomain()  }
+        ).items.map { it.toDomain() }
     }
 }

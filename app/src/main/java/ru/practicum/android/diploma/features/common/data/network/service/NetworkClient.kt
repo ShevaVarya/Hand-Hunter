@@ -1,17 +1,24 @@
 package ru.practicum.android.diploma.features.common.data.network.service
 
-import retrofit2.awaitResponse
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacanciesEntity
 
 interface NetworkClient {
-    suspend fun getVacanciesList(text: String, page: Int, params: Map<String, String> = mapOf()): Result<VacanciesEntity>
+    suspend fun getVacanciesList(
+        text: String,
+        page: Int,
+        params: Map<String, String> = mapOf()
+    ): Result<VacanciesEntity>
 }
 
 class NetworkClientImpl(
     private val hhApi: HHApi
 ) : NetworkClient {
-    override suspend fun getVacanciesList(text: String, page: Int, params: Map<String, String>): Result<VacanciesEntity> {
+    override suspend fun getVacanciesList(
+        text: String,
+        page: Int,
+        params: Map<String, String>
+    ): Result<VacanciesEntity> {
         try {
             val response = hhApi.getVacancies(
                 text = text,
@@ -19,7 +26,7 @@ class NetworkClientImpl(
                 params = params
             )
 
-            return if (response.resultCode == 200) {
+            return if (response.resultCode == SUCCESS_RESULT_CODE) {
                 val vacancies = response
 
                 if (vacancies != null) {
@@ -37,5 +44,9 @@ class NetworkClientImpl(
         } catch (exception: IllegalStateException) {
             return Result.failure(exception)
         }
+    }
+
+    companion object {
+        private const val SUCCESS_RESULT_CODE = 200
     }
 }
