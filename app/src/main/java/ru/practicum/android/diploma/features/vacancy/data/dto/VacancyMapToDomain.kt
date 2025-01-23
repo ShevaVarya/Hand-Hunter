@@ -15,7 +15,7 @@ fun DetailsVacancyEntity.toDomain(): VacancyDetails {
     return VacancyDetails(
         id = id,
         title = name,
-        salary = salary?.toDomain(),
+        salary = salary?.toDomain() ?: Salary.stub,
         employer = employer.toDomain(),
         location = area.toDomain(),
         experience = experience.toDomain(),
@@ -27,10 +27,10 @@ fun DetailsVacancyEntity.toDomain(): VacancyDetails {
 
 fun SalaryEntity.toDomain(): Salary {
     return Salary(
-        from = from,
-        to = to,
-        currency = currency,
-        isGross = gross
+        from = from ?: 0,
+        to = to ?: 0,
+        currency = currency ?: "",
+        isGross = gross ?: false
     )
 }
 

@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.vacancy.presentation.view_model
+package ru.practicum.android.diploma.features.vacancy.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +8,10 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
 
-sealed class VacancyDetailsUiState {
-    data object Loading : VacancyDetailsUiState()
-    data class Success(val data: VacancyDetails) : VacancyDetailsUiState()
-    data class Error(val message: String) : VacancyDetailsUiState()
+sealed interface VacancyDetailsUiState {
+    data object Loading : VacancyDetailsUiState
+    data class Success(val data: VacancyDetails) : VacancyDetailsUiState
+    data class Error(val message: String) : VacancyDetailsUiState
 }
 
 class VacancyDetailsViewModel(
@@ -25,10 +25,10 @@ class VacancyDetailsViewModel(
         _uiState.value = VacancyDetailsUiState.Loading
         viewModelScope.launch {
             try {
-                val details = vacancyDetailsInteractor.invoke(vacancyId)
+                val details = vacancyDetailsInteractor(vacancyId)
                 _uiState.value = VacancyDetailsUiState.Success(details)
             } catch (e: Exception) {
-                _uiState.value = VacancyDetailsUiState.Error(e.message.orEmpty())
+                _uiState.value = VacancyDetailsUiState.Error(e.message ?: "ошибка")
             }
         }
     }
