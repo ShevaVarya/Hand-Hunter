@@ -72,7 +72,11 @@
         android:id="@+id/vacancyInfoFragment"
         android:name="ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment"
         android:label="fragment_vacancy_info"
-        tools:layout="@layout/fragment_vacancy_info" />
+        tools:layout="@layout/fragment_vacancy_info" >
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/favouriteVacanciesFragment"
         android:name="ru.practicum.android.diploma.features.favourite.presentation.ui.FavouriteVacanciesFragment"
