@@ -14,7 +14,7 @@ interface NetworkClient {
     suspend fun getVacancyById(
         id: String,
         params: Map<String, String> = mapOf()
-    ): Result<DetailsVacancyEntity>
+    ): DetailsVacancyEntity
 }
 
 class NetworkClientImpl(
@@ -52,7 +52,7 @@ class NetworkClientImpl(
         }
     }
 
-    override suspend fun getVacancyById(id: String, params: Map<String, String>): Result<DetailsVacancyEntity> {
+    override suspend fun getVacancyById(id: String, params: Map<String, String>): DetailsVacancyEntity {
         return hhApi.getVacancyDetailsById(id, mapOf())
     }
 

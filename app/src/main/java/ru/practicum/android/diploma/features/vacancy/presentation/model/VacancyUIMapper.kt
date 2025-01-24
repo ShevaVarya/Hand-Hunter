@@ -51,12 +51,12 @@ private fun getToValueForUI(resourceProvider: ResourceProvider, to: Int): String
     return if (to == 0) {
         EMPTY_STRING
     } else {
-        resourceProvider.getString(R.string.salary_from) + " $to"
+        resourceProvider.getString(R.string.salary_to) + " $to"
     }
 }
 
-private fun getGrossInfoForUI(resourceProvider: ResourceProvider, isGross: Boolean?) {
-    if (isGross == null) {
+private fun getGrossInfoForUI(resourceProvider: ResourceProvider, isGross: Boolean?): String {
+    return if (isGross == null) {
         EMPTY_STRING
     } else {
         resourceProvider.getString(

@@ -61,7 +61,7 @@ interface HHApi {
     suspend fun getVacancyDetailsById(
         @Path("vacancyId") vacancyId: String,
         @QueryMap params: Map<String, String>
-    ): Result<DetailsVacancyEntity>
+    ): DetailsVacancyEntity
 
     /**
      * Запрос, возвращающий список стран.

@@ -34,8 +34,8 @@ fun SalaryEntity.toDomain(): Salary {
     )
 }
 
-fun mapCurrencyToDomain(currency: SalaryEntity.CurrencyEntity?): Salary.CurrencyEnum {
-    return when (currency?.code) {
+fun mapCurrencyToDomain(currency: String?): Salary.CurrencyEnum {
+    return when (currency) {
         "AZN" -> {
             Salary.CurrencyEnum.AZN
         }

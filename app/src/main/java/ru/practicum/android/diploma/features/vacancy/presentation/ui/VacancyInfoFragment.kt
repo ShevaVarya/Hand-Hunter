@@ -145,7 +145,10 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
             experienceTextView.text = state.vacancyInfo.experience
             employmentFormTextView.text = state.vacancyInfo.employmentForm
             descriptionTextView.text = Html.fromHtml(
-                state.vacancyInfo.description, Html.FROM_HTML_MODE_COMPACT
+                state.vacancyInfo.description,
+                Html.FROM_HTML_MODE_LEGACY or
+                    Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
+
             )
             keySkillsTextView.text = state.vacancyInfo.keySkills
         }

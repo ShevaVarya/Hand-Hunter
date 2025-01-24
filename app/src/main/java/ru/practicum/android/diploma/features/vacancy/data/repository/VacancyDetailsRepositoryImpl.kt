@@ -13,7 +13,7 @@ class VacancyDetailsRepositoryImpl(
 
     override suspend fun getVacancyDetails(vacancyId: String): Result<VacancyDetails> {
         return runCatching {
-            networkClient.getVacancyById(vacancyId).getOrNull()?.toDomain() ?: VacancyDetails.stub
+            networkClient.getVacancyById(vacancyId).toDomain()
         }.recoverCatching {
             resolveError(it)
         }
