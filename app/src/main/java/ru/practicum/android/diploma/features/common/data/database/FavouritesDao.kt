@@ -19,7 +19,4 @@ interface FavouritesDao {
         addVacancyToFavourites(vacancy)
         addKeySkillsToFavourites(keySkills)
     }
-
-    @Query("SELECT * FROM favourites_table")
-    suspend fun getFavourites(): List<VacancyDbEntity>
 }

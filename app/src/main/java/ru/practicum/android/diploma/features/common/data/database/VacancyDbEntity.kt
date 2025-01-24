@@ -10,7 +10,6 @@ data class VacancyDbEntity(
     @ColumnInfo(name = "vacancy_id")
     val vacancyId: String,
     val title: String,
-    val salary: String,
     val salaryFrom: Int?,
     val salaryTo: Int?,
     val currencySymbol: String?,
