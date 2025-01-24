@@ -3,13 +3,13 @@ package ru.practicum.android.diploma.di
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDetailsInteractor
+import ru.practicum.android.diploma.features.search.domain.interactor.VacancySearchInteractor
+import ru.practicum.android.diploma.features.search.domain.interactor.VacancySearchInteractorImpl
+import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDetailsInteractorImpl
 
 val interactorModule = module {
     singleOf(::VacancyDetailsInteractorImpl).bind<VacancyDetailsInteractor>()
 
     singleOf(::VacancySearchInteractorImpl) bind VacancySearchInteractor::class
-
 }
-

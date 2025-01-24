@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyInfoBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
@@ -26,12 +27,10 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     private val vacancyId by lazy {
         arguments?.getString(VACANCY_ID)
     }
-    private val viewModel by viewModel<VacancyInfoViewModel>()
 
-//    Заменить на:
-//    private val viewModel by viewModel<VacancyInfoViewModel> {
-//        parametersOf(vacancyId)
-//    }
+    private val viewModel by viewModel<VacancyInfoViewModel> {
+        parametersOf(vacancyId)
+    }
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyInfoBinding {
         return FragmentVacancyInfoBinding.inflate(layoutInflater)
@@ -47,7 +46,7 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 true
             }
 
-            viewModel.getVacancyInfo(vacancyId)
+            viewModel.getVacancyInfo()
         }
     }
 

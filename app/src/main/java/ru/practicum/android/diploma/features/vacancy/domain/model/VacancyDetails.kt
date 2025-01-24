@@ -10,14 +10,33 @@ data class VacancyDetails(
     val employmentType: String = "",
     val description: String = "",
     val keySkills: List<String> = emptyList()
-)
+) {
+    companion object {
+        val stub = VacancyDetails(
+            id = "",
+            title = ""
+        )
+    }
+}
 
 data class Salary(
     val from: Int = 0,
     val to: Int = 0,
-    val currency: String = "",
-    val isGross: Boolean = false
+    val currency: CurrencyEnum = CurrencyEnum.RUR,
+    val isGross: Boolean? = null
 ) {
+    enum class CurrencyEnum(val symbol:String) {
+        AZN("₼"),
+        BYR("Br"),
+        EUR("€"),
+        GEL("₾"),
+        KGS("с"),
+        KZT("₸"),
+        RUR("₽"),
+        USD("$"),
+        UZS("Soʻm")
+    }
+
     companion object {
         val stub = Salary()
     }

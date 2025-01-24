@@ -1,39 +1,41 @@
 package ru.practicum.android.diploma.features.vacancy.data.repository
 
-import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.invoke
-import retrofit2.HttpException
-import ru.practicum.android.diploma.features.common.data.network.api.HHApi
+import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
 import ru.practicum.android.diploma.features.vacancy.data.dto.toDomain
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsRepository
 import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
+import java.io.IOException
+import kotlin.coroutines.cancellation.CancellationException
 
 class VacancyDetailsRepositoryImpl(
-    private val hhApi: HHApi
+    private val networkClient: NetworkClient
 ) : VacancyDetailsRepository {
 
-    companion object {
-        private const val TAG = "VacancyRepository"
+    override suspend fun getVacancyDetails(vacancyId: String): Result<VacancyDetails> {
+        return runCatching {
+            networkClient.getVacancyById(vacancyId).getOrNull()?.toDomain() ?: VacancyDetails.stub
+        }.recoverCatching {
+            resolveError(it)
+        }
     }
 
-    override suspend fun getVacancyDetails(vacancyId: String): VacancyDetails {
-        return (Dispatchers.IO) {
-            try {
-                val response = hhApi.getVacancyDetailsById(vacancyId, emptyMap<String, String>()).execute()
-                if (response.isSuccessful) {
-                    val vacancyDetails = response.body()?.toDomain()
-                        ?: throw IllegalArgumentException("Response is null")
-                    Log.d(TAG, "API Response: ${response.body()}")
-                    Log.d(TAG, "Domain Model: $vacancyDetails")
-                    vacancyDetails
-                } else {
-                    throw HttpException(response)
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error fetching vacancy details", e)
-                throw e
-            }
+    private fun resolveError(error: Throwable): Nothing {
+        throw when (error) {
+            is CancellationException -> error
+
+            is IOException -> CustomException.IOException
+
+            else -> CustomException.EmptyException
+        }
+    }
+
+    sealed class CustomException : Exception() {
+        object EmptyException : CustomException() {
+            private fun readResolve(): Any = EmptyException
+        }
+
+        object IOException : CustomException() {
+            private fun readResolve(): Any = IOException
         }
     }
 }

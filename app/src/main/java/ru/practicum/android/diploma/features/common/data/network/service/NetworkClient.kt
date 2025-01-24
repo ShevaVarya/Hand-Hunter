@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.features.common.data.network.service
 
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacanciesEntity
+import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
 
 interface NetworkClient {
     suspend fun getVacanciesList(
@@ -9,6 +10,11 @@ interface NetworkClient {
         page: Int,
         params: Map<String, String> = mapOf()
     ): Result<VacanciesEntity>
+
+    suspend fun getVacancyById(
+        id: String,
+        params: Map<String, String> = mapOf()
+    ): Result<DetailsVacancyEntity>
 }
 
 class NetworkClientImpl(
@@ -44,6 +50,10 @@ class NetworkClientImpl(
         } catch (exception: IllegalStateException) {
             return Result.failure(exception)
         }
+    }
+
+    override suspend fun getVacancyById(id: String, params: Map<String, String>): Result<DetailsVacancyEntity> {
+        return hhApi.getVacancyDetailsById(id, mapOf())
     }
 
     companion object {
