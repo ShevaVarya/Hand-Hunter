@@ -10,9 +10,7 @@ import ru.practicum.android.diploma.features.search.domain.interactor.VacancySea
 
 val interactorModule = module {
 
-    single<FavouriteVacanciesInteractor> {
-        FavouriteVacanciesInteractorImpl(get())
-    }
+    singleOf(::FavouriteVacanciesInteractorImpl) bind FavouriteVacanciesInteractor::class
 
     singleOf(::VacancySearchInteractorImpl) bind VacancySearchInteractor::class
 

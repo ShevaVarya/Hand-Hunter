@@ -11,6 +11,10 @@ data class VacancyDbEntity(
     val vacancyId: String,
     val title: String,
     val salary: String,
+    val salaryFrom: Int?,
+    val salaryTo: Int?,
+    val currencySymbol: String?,
+    val isGross: Boolean?,
     @ColumnInfo(name = "employer_name")
     val employerName: String,
     val employerLogoUrl: String,

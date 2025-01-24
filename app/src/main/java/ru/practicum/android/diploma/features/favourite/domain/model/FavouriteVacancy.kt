@@ -1,9 +1,6 @@
 package ru.practicum.android.diploma.features.favourite.domain.model
 
-import androidx.room.ColumnInfo
-
-//mock
-data class Vacancy(
+data class FavouriteVacancy(
     val vacancyId: String,
     val title: String,
     val salary: String,

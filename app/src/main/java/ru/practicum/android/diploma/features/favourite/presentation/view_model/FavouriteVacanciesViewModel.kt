@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
-import ru.practicum.android.diploma.features.favourite.domain.model.Vacancy
 import ru.practicum.android.diploma.features.favourite.presentation.model.FavouriteVacanciesState
 import ru.practicum.android.diploma.features.favourite.presentation.model.VacancyUI
 import ru.practicum.android.diploma.utils.debounce

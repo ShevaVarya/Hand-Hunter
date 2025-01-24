@@ -10,9 +10,7 @@ import ru.practicum.android.diploma.features.search.domain.api.VacancySearchRepo
 
 val repositoryModule = module {
 
-    single<FavouriteVacanciesRepository> {
-        FavouriteVacanciesRepositoryImpl(get())
-    }
+    singleOf(::FavouriteVacanciesRepositoryImpl) bind FavouriteVacanciesRepository::class
 
     singleOf(::VacancySearchRepositoryImpl) bind VacancySearchRepository::class
 
