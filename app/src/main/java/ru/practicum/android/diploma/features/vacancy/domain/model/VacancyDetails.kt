@@ -25,7 +25,7 @@ data class Salary(
     val currency: CurrencyEnum = CurrencyEnum.RUR,
     val isGross: Boolean? = null
 ) {
-    enum class CurrencyEnum(val symbol:String) {
+    enum class CurrencyEnum(val symbol: String) {
         AZN("₼"),
         BYR("Br"),
         EUR("€"),

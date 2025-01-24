@@ -30,12 +30,7 @@ class VacancyDetailsRepositoryImpl(
     }
 
     sealed class CustomException : Exception() {
-        object EmptyException : CustomException() {
-            private fun readResolve(): Any = EmptyException
-        }
-
-        object IOException : CustomException() {
-            private fun readResolve(): Any = IOException
-        }
+        object EmptyException : CustomException()
+        object IOException : CustomException()
     }
 }

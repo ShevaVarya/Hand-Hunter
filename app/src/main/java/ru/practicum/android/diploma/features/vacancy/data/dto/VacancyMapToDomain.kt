@@ -34,20 +34,44 @@ fun SalaryEntity.toDomain(): Salary {
     )
 }
 
-fun mapCurrencyToDomain(currency: SalaryEntity.CurrencyEntity?): Salary.CurrencyEnum{
-    return if (currency != null ) {
-        when(currency.code){
-            "AZN" -> Salary.CurrencyEnum.AZN
-            "BYR" -> Salary.CurrencyEnum.BYR
-            "EUR" -> Salary.CurrencyEnum.EUR
-            "GEL" -> Salary.CurrencyEnum.GEL
-            "KGS" -> Salary.CurrencyEnum.KGS
-            "KZT" -> Salary.CurrencyEnum.KZT
-            "USD" -> Salary.CurrencyEnum.USD
-            "UZS" -> Salary.CurrencyEnum.UZS
-            else -> { Salary.CurrencyEnum.RUR }
+fun mapCurrencyToDomain(currency: SalaryEntity.CurrencyEntity?): Salary.CurrencyEnum {
+    return when (currency?.code) {
+        "AZN" -> {
+            Salary.CurrencyEnum.AZN
         }
-    } else Salary.CurrencyEnum.RUR
+
+        "BYR" -> {
+            Salary.CurrencyEnum.BYR
+        }
+
+        "EUR" -> {
+            Salary.CurrencyEnum.EUR
+        }
+
+        "GEL" -> {
+            Salary.CurrencyEnum.GEL
+        }
+
+        "KGS" -> {
+            Salary.CurrencyEnum.KGS
+        }
+
+        "KZT" -> {
+            Salary.CurrencyEnum.KZT
+        }
+
+        "USD" -> {
+            Salary.CurrencyEnum.USD
+        }
+
+        "UZS" -> {
+            Salary.CurrencyEnum.UZS
+        }
+
+        else -> {
+            Salary.CurrencyEnum.RUR
+        }
+    }
 }
 
 fun EmployerEntity.toDomain(): Employer {

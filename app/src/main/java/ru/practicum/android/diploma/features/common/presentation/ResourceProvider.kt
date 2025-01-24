@@ -13,7 +13,7 @@ interface ResourceProvider {
     fun getColor(@ColorRes res: Int): Int
 }
 
-class ResourceProviderImpl (
+class ResourceProviderImpl(
     private val context: Context
 ) : ResourceProvider {
 

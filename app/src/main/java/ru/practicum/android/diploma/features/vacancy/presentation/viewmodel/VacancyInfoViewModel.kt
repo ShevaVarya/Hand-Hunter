@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.features.common.presentation.ResourceProvide
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.presentation.model.VacancyInfoUI
 import ru.practicum.android.diploma.features.vacancy.presentation.model.toUI
+import java.io.IOException
 
 class VacancyInfoViewModel(
     private val resourceProvider: ResourceProvider,
@@ -30,10 +31,11 @@ class VacancyInfoViewModel(
         viewModelScope.launch {
             try {
                 val details = vacancyDetailsInteractor.getVacancyDetails(vacancyId).getOrNull()
-                if (details != null){
+                if (details != null) {
                     _state.value = State.Data(details.toUI(resourceProvider))
                 }
-            } catch (e: IllegalStateException) {
+            } catch (e: IOException) {
+                println(e)
                 _state.value = State.ServerError
             }
         }
