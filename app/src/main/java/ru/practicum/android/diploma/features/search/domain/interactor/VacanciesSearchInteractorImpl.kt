@@ -1,15 +1,15 @@
 package ru.practicum.android.diploma.features.search.domain.interactor
 
-import ru.practicum.android.diploma.features.search.domain.api.VacancySearchRepository
+import ru.practicum.android.diploma.features.search.domain.api.VacanciesSearchRepository
 import ru.practicum.android.diploma.features.search.domain.model.Vacancy
 
-class VacancySearchInteractorImpl(private val repository: VacancySearchRepository) : VacancySearchInteractor {
+class VacanciesSearchInteractorImpl(private val repository: VacanciesSearchRepository) : VacanciesSearchInteractor {
     override suspend fun getVacancies(
         text: String,
         page: Int,
         perPage: Int,
         params: Map<String, String>
-    ): List<Vacancy> {
+    ): Result<List<Vacancy>> {
         return repository.searchVacancies(text = text, page = page, perPage = perPage, params = params)
     }
 

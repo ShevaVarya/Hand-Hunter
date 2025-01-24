@@ -4,10 +4,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
+import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 
 class RootActivity : AppCompatActivity() {
 
@@ -15,9 +19,15 @@ class RootActivity : AppCompatActivity() {
         ActivityRootBinding.inflate(layoutInflater)
     }
 
+    private val interactor by inject<VacanciesSearchInteractor>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        lifecycleScope.launch {
+            interactor.getVacancies(text = "faf", page = 0, perPage = 5, params = mapOf())
+        }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHostFragment.navController
