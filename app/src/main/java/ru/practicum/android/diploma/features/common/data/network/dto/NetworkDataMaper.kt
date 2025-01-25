@@ -4,6 +4,7 @@ import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.Vac
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacancyEntity
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 import ru.practicum.android.diploma.features.search.domain.model.Vacancy
+import ru.practicum.android.diploma.features.vacancy.data.dto.mapCurrencyToDomain
 
 fun VacancyEntity.toDomain(): Vacancy {
     return Vacancy(
@@ -14,7 +15,7 @@ fun VacancyEntity.toDomain(): Vacancy {
         employerLogoUrl = employer.logoUrls?.original ?: "",
         salaryFrom = salary?.from ?: 0,
         salaryTo = salary?.to ?: 0,
-        currencySymbol = salary?.currency ?: ""
+        currencySymbol = mapCurrencyToDomain(salary?.currency).symbol
     )
 }
 
