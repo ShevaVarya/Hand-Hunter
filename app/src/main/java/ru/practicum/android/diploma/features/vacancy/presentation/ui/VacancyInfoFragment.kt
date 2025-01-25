@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.vacancy.presentation.ui
 
 import android.content.Intent
+import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -9,6 +10,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.core.util.TypedValueCompat.dpToPx
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -155,5 +157,9 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     companion object {
         private const val SEND_INTENT_TYPE = "text/plain"
         private const val VACANCY_ID = "vacancyId"
+
+        fun createArgs(vacancyId: String): Bundle {
+            return bundleOf(VACANCY_ID to vacancyId)
+        }
     }
 }

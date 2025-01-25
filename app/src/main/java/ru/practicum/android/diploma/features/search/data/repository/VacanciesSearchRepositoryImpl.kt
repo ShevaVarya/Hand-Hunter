@@ -1,31 +1,48 @@
 package ru.practicum.android.diploma.features.search.data.repository
 
-import android.util.Log
+import kotlinx.coroutines.CancellationException
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.dto.toDomain
+import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.search.domain.api.VacanciesSearchRepository
-import ru.practicum.android.diploma.features.search.domain.model.Vacancy
+import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
+import ru.practicum.android.diploma.features.search.domain.model.Vacancies
+import ru.practicum.android.diploma.utils.NetworkChecker
+import java.io.IOException
 
-class VacanciesSearchRepositoryImpl(private val api: HHApi) : VacanciesSearchRepository {
-    override suspend fun searchVacancies(
-        text: String,
-        page: Int,
-        perPage: Int,
-        params: Map<String, String>
-    ): Result<List<Vacancy>> {
+class VacanciesSearchRepositoryImpl(
+    private val api: HHApi,
+    private val networkChecker: NetworkChecker,
+) : VacanciesSearchRepository {
+    override suspend fun searchVacancies(querySearch: QuerySearch): Result<Vacancies> {
         return runCatching {
-            api.getVacancies(
-                text = text,
-                page = page,
-                perPage = perPage,
-                params = params
-            ).items.map { it.toDomain() }
+
+            if (networkChecker.isInternetAvailable()) {
+                val vacancies = api.getVacancies(
+                    text = querySearch.text ?: "",
+                    page = querySearch.page,
+                    perPage = querySearch.perPage,
+                    params = querySearch.params
+                )
+
+                if (vacancies.items.isEmpty()) throw CustomException.EmptyError
+
+                vacancies.toDomain()
+            } else {
+                throw CustomException.NetworkError
+            }
         }
             .recoverCatching { resolveError(it) }
     }
 
-    private suspend fun resolveError(error: Throwable): Nothing {
-        Log.d("MyLog", "resolveError: $error")
-        throw error
+    private fun resolveError(error: Throwable): Nothing {
+        throw when (error) {
+            is CustomException.NetworkError -> error
+            is CustomException.EmptyError -> error
+            is CancellationException -> error
+            is IOException -> CustomException.NetworkError
+            else -> CustomException.ServerError
+        }
+
     }
 }
