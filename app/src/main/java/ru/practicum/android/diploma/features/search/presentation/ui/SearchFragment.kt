@@ -131,7 +131,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private fun showInit() {
         vacancyAdapter?.submitList(emptyList())
         with(viewBinding) {
-            messageTextView.text = EMPTY_TEXT
+            errorsTextView.text = EMPTY_TEXT
             errorsImageView.setImageResource(R.drawable.empty_search)
             progressBar.isVisible = false
             contentRecyclerView.isVisible = false
