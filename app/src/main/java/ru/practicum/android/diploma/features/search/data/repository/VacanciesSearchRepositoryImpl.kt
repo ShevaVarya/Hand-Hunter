@@ -16,7 +16,6 @@ class VacanciesSearchRepositoryImpl(
 ) : VacanciesSearchRepository {
     override suspend fun searchVacancies(querySearch: QuerySearch): Result<Vacancies> {
         return runCatching {
-
             if (networkChecker.isInternetAvailable()) {
                 val vacancies = api.getVacancies(
                     text = querySearch.text ?: "",
@@ -43,6 +42,5 @@ class VacanciesSearchRepositoryImpl(
             is IOException -> CustomException.NetworkError
             else -> CustomException.ServerError
         }
-
     }
 }

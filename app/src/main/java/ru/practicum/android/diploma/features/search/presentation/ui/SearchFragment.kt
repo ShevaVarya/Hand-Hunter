@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.features.search.presentation.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -26,7 +25,6 @@ import ru.practicum.android.diploma.features.search.presentation.recycler.Vacanc
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.debounce
-
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
@@ -195,24 +193,31 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
+        onTouchListener()
+        onTextChanged()
+
+    }
+
+    private fun onTouchListener() {
         with(viewBinding) {
             searchEditText.setOnTouchListener { _, event ->
-                if (event.action === MotionEvent.ACTION_UP) {
-                    if (searchEditText.compoundDrawables[RIGHT_CORNER] != null) {
-                        val drawableEndWidth =
-                            searchEditText.compoundDrawables[RIGHT_CORNER].bounds.width()
+                if (event.action === MotionEvent.ACTION_UP && searchEditText.compoundDrawables[RIGHT_CORNER] != null) {
+                    val drawableEndWidth =
+                        searchEditText.compoundDrawables[RIGHT_CORNER].bounds.width()
 
-                        if (event.x >= (searchEditText.width - searchEditText.paddingEnd - drawableEndWidth)) {
-                            viewModel.onClearedSearch()
-                            return@setOnTouchListener true
-                        }
+                    if (event.x >= (searchEditText.width - searchEditText.paddingEnd - drawableEndWidth)) {
+                        viewModel.onClearedSearch()
+                        return@setOnTouchListener true
                     }
                 }
                 false
             }
+        }
+    }
 
+    private fun onTextChanged() {
+        with(viewBinding) {
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val isNotEmpty = text.isNullOrEmpty().not()
                 val querySearch = QuerySearch(text = text.toString())

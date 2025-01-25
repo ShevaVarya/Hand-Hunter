@@ -6,6 +6,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemSearchBinding
 import ru.practicum.android.diploma.features.search.domain.model.Vacancy
+import java.util.Locale
 
 class VacancyViewHolder(private val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -26,7 +27,7 @@ class VacancyViewHolder(private val binding: ItemSearchBinding) : RecyclerView.V
     }
 
     private fun getProfession(vacancyName: String, city: String): String {
-        return String.format("%s, %s", vacancyName, city)
+        return String.format("%s, %s", vacancyName, city, Locale.getDefault())
     }
 
 }
