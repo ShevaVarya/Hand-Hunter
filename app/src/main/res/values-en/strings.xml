@@ -41,4 +41,9 @@
     <string name="vacancy_info_employer_logo_description">Employer logo</string>
     <string name="vacancy_info_no_data_error">Vacancy not found or\ndeleted</string>
     <string name="vacancy_info_server_error">Server error</string>
+    <string name="vacancy_info_no_salary">Income level not specified</string>
+    <string name="salary_from">from</string>
+    <string name="salary_to">to</string>
+    <string name="vacancy_info_gross_info_true">gross</string>
+    <string name="vacancy_info_gross_info_false">net</string>
 </resources>

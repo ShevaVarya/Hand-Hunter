@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
@@ -24,14 +25,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         return createViewBinding(inflater, container).root
     }
 
-//    Мок для навигации на экран Вакансии
+    //    Мок для навигации на экран Вакансии
     override fun initUi() {
         viewBinding.filter.setOnClickListener {
-            this@SearchFragment.findNavController().navigate(R.id.action_searchFragment_to_vacancyInfoFragment)
+            this@SearchFragment.findNavController()
+                .navigate(R.id.action_searchFragment_to_vacancyInfoFragment, bundleOf("vacancyId" to "115522353"))
         }
     }
 
-//    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
+    //    Из за проверки detekt добавил переменную в пустой метод, удалить после реализации
     override fun observeData() {
         val a = 0
     }
