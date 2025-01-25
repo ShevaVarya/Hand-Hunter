@@ -43,5 +43,11 @@ class SearchViewModel(
         }
     }
 
+    fun onClearedSearch() {
+        viewModelScope.launch {
+            searchStateFlow.emit(SearchState.Init)
+        }
+        lastSearchQuery = null
+    }
 
 }

@@ -45,6 +45,6 @@
 
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
-        <item quantity="other">Found%d vacancies</item>
+        <item quantity="other">Found %d vacancies</item>
     </plurals>
 </resources>

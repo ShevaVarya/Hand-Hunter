@@ -58,15 +58,37 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { searchState ->
                 when (searchState) {
-                    SearchState.EmptyError -> showEmptyError()
                     SearchState.Loading -> showProgressBar()
+                    is SearchState.Content -> showVacancies(searchState.vacancies)
+                    SearchState.Init -> showInit()
+                    SearchState.EmptyError -> showEmptyError()
                     SearchState.NetworkError -> showNetworkError()
                     SearchState.ServerError -> showServerError()
-                    is SearchState.Content -> showVacancies(searchState.vacancies)
-                    SearchState.Init -> Unit
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun showProgressBar() {
+        with(viewBinding) {
+            progressBar.isVisible = true
+            contentRecyclerView.isVisible = false
+            messageTextView.isVisible = false
+            errorsImageView.isVisible = false
+            errorsTextView.isVisible = false
+        }
+    }
+
+    private fun showVacancies(vacancies: Vacancies) {
+        vacancyAdapter?.submitList(vacancies.items)
+        with(viewBinding) {
+            messageTextView.text = getTotalVacanciesText(vacancies)
+            progressBar.isVisible = false
+            contentRecyclerView.isVisible = true
+            messageTextView.isVisible = true
+            errorsImageView.isVisible = false
+            errorsTextView.isVisible = false
+        }
     }
 
     private fun showEmptyError() {
@@ -106,26 +128,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun showProgressBar() {
+    private fun showInit() {
+        vacancyAdapter?.submitList(emptyList())
         with(viewBinding) {
-            progressBar.isVisible = true
+            messageTextView.text = EMPTY_TEXT
+            errorsImageView.setImageResource(R.drawable.empty_search)
+            progressBar.isVisible = false
             contentRecyclerView.isVisible = false
             messageTextView.isVisible = false
-            errorsImageView.isVisible = false
-            errorsTextView.isVisible = false
-        }
-    }
+            errorsImageView.isVisible = true
+            errorsTextView.isVisible = true
 
-    private fun showVacancies(vacancies: Vacancies) {
-        vacancyAdapter?.submitList(vacancies.items)
-        with(viewBinding) {
-            messageTextView.text = getTotalVacanciesText(vacancies)
-            progressBar.isVisible = false
-            contentRecyclerView.isVisible = true
-            messageTextView.isVisible = true
-            errorsImageView.isVisible = false
-            errorsTextView.isVisible = false
+            searchEditText.setText(EMPTY_TEXT)
+            searchEditText.clearFocus()
         }
+        hideKeyBoard()
     }
 
     private fun getTotalVacanciesText(vacancies: Vacancies): String {
@@ -188,9 +205,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                             searchEditText.compoundDrawables[RIGHT_CORNER].bounds.width()
 
                         if (event.x >= (searchEditText.width - searchEditText.paddingEnd - drawableEndWidth)) {
-                            searchEditText.setText(EMPTY_TEXT)
-                            hideKeyBoard()
-                            searchEditText.clearFocus()
+                            viewModel.onClearedSearch()
                             return@setOnTouchListener true
                         }
                     }
@@ -201,6 +216,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val isNotEmpty = text.isNullOrEmpty().not()
                 val querySearch = QuerySearch(text = text.toString())
+                if (!isNotEmpty) {
+                    viewModel.onClearedSearch()
+                }
 
                 val drawableEnd = if (isNotEmpty) {
                     ContextCompat.getDrawable(requireContext(), R.drawable.close_24px)
