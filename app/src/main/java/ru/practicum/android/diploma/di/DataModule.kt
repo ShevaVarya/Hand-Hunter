@@ -14,6 +14,7 @@ import ru.practicum.android.diploma.features.common.data.database.FavouritesDao
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClientImpl
+import ru.practicum.android.diploma.utils.NetworkChecker
 
 private const val BASE_URL = "https://api.hh.ru/"
 private const val BASE_EMAIL = "Kazesteam@yandex.ru"
@@ -66,4 +67,6 @@ val dataModule = module {
         val db: AppDatabase = get()
         db.favouritesDao()
     }
+
+    single<NetworkChecker> { NetworkChecker(get()) }
 }

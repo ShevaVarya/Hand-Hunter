@@ -19,15 +19,15 @@ class RootActivity : AppCompatActivity() {
         ActivityRootBinding.inflate(layoutInflater)
     }
 
-    private val interactor by inject<VacanciesSearchInteractor>()
+//    private val interactor by inject<VacanciesSearchInteractor>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        lifecycleScope.launch {
-            interactor.getVacancies(text = "faf", page = 0, perPage = 5, params = mapOf())
-        }
+//        lifecycleScope.launch {
+//            interactor.getVacancies(text = "fafngkjdsnfkmdsfkfnjdskfb", page = 0, perPage = 5, params = mapOf())
+//        }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHostFragment.navController
