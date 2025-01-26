@@ -2,26 +2,28 @@ package ru.practicum.android.diploma.features.favourite.data.repository
 
 import ru.practicum.android.diploma.features.common.data.database.AppDatabase
 import ru.practicum.android.diploma.features.common.data.database.KeySkillEntity
+import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.favourite.data.dto.toDb
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesRepository
-import ru.practicum.android.diploma.features.favourite.domain.model.FavouriteVacancy
 
 class FavouriteVacanciesRepositoryImpl(
     private val appDatabase: AppDatabase,
 ) : FavouriteVacanciesRepository {
 
-    override suspend fun addToFavourites(vacancy: FavouriteVacancy, keySkills: String) {
-        appDatabase.favouritesDao().addToFavourites(
-            vacancy.toDb(),
-            createKeySkillEntity(vacancy, keySkills)
-        )
+    override suspend fun addToFavourites(vacancy: VacancyDetails) {
+        val vacancyDb = vacancy.toDb()
+        vacancy.keySkills.forEach { skill ->
+            appDatabase.favouritesDao().addToFavourites(
+                vacancyDb, createKeySkillEntity(vacancy.id, skill)
+            )
+        }
     }
 
-    private fun createKeySkillEntity(vacancy: FavouriteVacancy, keySkills: String): KeySkillEntity {
+    private fun createKeySkillEntity(vacancyId: String, skill: String): KeySkillEntity {
         return KeySkillEntity(
             id = 0,
-            vacancyId = vacancy.vacancyId,
-            keySkill = keySkills,
+            vacancyId = vacancyId,
+            keySkill = skill,
         )
     }
 

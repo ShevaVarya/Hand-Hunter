@@ -16,7 +16,7 @@ data class VacancyDbEntity(
     val isGross: Boolean?,
     @ColumnInfo(name = "employer_name")
     val employerName: String,
-    val employerLogoUrl: String,
+    val employerLogoUrl: String?,
     val location: String,
     val experience: String,
     @ColumnInfo(name = "employment_form")
