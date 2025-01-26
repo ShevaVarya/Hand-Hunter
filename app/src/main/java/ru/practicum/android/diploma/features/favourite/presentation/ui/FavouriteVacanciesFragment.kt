@@ -1,28 +1,31 @@
 package ru.practicum.android.diploma.features.favourite.presentation.ui
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFavouriteVacanciesBinding
+import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
+import ru.practicum.android.diploma.features.favourite.presentation.viewmodel.FavouriteVacanciesViewModel
 
-class FavouriteVacanciesFragment : Fragment() {
+class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBinding>() {
 
-    private var _binding: FragmentFavouriteVacanciesBinding? = null
-    private val binding get() = _binding!!
+    private val viewModel: FavouriteVacanciesViewModel by viewModel<FavouriteVacanciesViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFavouriteVacanciesBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteVacanciesBinding {
+        viewBinding = FragmentFavouriteVacanciesBinding.inflate(inflater, container, false)
+        return viewBinding
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun initUi() {
+        createToast()
+    }
+
+    override fun observeData() {
+        createToast()
+    }
+
+    private fun createToast() {
+        Toast.makeText(requireContext(), "Скоро тут будет UI", Toast.LENGTH_SHORT).show()
     }
 }

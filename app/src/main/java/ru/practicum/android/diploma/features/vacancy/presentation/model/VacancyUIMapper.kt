@@ -1,9 +1,9 @@
 package ru.practicum.android.diploma.features.vacancy.presentation.model
 
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.features.common.domain.model.Salary
+import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
-import ru.practicum.android.diploma.features.vacancy.domain.model.Salary
-import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
 
 private const val EMPTY_STRING = ""
 
