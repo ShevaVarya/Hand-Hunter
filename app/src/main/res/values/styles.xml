@@ -74,6 +74,7 @@
         <item name="android:layout_marginVertical">@dimen/margin_3x</item>
         <item name="android:textColor">?attr/mainTextColor</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="statusBarStyle">
