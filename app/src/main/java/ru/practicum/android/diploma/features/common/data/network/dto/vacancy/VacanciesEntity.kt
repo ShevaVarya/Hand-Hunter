@@ -5,6 +5,7 @@ import ru.practicum.android.diploma.features.common.data.network.api.Response
 
 data class VacanciesEntity(
     val items: List<VacancyEntity>,
+    val found: Int,
     val pages: Int,
     val page: Int,
     @SerializedName("per_page")
