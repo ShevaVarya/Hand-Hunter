@@ -193,20 +193,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 if (isRightDrawableClicked(event)) {
                     viewModel.onClearedSearch()
                     performClick()
-                    return@setOnTouchListener true
+                    true
+                } else {
+                    false
                 }
-                false
             }
         }
-    }
-
-    private fun EditText.isRightDrawableClicked(event: MotionEvent): Boolean {
-        if (event.action != MotionEvent.ACTION_UP) return false
-
-        val rightDrawable = compoundDrawables[RIGHT_CORNER] ?: return false
-        val drawableWidth = rightDrawable.bounds.width()
-
-        return event.x >= (width - paddingEnd - drawableWidth)
     }
 
     private fun onTextChanged() {
@@ -241,6 +233,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         view?.let {
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
         }
+    }
+
+    private fun EditText.isRightDrawableClicked(event: MotionEvent): Boolean {
+        val rightDrawable = compoundDrawables[RIGHT_CORNER]
+        val drawableWidth = rightDrawable?.bounds?.width()
+        if (event.action != MotionEvent.ACTION_UP || drawableWidth == null) return false
+
+        return event.x >= width - paddingEnd - drawableWidth
     }
 
     private companion object {
