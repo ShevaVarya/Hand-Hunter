@@ -1,9 +1,9 @@
 package ru.practicum.android.diploma.features.favourite.domain.api
 
-import kotlinx.coroutines.flow.Flow
+import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 
 interface FavouriteVacanciesRepository {
 
-    fun getFavourites(): Flow<List<Vacancy>>
+    suspend fun addToFavourites(vacancy: VacancyDetails)
 
 }

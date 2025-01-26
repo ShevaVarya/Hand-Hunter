@@ -5,16 +5,15 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.favourite.domain.interactor.FavouriteVacanciesInteractorImpl
-import ru.practicum.android.diploma.features.search.domain.interactor.VacancySearchInteractor
-import ru.practicum.android.diploma.features.search.domain.interactor.VacancySearchInteractorImpl
+import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
+import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractorImpl
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDetailsInteractorImpl
 
 val interactorModule = module {
 
+    singleOf(::VacancyDetailsInteractorImpl).bind<VacancyDetailsInteractor>()
+    singleOf(::VacanciesSearchInteractorImpl) bind VacanciesSearchInteractor::class
     singleOf(::FavouriteVacanciesInteractorImpl) bind FavouriteVacanciesInteractor::class
 
-    singleOf(::VacancySearchInteractorImpl) bind VacancySearchInteractor::class
-
-    singleOf(::VacancyDetailsInteractorImpl).bind<VacancyDetailsInteractor>()
 }
