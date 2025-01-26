@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.features.favourite.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFavouriteVacanciesBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
@@ -17,11 +18,14 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
     }
 
     override fun initUi() {
-        TODO()
+        createToast()
     }
 
     override fun observeData() {
-        TODO()
+        createToast()
     }
 
+    private fun createToast() {
+        Toast.makeText(requireContext(), "Скоро тут будет UI", Toast.LENGTH_SHORT).show()
+    }
 }

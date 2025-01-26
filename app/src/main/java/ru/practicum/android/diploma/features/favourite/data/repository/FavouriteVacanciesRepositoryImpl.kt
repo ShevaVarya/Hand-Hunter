@@ -11,18 +11,17 @@ class FavouriteVacanciesRepositoryImpl(
 ) : FavouriteVacanciesRepository {
 
     override suspend fun addToFavourites(vacancy: VacancyDetails) {
-        val vacancyDb = vacancy.toDb()
-        vacancy.keySkills.forEach { skill ->
-            appDatabase.favouritesDao().addToFavourites(
-                vacancyDb,
-                createKeySkillEntity(vacancy.id, skill)
-            )
+        val keySkills = vacancy.keySkills.map { skill ->
+            createKeySkillEntity(vacancy.id, skill)
         }
+        appDatabase.favouritesDao().addToFavourites(
+            vacancy.toDb(),
+            keySkills
+        )
     }
 
     private fun createKeySkillEntity(vacancyId: String, skill: String): KeySkillEntity {
         return KeySkillEntity(
-            id = 0,
             vacancyId = vacancyId,
             keySkill = skill,
         )
