@@ -21,6 +21,7 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="error_image">Изображение ошибки</string>
     <string name="error_text">Текст ошибки</string>
+    <string name="message_text">Таких вакансий нет</string>
 
     <string name="item_bottom_navigation_menu_home">Главная</string>
     <string name="item_bottom_navigation_menu_favorites">Избранное</string>
@@ -48,4 +49,16 @@
     <string name="vacancy_info_employer_logo_description">Логотип работодателя</string>
     <string name="vacancy_info_no_data_error">Вакансия не найдена или\nудалена</string>
     <string name="vacancy_info_server_error">Ошибка сервера</string>
+    <string name="vacancy_info_no_salary">Уровень дохода не указан</string>
+    <string name="salary_from">от</string>
+    <string name="salary_to">до</string>
+    <string name="vacancy_info_gross_info_true">до вычета налогов</string>
+    <string name="vacancy_info_gross_info_false">после вычета налогов</string>
+
+    <plurals name="vacancies_count">
+        <item quantity="one">Найдено %d вакансия</item>
+        <item quantity="few">Найдено %d вакансии</item>
+        <item quantity="many">Найдено %d вакансий</item>
+        <item quantity="other">Найдено %d вакансий</item>
+    </plurals>
 </resources>

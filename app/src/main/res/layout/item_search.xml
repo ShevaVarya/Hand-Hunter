@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/margin_2x">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_border"
@@ -25,7 +26,6 @@
         android:id="@+id/logo_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="@dimen/margin_4x"
         android:contentDescription="@string/logo"
         android:src="@drawable/placeholder_32px"
         app:layout_constraintStart_toStartOf="parent"

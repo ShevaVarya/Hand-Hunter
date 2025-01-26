@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.vacancy.presentation.ui
 
 import android.content.Intent
+import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -9,6 +10,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.core.util.TypedValueCompat.dpToPx
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyInfoBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
@@ -26,12 +29,10 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     private val vacancyId by lazy {
         arguments?.getString(VACANCY_ID)
     }
-    private val viewModel by viewModel<VacancyInfoViewModel>()
 
-//    Заменить на:
-//    private val viewModel by viewModel<VacancyInfoViewModel> {
-//        parametersOf(vacancyId)
-//    }
+    private val viewModel by viewModel<VacancyInfoViewModel> {
+        parametersOf(vacancyId)
+    }
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyInfoBinding {
         return FragmentVacancyInfoBinding.inflate(layoutInflater)
@@ -47,7 +48,7 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 true
             }
 
-            viewModel.getVacancyInfo(vacancyId)
+            viewModel.getVacancyInfo()
         }
     }
 
@@ -146,7 +147,10 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
             experienceTextView.text = state.vacancyInfo.experience
             employmentFormTextView.text = state.vacancyInfo.employmentForm
             descriptionTextView.text = Html.fromHtml(
-                state.vacancyInfo.description, Html.FROM_HTML_MODE_COMPACT
+                state.vacancyInfo.description,
+                Html.FROM_HTML_MODE_LEGACY or
+                    Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
+
             )
             keySkillsTextView.text = state.vacancyInfo.keySkills
         }
@@ -155,5 +159,9 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     companion object {
         private const val SEND_INTENT_TYPE = "text/plain"
         private const val VACANCY_ID = "vacancyId"
+
+        fun createArgs(vacancyId: String): Bundle {
+            return bundleOf(VACANCY_ID to vacancyId)
+        }
     }
 }

@@ -6,6 +6,7 @@ import org.koin.core.context.startKoin
 import ru.practicum.android.diploma.di.dataModule
 import ru.practicum.android.diploma.di.interactorModule
 import ru.practicum.android.diploma.di.repositoryModule
+import ru.practicum.android.diploma.di.utilsModule
 import ru.practicum.android.diploma.di.viewModelModule
 
 class HHApplication : Application() {
@@ -15,7 +16,7 @@ class HHApplication : Application() {
 
         startKoin {
             androidContext(this@HHApplication)
-            modules(listOf(dataModule, repositoryModule, interactorModule, viewModelModule))
+            modules(listOf(dataModule, repositoryModule, interactorModule, viewModelModule, utilsModule))
         }
     }
 }
