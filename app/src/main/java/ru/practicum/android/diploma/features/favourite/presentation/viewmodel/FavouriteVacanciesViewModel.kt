@@ -8,7 +8,7 @@ class FavouriteVacanciesViewModel(
 ) : ViewModel() {
 
     // не хочу удалять вьюМодель, а детект ругается
-    fun stub () {
+    fun stub() {
         val a = 0
     }
 
