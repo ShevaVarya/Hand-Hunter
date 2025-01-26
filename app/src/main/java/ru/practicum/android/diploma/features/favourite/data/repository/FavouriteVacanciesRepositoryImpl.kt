@@ -14,7 +14,8 @@ class FavouriteVacanciesRepositoryImpl(
         val vacancyDb = vacancy.toDb()
         vacancy.keySkills.forEach { skill ->
             appDatabase.favouritesDao().addToFavourites(
-                vacancyDb, createKeySkillEntity(vacancy.id, skill)
+                vacancyDb,
+                createKeySkillEntity(vacancy.id, skill)
             )
         }
     }

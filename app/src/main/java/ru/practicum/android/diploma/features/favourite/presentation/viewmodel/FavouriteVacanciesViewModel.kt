@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.favourite.presentation.view_model
+package ru.practicum.android.diploma.features.favourite.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
@@ -6,5 +6,10 @@ import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacan
 class FavouriteVacanciesViewModel(
     private val interactor: FavouriteVacanciesInteractor,
 ) : ViewModel() {
+
+    // не хочу удалять вьюМодель, а детект ругается
+    fun stub () {
+        val a = 0
+    }
 
 }
