@@ -27,7 +27,7 @@ class VacancyViewHolder(private val binding: ItemSearchBinding) : RecyclerView.V
     }
 
     private fun getProfession(vacancyName: String, city: String): String {
-        return String.format("%s, %s", vacancyName, city, Locale.getDefault())
+        return String.format(Locale.getDefault(), "%s, %s", vacancyName, city)
     }
 
 }

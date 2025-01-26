@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -55,6 +56,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewModel.getSearchStateFlow()
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { searchState ->
+                with(viewBinding) {
+                    progressBar.isVisible = false
+                    contentRecyclerView.isVisible = false
+                    messageTextView.isVisible = false
+                    errorsImageView.isVisible = false
+                    errorsTextView.isVisible = false
+                }
                 when (searchState) {
                     SearchState.Loading -> showProgressBar()
                     is SearchState.Content -> showVacancies(searchState.vacancies)
@@ -68,24 +76,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun showProgressBar() {
-        with(viewBinding) {
-            progressBar.isVisible = true
-            contentRecyclerView.isVisible = false
-            messageTextView.isVisible = false
-            errorsImageView.isVisible = false
-            errorsTextView.isVisible = false
-        }
+        viewBinding.progressBar.isVisible = true
     }
 
     private fun showVacancies(vacancies: Vacancies) {
         vacancyAdapter?.submitList(vacancies.items)
         with(viewBinding) {
             messageTextView.text = getTotalVacanciesText(vacancies)
-            progressBar.isVisible = false
             contentRecyclerView.isVisible = true
             messageTextView.isVisible = true
-            errorsImageView.isVisible = false
-            errorsTextView.isVisible = false
         }
     }
 
@@ -94,8 +93,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             errorsImageView.setImageResource(R.drawable.bad_search)
             errorsTextView.setText(R.string.bad_request)
             messageTextView.setText(R.string.message_text)
-            progressBar.isVisible = false
-            contentRecyclerView.isVisible = false
             messageTextView.isVisible = true
             errorsImageView.isVisible = true
             errorsTextView.isVisible = true
@@ -106,9 +103,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             errorsImageView.setImageResource(R.drawable.no_internet)
             errorsTextView.setText(R.string.bad_internet)
-            progressBar.isVisible = false
-            contentRecyclerView.isVisible = false
-            messageTextView.isVisible = false
             errorsImageView.isVisible = true
             errorsTextView.isVisible = true
         }
@@ -118,9 +112,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             errorsImageView.setImageResource(R.drawable.server_error)
             errorsTextView.setText(R.string.server_error)
-            progressBar.isVisible = false
-            contentRecyclerView.isVisible = false
-            messageTextView.isVisible = false
             errorsImageView.isVisible = true
             errorsTextView.isVisible = true
         }
@@ -131,9 +122,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             errorsTextView.text = EMPTY_TEXT
             errorsImageView.setImageResource(R.drawable.empty_search)
-            progressBar.isVisible = false
-            contentRecyclerView.isVisible = false
-            messageTextView.isVisible = false
             errorsImageView.isVisible = true
             errorsTextView.isVisible = true
 
@@ -194,26 +182,31 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun initListeners() {
-        onTouchListener()
+        setupSearchEditTextTouchListener()
         onTextChanged()
 
     }
 
-    private fun onTouchListener() {
-        with(viewBinding) {
-            searchEditText.setOnTouchListener { _, event ->
-                if (event.action === MotionEvent.ACTION_UP && searchEditText.compoundDrawables[RIGHT_CORNER] != null) {
-                    val drawableEndWidth =
-                        searchEditText.compoundDrawables[RIGHT_CORNER].bounds.width()
-
-                    if (event.x >= (searchEditText.width - searchEditText.paddingEnd - drawableEndWidth)) {
-                        viewModel.onClearedSearch()
-                        return@setOnTouchListener true
-                    }
+    private fun setupSearchEditTextTouchListener() {
+        with(viewBinding.searchEditText) {
+            setOnTouchListener { _, event ->
+                if (isRightDrawableClicked(event)) {
+                    viewModel.onClearedSearch()
+                    performClick()
+                    return@setOnTouchListener true
                 }
                 false
             }
         }
+    }
+
+    private fun EditText.isRightDrawableClicked(event: MotionEvent): Boolean {
+        if (event.action != MotionEvent.ACTION_UP) return false
+
+        val rightDrawable = compoundDrawables[RIGHT_CORNER] ?: return false
+        val drawableWidth = rightDrawable.bounds.width()
+
+        return event.x >= (width - paddingEnd - drawableWidth)
     }
 
     private fun onTextChanged() {
