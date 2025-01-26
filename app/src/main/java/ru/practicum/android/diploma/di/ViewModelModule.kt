@@ -9,7 +9,6 @@ import ru.practicum.android.diploma.features.vacancy.presentation.viewmodel.Vaca
 val viewModelModule = module {
 
     viewModelOf(::FavouriteVacanciesViewModel)
-
     viewModelOf(::VacancyInfoViewModel)
     viewModelOf(::SearchViewModel)
 }
