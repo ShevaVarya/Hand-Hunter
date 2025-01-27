@@ -4,16 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavouriteVacanciesBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.favourite.presentation.model.FavouriteVacanciesState
-import ru.practicum.android.diploma.features.favourite.presentation.model.FavouriteVacancyUI
 import ru.practicum.android.diploma.features.favourite.presentation.viewmodel.FavouriteVacanciesViewModel
-import ru.practicum.android.diploma.features.search.domain.model.Vacancy
+import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
 import ru.practicum.android.diploma.features.search.presentation.recycler.VacancyAdapter
+import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.collectWithLifecycle
+import ru.practicum.android.diploma.utils.debounce
 
 class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBinding>() {
 
@@ -21,15 +24,16 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
 
     private var vacancyAdapter: VacancyAdapter? = null
 
-    private var onVacancyClickDebounce: ((Vacancy) -> Unit?)? = null
+    private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteVacanciesBinding {
-        viewBinding = FragmentFavouriteVacanciesBinding.inflate(inflater, container, false)
-        return viewBinding
+        return FragmentFavouriteVacanciesBinding.inflate(inflater, container, false)
     }
 
     override fun initUi() {
-        initAdapters()
+        initAdapter()
+        initClickDebounce()
+        viewModel.getFavourites()
     }
 
     override fun observeData() {
@@ -38,7 +42,7 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
         }
     }
 
-    private fun initAdapters() {
+    private fun initAdapter() {
         vacancyAdapter = VacancyAdapter(
             onClick = { vacancy ->
                 onVacancyClickDebounce?.let { it(vacancy) }
@@ -49,6 +53,26 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
             favouriteRecyclerView.adapter = vacancyAdapter
             favouriteRecyclerView.itemAnimator = null
         }
+
+        vacancyAdapter?.submitList(emptyList())
+    }
+
+    private fun initClickDebounce() {
+        onVacancyClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { vacancy ->
+            startVacancyInfoFragment(vacancy.id)
+        }
+    }
+
+    private fun startVacancyInfoFragment(vacancyId: String) {
+        findNavController()
+            .navigate(
+                R.id.action_searchFragment_to_vacancyInfoFragment,
+                VacancyInfoFragment.createArgs(vacancyId)
+            )
     }
 
     private fun applyState(state: FavouriteVacanciesState) {
@@ -65,9 +89,9 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
         }
     }
 
-    private fun showContent(vacancies: List<FavouriteVacancyUI>) {
+    private fun showContent(vacancies: List<VacancySearchUI>) {
+        vacancyAdapter?.submitList(vacancies)
         viewBinding.favouriteRecyclerView.isVisible = true
-        //vacancyAdapter?.submitList(vacancies)
     }
 
     private fun showLoading() {
@@ -86,4 +110,15 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
         super.onDestroyView()
         vacancyAdapter = null
     }
+
+    companion object {
+        const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+
+    override fun onStart() {
+        super.onStart()
+        //проверить, может тут вызывать viewModel.getFavourites()
+    }
+
+
 }

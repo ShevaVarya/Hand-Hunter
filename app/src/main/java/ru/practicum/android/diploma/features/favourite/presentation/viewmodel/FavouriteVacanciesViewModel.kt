@@ -20,10 +20,6 @@ class FavouriteVacanciesViewModel(
         MutableStateFlow(FavouriteVacanciesState.Loading)
     val state: StateFlow<FavouriteVacanciesState> = _state.asStateFlow()
 
-    init {
-        getFavourites()
-    }
-
     fun getFavourites() {
         viewModelScope.launch {
             interactor.getFavourites().collect { vacancies ->

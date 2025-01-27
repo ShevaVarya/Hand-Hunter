@@ -29,10 +29,9 @@ fun Vacancies.toUI(resourceProvider: ResourceProvider): VacanciesSearchUI {
         page = page,
         perPage = perPage,
     )
-
 }
 
-private fun getProfession(vacancyName: String, city: String): String {
+fun getProfession(vacancyName: String, city: String): String {
     return String.format(Locale.getDefault(), SALARY_FORMAT, vacancyName, city)
 }
 

@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.features.favourite.presentation.model
 
+import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
+
 sealed interface FavouriteVacanciesState {
 
     data object Loading : FavouriteVacanciesState
@@ -13,6 +15,6 @@ sealed interface FavouriteVacanciesState {
      */
 
     data class Content(
-        val vacancies: List<FavouriteVacancyUI>
+        val vacancies: List<VacancySearchUI>
     ) : FavouriteVacanciesState
 }
