@@ -7,9 +7,9 @@ import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.det
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity.SkillEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.EmployerEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.SalaryEntity
-import ru.practicum.android.diploma.features.vacancy.domain.model.Employer
-import ru.practicum.android.diploma.features.vacancy.domain.model.Salary
-import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
+import ru.practicum.android.diploma.features.common.domain.model.Employer
+import ru.practicum.android.diploma.features.common.domain.model.Salary
+import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 
 fun DetailsVacancyEntity.toDomain(): VacancyDetails {
     return VacancyDetails(

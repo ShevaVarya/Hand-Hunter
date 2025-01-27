@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
+import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.vacancy.presentation.model.VacancyInfoUI
@@ -17,10 +18,11 @@ import kotlin.coroutines.cancellation.CancellationException
 class VacancyInfoViewModel(
     private val resourceProvider: ResourceProvider,
     private val vacancyDetailsInteractor: VacancyDetailsInteractor,
+    private val favouriteVacanciesInteractor: FavouriteVacanciesInteractor,
     private val vacancyId: String?
 ) : ViewModel() {
     private var isFavourite: Boolean = false
-    private var vacancyDomain: VacancyDetails? = null
+    private var details: VacancyDetails? = null
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state.asStateFlow()
@@ -33,9 +35,9 @@ class VacancyInfoViewModel(
 
         viewModelScope.launch {
             vacancyDetailsInteractor.getVacancyDetails(vacancyId)
-                .onSuccess { details ->
-                    vacancyDomain = details
-                    _state.value = State.Data(details.toUI(resourceProvider))
+                .onSuccess {
+                    details = it
+                    _state.value = State.Data(it.toUI(resourceProvider))
                 }
                 .onFailure { handleError(it) }
         }
@@ -54,13 +56,24 @@ class VacancyInfoViewModel(
     }
 
     fun getVacancySharingText(): String {
-        return vacancyDomain?.vacancyUrl ?: EMPTY_STRING
+        return details?.vacancyUrl ?: EMPTY_STRING
     }
 
     fun toggleFavouriteVacancy(): Boolean {
-        // логика добавления в избранное
-        isFavourite = !isFavourite
+        if (_state.value is State.Data) {
+            viewModelScope.launch {
+                details?.let {
+                    favouriteVacanciesInteractor.addToFavourites(it)
+                }
+            }
+            isFavourite = !isFavourite
+        }
         return isFavourite
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        details = null
     }
 
     sealed interface State {
