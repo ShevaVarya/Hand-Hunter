@@ -45,8 +45,10 @@ private fun getFormatSalary(vacancy: Vacancy, resourceProvider: ResourceProvider
         salaryFrom.isNotEmpty() && salaryTo.isNotEmpty() ->
             "%s %s %s %s".format(
                 Locale.getDefault(),
-                resourceProvider.getString(R.string.salary_from), salaryFrom,
-                resourceProvider.getString(R.string.salary_to), salaryTo
+                resourceProvider.getString(R.string.salary_from),
+                salaryFrom,
+                resourceProvider.getString(R.string.salary_to),
+                salaryTo
             )
 
         salaryFrom.isNotEmpty() ->
