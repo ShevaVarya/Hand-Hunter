@@ -5,17 +5,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemSearchBinding
-import ru.practicum.android.diploma.features.search.domain.model.Vacancy
-import java.util.Locale
+import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
 
 class VacancyViewHolder(private val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(vacancy: Vacancy) {
+    fun bind(vacancy: VacancySearchUI) {
         val cornerRadius = binding.root.context.resources.getDimensionPixelSize(R.dimen.radius_1x)
         with(binding) {
-            professionTextView.text = getProfession(vacancy.name, vacancy.city)
+            professionTextView.text = vacancy.formatedProfession
             fieldTextView.text = vacancy.employerName
-            wagesTextView.text = vacancy.salaryFrom.toString()
+            wagesTextView.text = vacancy.formatedSalary
 
             Glide.with(logoImageView.context)
                 .load(vacancy.employerLogoUrl)
@@ -24,10 +23,6 @@ class VacancyViewHolder(private val binding: ItemSearchBinding) : RecyclerView.V
                 .transform(RoundedCorners(cornerRadius))
                 .into(logoImageView)
         }
-    }
-
-    private fun getProfession(vacancyName: String, city: String): String {
-        return String.format(Locale.getDefault(), "%s, %s", vacancyName, city)
     }
 
 }
