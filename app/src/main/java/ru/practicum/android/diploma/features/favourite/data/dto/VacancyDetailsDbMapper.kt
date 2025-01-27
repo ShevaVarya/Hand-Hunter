@@ -19,7 +19,8 @@ fun VacancyDetails.toDb(): VacancyDbEntity {
         location = location,
         experience = experience,
         employmentForm = employmentType,
-        description = description
+        description = description,
+        vacancyUrl = vacancyUrl
     )
 }
 
@@ -41,6 +42,7 @@ fun VacancyDbEntity.toDomain(skills: List<String> = emptyList()): VacancyDetails
         experience = experience,
         employmentType = employmentForm,
         description = description,
-        keySkills = skills
+        keySkills = skills,
+        vacancyUrl = vacancyUrl
     )
 }

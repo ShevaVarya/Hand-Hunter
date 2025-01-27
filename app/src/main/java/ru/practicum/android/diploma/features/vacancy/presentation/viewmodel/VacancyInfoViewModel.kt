@@ -39,7 +39,6 @@ class VacancyInfoViewModel(
         } else {
             getVacancyInfoFromBd(vacancyId)
         }
-
     }
 
     private fun getVacancyInfoFromNetwork(vacancyId: String) {
@@ -67,14 +66,9 @@ class VacancyInfoViewModel(
 
     private fun getVacancyInfoFromBd(vacancyId: String) {
         viewModelScope.launch {
-            try {
-                details = vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
-                details?.let {
-                    _state.value = State.Data(it.toUI(resourceProvider))
-                }
-            } catch (e: IOException) {
-                println(e)
-                _state.value = State.ServerError
+            details = vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
+            details?.let {
+                _state.value = State.Data(it.toUI(resourceProvider))
             }
         }
     }
