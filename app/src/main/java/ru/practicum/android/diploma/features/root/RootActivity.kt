@@ -44,7 +44,7 @@ class RootActivity : AppCompatActivity() {
             window?.let {
                 WindowCompat.setDecorFitsSystemWindows(it, true)
                 WindowInsetsControllerCompat(it, binding.root).isAppearanceLightStatusBars =
-                    (nightModeFlags == Configuration.UI_MODE_NIGHT_NO)
+                    nightModeFlags == Configuration.UI_MODE_NIGHT_NO
             }
         } else {
             var flags: Int = binding.root.systemUiVisibility
