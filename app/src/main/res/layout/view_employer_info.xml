@@ -11,6 +11,7 @@
         android:id="@+id/employer_logo_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:background="@drawable/bg_employer_logo"
         android:contentDescription="@string/vacancy_info_employer_logo_description"
         android:src="@drawable/placeholder_32px"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,23 +20,27 @@
 
     <TextView
         android:id="@+id/employer_name_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_2x"
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="@style/textStyleMedium22"
         app:layout_constraintStart_toEndOf="@+id/employer_logo_image_view"
         app:layout_constraintTop_toTopOf="@+id/employer_logo_image_view"
-        tools:text="Имя работодателя" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Имя работодателя 1234567890123456" />
 
     <TextView
         android:id="@+id/vacancy_location_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_2x"
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="@style/textStyleRegular16"
         app:layout_constraintStart_toEndOf="@+id/employer_logo_image_view"
         app:layout_constraintTop_toBottomOf="@+id/employer_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Локация" />
 </androidx.constraintlayout.widget.ConstraintLayout>

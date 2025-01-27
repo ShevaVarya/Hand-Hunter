@@ -6,11 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
+import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.vacancy.presentation.model.VacancyInfoUI
 import ru.practicum.android.diploma.features.vacancy.presentation.model.toUI
-import java.io.IOException
+import kotlin.coroutines.cancellation.CancellationException
 
 class VacancyInfoViewModel(
     private val resourceProvider: ResourceProvider,
@@ -18,6 +20,7 @@ class VacancyInfoViewModel(
     private val vacancyId: String?
 ) : ViewModel() {
     private var isFavourite: Boolean = false
+    private var vacancyDomain: VacancyDetails? = null
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state.asStateFlow()
@@ -29,20 +32,29 @@ class VacancyInfoViewModel(
         }
 
         viewModelScope.launch {
-            try {
-                val details = vacancyDetailsInteractor.getVacancyDetails(vacancyId).getOrNull()
-                if (details != null) {
+            vacancyDetailsInteractor.getVacancyDetails(vacancyId)
+                .onSuccess { details ->
+                    vacancyDomain = details
                     _state.value = State.Data(details.toUI(resourceProvider))
                 }
-            } catch (e: IOException) {
-                println(e)
-                _state.value = State.ServerError
+                .onFailure { handleError(it) }
+        }
+    }
+
+    private fun handleError(error: Throwable) {
+        when (error) {
+            is CustomException.RequestError, CustomException.EmptyError, CustomException.NetworkError -> {
+                _state.value = State.NoData
             }
+
+            is CustomException.ServerError -> _state.value = State.ServerError
+            is CancellationException -> throw error
+            else -> Unit
         }
     }
 
     fun getVacancySharingText(): String {
-        return EMPTY_STRING
+        return vacancyDomain?.vacancyUrl ?: EMPTY_STRING
     }
 
     fun toggleFavouriteVacancy(): Boolean {

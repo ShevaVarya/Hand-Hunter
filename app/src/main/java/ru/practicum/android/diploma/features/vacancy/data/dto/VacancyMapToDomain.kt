@@ -21,7 +21,8 @@ fun DetailsVacancyEntity.toDomain(): VacancyDetails {
         experience = experience.toDomain(),
         employmentType = employmentForm.toDomain(),
         description = description,
-        keySkills = keySkills.map { it.toDomain() }
+        keySkills = keySkills.map { it.toDomain() },
+        vacancyUrl = vacancyUrl
     )
 }
 

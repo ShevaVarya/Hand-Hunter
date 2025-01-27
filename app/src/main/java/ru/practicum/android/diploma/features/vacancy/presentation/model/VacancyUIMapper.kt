@@ -35,7 +35,13 @@ fun Salary.toUI(resourceProvider: ResourceProvider): String {
         val to = getToValueForUI(resourceProvider, this.to)
         val grossInfo = getGrossInfoForUI(resourceProvider, isGross)
 
-        return StringBuilder().append("$from ").append("$to ").append(currency.symbol).append(" $grossInfo").toString()
+        return String.format(
+            resourceProvider.getString(R.string.vacancy_info_salary_total_string),
+            from,
+            to,
+            currency.symbol,
+            grossInfo
+        )
     }
 }
 
@@ -43,7 +49,7 @@ private fun getFromValueForUI(resourceProvider: ResourceProvider, from: Int): St
     return if (from == 0) {
         EMPTY_STRING
     } else {
-        resourceProvider.getString(R.string.salary_from) + " $from"
+        String.format(resourceProvider.getString(R.string.vacancy_info_salary_from), from)
     }
 }
 
@@ -51,7 +57,7 @@ private fun getToValueForUI(resourceProvider: ResourceProvider, to: Int): String
     return if (to == 0) {
         EMPTY_STRING
     } else {
-        resourceProvider.getString(R.string.salary_to) + " $to"
+        String.format(resourceProvider.getString(R.string.vacancy_info_salary_to), to)
     }
 }
 

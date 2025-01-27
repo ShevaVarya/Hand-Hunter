@@ -9,6 +9,6 @@ import ru.practicum.android.diploma.features.vacancy.data.repository.VacancyDeta
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsRepository
 
 val repositoryModule = module {
-    singleOf(::VacancyDetailsRepositoryImpl).bind<VacancyDetailsRepository>()
+    singleOf(::VacancyDetailsRepositoryImpl) bind VacancyDetailsRepository::class
     singleOf(::VacanciesSearchRepositoryImpl) bind VacanciesSearchRepository::class
 }

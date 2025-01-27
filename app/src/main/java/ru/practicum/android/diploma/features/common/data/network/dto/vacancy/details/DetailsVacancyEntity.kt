@@ -14,6 +14,7 @@ import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEn
  * @param employmentForm - информация о типе занятости
  * @param description - описание вакансии
  * @param keySkills - информация о требуемых навыках для отклика на данную вакансию
+ * @param vacancyUrl - ссылка на вакансию
  */
 data class DetailsVacancyEntity(
     val id: String,
@@ -26,7 +27,9 @@ data class DetailsVacancyEntity(
     val employmentForm: EmploymentFormEntity,
     val description: String,
     @SerializedName("key_skills")
-    val keySkills: List<SkillEntity>
+    val keySkills: List<SkillEntity>,
+    @SerializedName("alternate_url")
+    val vacancyUrl: String
 ) {
     data class ExperienceEntity(
         val id: String,
