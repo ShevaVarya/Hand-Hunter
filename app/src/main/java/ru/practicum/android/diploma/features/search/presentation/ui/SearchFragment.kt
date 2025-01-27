@@ -19,9 +19,9 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
-import ru.practicum.android.diploma.features.search.domain.model.Vacancies
-import ru.practicum.android.diploma.features.search.domain.model.Vacancy
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
+import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
+import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
 import ru.practicum.android.diploma.features.search.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
@@ -31,7 +31,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private var vacancyAdapter: VacancyAdapter? = null
 
-    private var onVacancyClickDebounce: ((Vacancy) -> Unit?)? = null
+    private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
     private var onSearchDebounce: ((QuerySearch) -> Unit)? = null
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
@@ -79,7 +79,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewBinding.progressBar.isVisible = true
     }
 
-    private fun showVacancies(vacancies: Vacancies) {
+    private fun showVacancies(vacancies: VacanciesSearchUI) {
         vacancyAdapter?.submitList(vacancies.items)
         with(viewBinding) {
             messageTextView.text = getTotalVacanciesText(vacancies)
@@ -131,7 +131,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         hideKeyBoard()
     }
 
-    private fun getTotalVacanciesText(vacancies: Vacancies): String {
+    private fun getTotalVacanciesText(vacancies: VacanciesSearchUI): String {
         val vacanciesCount = vacancies.found
         return resources.getQuantityString(
             R.plurals.vacancies_count,
