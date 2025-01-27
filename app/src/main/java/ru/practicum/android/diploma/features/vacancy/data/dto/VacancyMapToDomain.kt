@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.features.vacancy.data.dto
 
 import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
-import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity.EmploymentFormEntity
+import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity.EmploymentEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity.ExperienceEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity.SkillEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.EmployerEntity
@@ -19,9 +19,10 @@ fun DetailsVacancyEntity.toDomain(): VacancyDetails {
         employer = employer.toDomain(),
         location = area.toDomain(),
         experience = experience.toDomain(),
-        employmentType = employmentForm.toDomain(),
+        employmentType = employment.toDomain(),
         description = description,
-        keySkills = keySkills.map { it.toDomain() }
+        keySkills = keySkills.map { it.toDomain() },
+        vacancyUrl = vacancyUrl
     )
 }
 
@@ -89,7 +90,7 @@ fun ExperienceEntity.toDomain(): String {
     return name
 }
 
-fun EmploymentFormEntity.toDomain(): String {
+fun EmploymentEntity.toDomain(): String {
     return name
 }
 

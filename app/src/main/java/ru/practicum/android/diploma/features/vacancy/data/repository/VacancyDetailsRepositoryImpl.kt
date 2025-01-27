@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.features.vacancy.data.repository
 import ru.practicum.android.diploma.features.common.data.database.AppDatabase
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
-import ru.practicum.android.diploma.features.favourite.data.dto.toDomain
 import ru.practicum.android.diploma.features.vacancy.data.dto.toDomain
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsRepository
 import java.io.IOException
@@ -16,7 +15,7 @@ class VacancyDetailsRepositoryImpl(
 
     override suspend fun getVacancyDetails(vacancyId: String): Result<VacancyDetails> {
         return runCatching {
-            networkClient.getVacancyById(vacancyId).toDomain()
+            networkClient.getVacancyById(vacancyId, mapOf()).map { it.toDomain() }
         }.recoverCatching {
             resolveError(it)
         }

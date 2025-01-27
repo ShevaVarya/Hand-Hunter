@@ -16,6 +16,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -109,7 +110,7 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 }
 
                 is VacancyInfoViewModel.State.ServerError -> {
-                    setErrorResource(R.drawable.server_error, R.string.vacancy_info_server_error)
+                    setErrorResource(R.drawable.server_error2, R.string.vacancy_info_server_error)
                     errorContainer.isVisible = true
                 }
 
@@ -134,11 +135,11 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
             Glide.with(employerInfoView.employerLogoImageView)
                 .load(state.vacancyInfo.employerLogoUrl)
                 .placeholder(R.drawable.placeholder_32px)
-                .fitCenter()
                 .transform(
+                    FitCenter(),
                     RoundedCorners(
                         dpToPx(
-                            resources.getDimension(R.dimen.radius_3x),
+                            resources.getDimension(R.dimen.radius_1x),
                             resources.displayMetrics
                         ).toInt()
                     )
@@ -155,8 +156,13 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 Html.FROM_HTML_MODE_LEGACY or
                     Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
 
-            )
-            keySkillsTextView.text = state.vacancyInfo.keySkills
+            ).toString().trim()
+            if (state.vacancyInfo.keySkills.isNotEmpty()) {
+                keySkillsTitleTextView.isVisible = true
+                keySkillsTextView.text = state.vacancyInfo.keySkills
+            } else {
+                keySkillsTitleTextView.isGone = true
+            }
         }
     }
 
