@@ -34,50 +34,26 @@ private fun getProfession(vacancyName: String, city: String): String {
 }
 
 private fun getFormatSalary(vacancy: Vacancy, resourceProvider: ResourceProvider): String {
-    val salaryFrom = vacancy.salaryFrom
-    val salaryTo = vacancy.salaryTo
-
-    val from = if (salaryFrom != 0) String.format(
-        Locale.getDefault(),
-        "%d %s",
-        salaryFrom,
-        vacancy.currencySymbol
-    ) else EMPTY_STRING
-
-    val to = if (salaryTo != 0) String.format(
-        Locale.getDefault(),
-        "%d %s",
-        salaryTo,
-        vacancy.currencySymbol
-    ) else EMPTY_STRING
+    val salaryFrom =
+        vacancy.salaryFrom.takeIf { it != 0 }?.let { "%d %s".format(Locale.getDefault(), it, vacancy.currencySymbol) }
+            ?: ""
+    val salaryTo =
+        vacancy.salaryTo.takeIf { it != 0 }?.let { "%d %s".format(Locale.getDefault(), it, vacancy.currencySymbol) }
+            ?: ""
 
     return when {
-        salaryFrom != 0 && salaryTo != 0 -> {
-            String.format(
-                Locale.getDefault(), "%s %s %s %s",
-                resourceProvider.getString(R.string.salary_from),
-                from,
-                resourceProvider.getString(R.string.salary_to),
-                to
+        salaryFrom.isNotEmpty() && salaryTo.isNotEmpty() ->
+            "%s %s %s %s".format(
+                Locale.getDefault(),
+                resourceProvider.getString(R.string.salary_from), salaryFrom,
+                resourceProvider.getString(R.string.salary_to), salaryTo
             )
-        }
 
-        salaryFrom != 0 && salaryTo == 0 -> {
-            String.format(
-                Locale.getDefault(), "%s %s",
-                resourceProvider.getString(R.string.salary_from),
-                from
-            )
-        }
+        salaryFrom.isNotEmpty() ->
+            "%s %s".format(Locale.getDefault(), resourceProvider.getString(R.string.salary_from), salaryFrom)
 
-        salaryFrom == 0 && salaryTo != 0 -> {
-            String.format(
-                Locale.getDefault(), "%s %s",
-                resourceProvider.getString(R.string.salary_to),
-                to
-            )
-        }
-
+        salaryTo.isNotEmpty() ->
+            "%s %s".format(Locale.getDefault(), resourceProvider.getString(R.string.salary_to), salaryTo)
         else -> resourceProvider.getString(R.string.no_salary)
     }
 }
