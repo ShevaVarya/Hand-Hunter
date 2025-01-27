@@ -58,7 +58,6 @@ class NetworkClientImpl(
         }
     }
 
-
     override suspend fun getVacancyById(id: String, params: Map<String, String>): Result<DetailsVacancyEntity> {
         return runCatching {
             if (networkChecker.isInternetAvailable()) {
@@ -78,7 +77,7 @@ class NetworkClientImpl(
             is CancellationException -> error
             is IOException -> CustomException.NetworkError
             is HttpException -> {
-                if (error.code() in 400..499) {
+                if (error.code() in START_OF_ERROR_RANGE..END_OF_ERROR_RANGE) {
                     CustomException.RequestError(error.code())
                 } else {
                     CustomException.ServerError
@@ -91,5 +90,7 @@ class NetworkClientImpl(
 
     companion object {
         private const val SUCCESS_RESULT_CODE = 200
+        private const val START_OF_ERROR_RANGE = 400
+        private const val END_OF_ERROR_RANGE = 499
     }
 }
