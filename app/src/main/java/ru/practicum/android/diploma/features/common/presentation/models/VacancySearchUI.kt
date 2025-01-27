@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.search.presentation.model
+package ru.practicum.android.diploma.features.common.presentation.models
 
 data class VacancySearchUI(
     val id: String,

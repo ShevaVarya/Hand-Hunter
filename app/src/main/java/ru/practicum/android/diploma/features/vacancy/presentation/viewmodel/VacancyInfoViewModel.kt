@@ -19,6 +19,7 @@ class VacancyInfoViewModel(
     private val resourceProvider: ResourceProvider,
     private val vacancyDetailsInteractor: VacancyDetailsInteractor,
     private val favouriteVacanciesInteractor: FavouriteVacanciesInteractor,
+    private val wasOpenedFromSearch: Boolean,
     private val vacancyId: String?
 ) : ViewModel() {
     private var isFavourite: Boolean = false
@@ -33,6 +34,14 @@ class VacancyInfoViewModel(
             return
         }
 
+        if (wasOpenedFromSearch) {
+            getVacancyInfoFromNetwork(vacancyId)
+        } else {
+            getVacancyInfoFromDb(vacancyId)
+        }
+    }
+
+    private fun getVacancyInfoFromNetwork(vacancyId: String) {
         viewModelScope.launch {
             vacancyDetailsInteractor.getVacancyDetails(vacancyId)
                 .onSuccess {
@@ -52,6 +61,15 @@ class VacancyInfoViewModel(
             is CustomException.ServerError -> _state.value = State.ServerError
             is CancellationException -> throw error
             else -> Unit
+        }
+    }
+
+    private fun getVacancyInfoFromDb(vacancyId: String) {
+        viewModelScope.launch {
+            details = vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
+            details?.let {
+                _state.value = State.Data(it.toUI(resourceProvider))
+            }
         }
     }
 
