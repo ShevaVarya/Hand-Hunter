@@ -9,15 +9,9 @@ data class VacancyDetails(
     val experience: String = "",
     val employmentType: String = "",
     val description: String = "",
-    val keySkills: List<String> = emptyList()
-) {
-    companion object {
-        val stub = VacancyDetails(
-            id = "",
-            title = ""
-        )
-    }
-}
+    val keySkills: List<String> = emptyList(),
+    val vacancyUrl: String
+)
 
 data class Salary(
     val from: Int = 0,

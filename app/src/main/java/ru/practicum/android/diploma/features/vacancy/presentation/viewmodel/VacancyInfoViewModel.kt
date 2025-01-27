@@ -6,13 +6,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.presentation.model.VacancyInfoUI
 import ru.practicum.android.diploma.features.vacancy.presentation.model.toUI
-import java.io.IOException
+import kotlin.coroutines.cancellation.CancellationException
 
 class VacancyInfoViewModel(
     private val resourceProvider: ResourceProvider,
@@ -33,20 +34,29 @@ class VacancyInfoViewModel(
         }
 
         viewModelScope.launch {
-            try {
-                details = vacancyDetailsInteractor.getVacancyDetails(vacancyId).getOrNull()
-                details?.let {
+            vacancyDetailsInteractor.getVacancyDetails(vacancyId)
+                .onSuccess {
+                    details = it
                     _state.value = State.Data(it.toUI(resourceProvider))
                 }
-            } catch (e: IOException) {
-                println(e)
-                _state.value = State.ServerError
+                .onFailure { handleError(it) }
+        }
+    }
+
+    private fun handleError(error: Throwable) {
+        when (error) {
+            is CustomException.RequestError, CustomException.EmptyError, CustomException.NetworkError -> {
+                _state.value = State.NoData
             }
+
+            is CustomException.ServerError -> _state.value = State.ServerError
+            is CancellationException -> throw error
+            else -> Unit
         }
     }
 
     fun getVacancySharingText(): String {
-        return EMPTY_STRING
+        return details?.vacancyUrl ?: EMPTY_STRING
     }
 
     fun toggleFavouriteVacancy(): Boolean {
