@@ -25,7 +25,7 @@ class FavouriteVacanciesRepositoryImpl(
 
     override fun getFavourites(): Flow<List<VacancyDetails>> = flow {
         val vacancies = appDatabase.favouritesDao().getFavourites()
-        emit(vacancies.map { it.toDomain() })
+        emit(vacancies.map { it.toDomain() }.reversed())
     }
 
     private fun createKeySkillEntity(vacancyId: String, skill: String): KeySkillEntity {
