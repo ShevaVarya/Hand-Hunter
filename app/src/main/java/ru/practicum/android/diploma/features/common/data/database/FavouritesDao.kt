@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavouritesDao {
@@ -23,7 +24,7 @@ interface FavouritesDao {
     }
 
     @Query("SELECT * FROM favourites_table")
-    suspend fun getFavourites(): List<VacancyDbEntity>
+    fun getFavourites(): Flow<List<VacancyDbEntity>>
 
     @Query("SELECT key_skill FROM key_skill_table WHERE vacancy_id = :vacancyId")
     suspend fun getKeySkills(vacancyId: String): List<String>

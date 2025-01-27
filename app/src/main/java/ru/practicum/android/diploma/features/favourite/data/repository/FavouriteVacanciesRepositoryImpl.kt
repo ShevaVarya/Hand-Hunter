@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.features.favourite.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.features.common.data.database.AppDatabase
 import ru.practicum.android.diploma.features.common.data.database.KeySkillEntity
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
@@ -23,9 +23,11 @@ class FavouriteVacanciesRepositoryImpl(
         )
     }
 
-    override fun getFavourites(): Flow<List<VacancyDetails>> = flow {
-        val vacancies = appDatabase.favouritesDao().getFavourites()
-        emit(vacancies.map { it.toDomain() }.reversed())
+    override fun getFavourites(): Flow<List<VacancyDetails>> {
+        return appDatabase.favouritesDao().getFavourites()
+            .map { vacancies ->
+                vacancies.map { it.toDomain() }.reversed()
+            }
     }
 
     private fun createKeySkillEntity(vacancyId: String, skill: String): KeySkillEntity {
