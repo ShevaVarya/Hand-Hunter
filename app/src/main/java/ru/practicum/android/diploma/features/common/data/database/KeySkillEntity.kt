@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "key_skill_table")
 data class KeySkillEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     @ColumnInfo(name = "vacancy_id")
     val vacancyId: String,
     @ColumnInfo(name = "key_skill")

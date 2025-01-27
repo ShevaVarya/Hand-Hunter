@@ -15,9 +15,11 @@ interface FavouritesDao {
     suspend fun addKeySkillsToFavourites(keySkills: KeySkillEntity)
 
     @Transaction
-    suspend fun addToFavourites(vacancy: VacancyDbEntity, keySkills: KeySkillEntity) {
+    suspend fun addToFavourites(vacancy: VacancyDbEntity, keySkills: List<KeySkillEntity>) {
         addVacancyToFavourites(vacancy)
-        addKeySkillsToFavourites(keySkills)
+        keySkills.forEach { skill ->
+            addKeySkillsToFavourites(KeySkillEntity(vacancyId = skill.vacancyId, keySkill = skill.keySkill))
+        }
     }
 
     @Query("SELECT * FROM favourites_table")
