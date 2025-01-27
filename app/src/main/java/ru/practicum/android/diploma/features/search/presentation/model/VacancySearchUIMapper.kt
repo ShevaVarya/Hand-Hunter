@@ -4,6 +4,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 import ru.practicum.android.diploma.features.search.domain.model.Vacancy
+import java.text.NumberFormat
 import java.util.Locale
 
 private const val EMPTY_STRING = ""
@@ -34,12 +35,14 @@ private fun getProfession(vacancyName: String, city: String): String {
 }
 
 private fun getFormatSalary(vacancy: Vacancy, resourceProvider: ResourceProvider): String {
+    val numberFormat = NumberFormat.getInstance(Locale.getDefault())
+
     val salaryFrom =
-        vacancy.salaryFrom.takeIf { it != 0 }?.let { "%d %s".format(Locale.getDefault(), it, vacancy.currencySymbol) }
-            ?: ""
+        vacancy.salaryFrom.takeIf { it != 0 }?.let { "%s %s".format(numberFormat.format(it), vacancy.currencySymbol) }
+            ?: EMPTY_STRING
     val salaryTo =
-        vacancy.salaryTo.takeIf { it != 0 }?.let { "%d %s".format(Locale.getDefault(), it, vacancy.currencySymbol) }
-            ?: ""
+        vacancy.salaryTo.takeIf { it != 0 }?.let { "%s %s".format(numberFormat.format(it), vacancy.currencySymbol) }
+            ?: EMPTY_STRING
 
     return when {
         salaryFrom.isNotEmpty() && salaryTo.isNotEmpty() ->
@@ -56,6 +59,7 @@ private fun getFormatSalary(vacancy: Vacancy, resourceProvider: ResourceProvider
 
         salaryTo.isNotEmpty() ->
             "%s %s".format(Locale.getDefault(), resourceProvider.getString(R.string.salary_to), salaryTo)
+
         else -> resourceProvider.getString(R.string.no_salary)
     }
 }
