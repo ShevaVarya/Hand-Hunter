@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
+import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
-import ru.practicum.android.diploma.features.vacancy.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.vacancy.presentation.model.VacancyInfoUI
 import ru.practicum.android.diploma.features.vacancy.presentation.model.toUI
 import kotlin.coroutines.cancellation.CancellationException
