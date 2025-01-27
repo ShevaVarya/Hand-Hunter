@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.search.presentation.recycler
+package ru.practicum.android.diploma.features.common.presentation.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI

@@ -37,7 +37,7 @@ class VacancyInfoViewModel(
         if (wasOpenedFromSearch) {
             getVacancyInfoFromNetwork(vacancyId)
         } else {
-            getVacancyInfoFromBd(vacancyId)
+            getVacancyInfoFromDb(vacancyId)
         }
     }
 
@@ -64,7 +64,7 @@ class VacancyInfoViewModel(
         }
     }
 
-    private fun getVacancyInfoFromBd(vacancyId: String) {
+    private fun getVacancyInfoFromDb(vacancyId: String) {
         viewModelScope.launch {
             details = vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
             details?.let {

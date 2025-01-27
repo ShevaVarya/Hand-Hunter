@@ -22,7 +22,7 @@ import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
-import ru.practicum.android.diploma.features.search.presentation.recycler.VacancyAdapter
+import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.debounce

@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.search.presentation.recycler
+package ru.practicum.android.diploma.features.common.presentation.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.favourite.presentation.model.FavouriteVacanciesState
 import ru.practicum.android.diploma.features.favourite.presentation.viewmodel.FavouriteVacanciesViewModel
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
-import ru.practicum.android.diploma.features.search.presentation.recycler.VacancyAdapter
+import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
