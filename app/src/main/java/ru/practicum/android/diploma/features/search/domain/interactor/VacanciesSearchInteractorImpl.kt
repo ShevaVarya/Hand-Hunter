@@ -4,9 +4,11 @@ import ru.practicum.android.diploma.features.search.domain.api.VacanciesSearchRe
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 
-class VacanciesSearchInteractorImpl(private val repository: VacanciesSearchRepository) : VacanciesSearchInteractor {
+class VacanciesSearchInteractorImpl(
+    private val repository: VacanciesSearchRepository,
+) : VacanciesSearchInteractor {
     override suspend fun getVacancies(querySearch: QuerySearch): Result<Vacancies> {
-        return repository.searchVacancies(querySearch)
+        return repository.searchVacancies(querySearch).mapCatching { it }
     }
 
 }

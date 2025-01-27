@@ -47,6 +47,7 @@
     <string name="salary_to">to</string>
     <string name="vacancy_info_gross_info_true">gross</string>
     <string name="vacancy_info_gross_info_false">net</string>
+    <string name="no_salary">The salary is not indicated</string>
 
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
