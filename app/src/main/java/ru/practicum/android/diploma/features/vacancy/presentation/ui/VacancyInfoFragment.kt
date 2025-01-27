@@ -163,7 +163,7 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     companion object {
         private const val SEND_INTENT_TYPE = "text/plain"
         private const val VACANCY_ID = "vacancyId"
-        private const val WAS_OPENED_FROM_SEARCH = "vacancyId"
+        private const val WAS_OPENED_FROM_SEARCH = "wasOpenedFromSearch"
 
         fun createArgs(wasOpenedFromSearch: Boolean, vacancyId: String): Bundle {
             return bundleOf(

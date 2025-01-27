@@ -23,7 +23,7 @@ fun VacancyDetails.toDb(): VacancyDbEntity {
     )
 }
 
-fun VacancyDbEntity.toDomain(): VacancyDetails {
+fun VacancyDbEntity.toDomain(skills: List<String> = emptyList()): VacancyDetails {
     return VacancyDetails(
         id = vacancyId,
         title = title,
@@ -41,6 +41,6 @@ fun VacancyDbEntity.toDomain(): VacancyDetails {
         experience = experience,
         employmentType = employmentForm,
         description = description,
-        keySkills = emptyList()
+        keySkills = skills
     )
 }

@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.search.presentation.model
 
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
+import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 import ru.practicum.android.diploma.features.search.domain.model.Vacancy
 import ru.practicum.android.diploma.utils.getFormatSalary

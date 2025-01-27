@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.features.favourite.presentation.model
 
-import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
+import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 
 sealed interface FavouriteVacanciesState {
 

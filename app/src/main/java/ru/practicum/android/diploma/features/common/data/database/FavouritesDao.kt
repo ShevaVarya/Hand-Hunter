@@ -29,4 +29,11 @@ interface FavouritesDao {
     @Query("SELECT key_skill FROM key_skill_table WHERE vacancy_id = :vacancyId")
     suspend fun getKeySkills(vacancyId: String): List<String>
 
+    @Query("SELECT * FROM favourites_table WHERE vacancy_id = :vacancyId")
+    suspend fun getVacancy(vacancyId: String): VacancyDbEntity
+
+    @Transaction
+    suspend fun getFavouriteVacancy(vacancyId: String): Pair<VacancyDbEntity, List<String>> {
+        return Pair(getVacancy(vacancyId), getKeySkills(vacancyId))
+    }
 }

@@ -33,9 +33,32 @@ class VacancyInfoViewModel(
             return
         }
 
+        if (wasOpenedFromSearch) {
+            getVacancyInfoFromNetwork(vacancyId)
+        } else {
+            getVacancyInfoFromBd(vacancyId)
+        }
+
+    }
+
+    private fun getVacancyInfoFromNetwork(vacancyId: String) {
         viewModelScope.launch {
             try {
                 details = vacancyDetailsInteractor.getVacancyDetails(vacancyId).getOrNull()
+                details?.let {
+                    _state.value = State.Data(it.toUI(resourceProvider))
+                }
+            } catch (e: IOException) {
+                println(e)
+                _state.value = State.ServerError
+            }
+        }
+    }
+
+    private fun getVacancyInfoFromBd(vacancyId: String) {
+        viewModelScope.launch {
+            try {
+                details = vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
                 details?.let {
                     _state.value = State.Data(it.toUI(resourceProvider))
                 }

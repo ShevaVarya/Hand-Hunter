@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import ru.practicum.android.diploma.databinding.ItemSearchBinding
-import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
+import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 
 class VacancyAdapter(
     private val onClick: (VacancySearchUI) -> Unit = {},
