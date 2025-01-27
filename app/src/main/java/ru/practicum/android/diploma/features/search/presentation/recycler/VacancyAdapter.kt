@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import ru.practicum.android.diploma.databinding.ItemSearchBinding
 import ru.practicum.android.diploma.features.search.domain.model.Vacancy
+import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
 
 class VacancyAdapter(
-    private val onClick: (Vacancy) -> Unit = {},
-) : ListAdapter<Vacancy, VacancyViewHolder>(VacancyDiffCallback()) {
+    private val onClick: (VacancySearchUI) -> Unit = {},
+) : ListAdapter<VacancySearchUI, VacancyViewHolder>(VacancyDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val binding = ItemSearchBinding.inflate(
