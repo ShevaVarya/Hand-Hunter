@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEn
  * @param employer - информация о работодателе (логотип, название организации)
  * @param salary - информация о заработной плате (вилка или же только верхняя/нижняя граница, если в вакансии не указана з/п - значение null)
  * @param experience - информация о требуемом опыте для отклика на данную вакансию
- * @param employmentForm - информация о типе занятости
+ * @param employment - информация о типе занятости
  * @param description - описание вакансии
  * @param keySkills - информация о требуемых навыках для отклика на данную вакансию
  * @param vacancyUrl - ссылка на вакансию
@@ -23,8 +23,8 @@ data class DetailsVacancyEntity(
     val employer: EmployerEntity,
     val area: AreaEntity,
     val experience: ExperienceEntity,
-    @SerializedName("employment_form")
-    val employmentForm: EmploymentFormEntity,
+    @SerializedName("employment")
+    val employment: EmploymentEntity,
     val description: String,
     @SerializedName("key_skills")
     val keySkills: List<SkillEntity>,
@@ -36,7 +36,7 @@ data class DetailsVacancyEntity(
         val name: String
     )
 
-    data class EmploymentFormEntity(
+    data class EmploymentEntity(
         val id: String,
         val name: String
     )
