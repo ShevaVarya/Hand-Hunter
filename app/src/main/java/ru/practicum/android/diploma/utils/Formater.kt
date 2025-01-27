@@ -9,7 +9,6 @@ private const val EMPTY_STRING = ""
 private const val SALARY_FORMAT = "%s %s"
 private const val DOUBLE_SALARY_FORMAT = "%s %s %s %s"
 
-
 fun getProfession(vacancyName: String, city: String): String {
     return String.format(Locale.getDefault(), SALARY_FORMAT, vacancyName, city)
 }

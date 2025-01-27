@@ -27,11 +27,13 @@ class FavouriteVacanciesViewModel(
     private fun getFavourites() {
         viewModelScope.launch {
             interactor.getFavourites().collect { vacancies ->
-                _state.value =
-                    if (vacancies.isEmpty()) FavouriteVacanciesState.Empty
-                    else FavouriteVacanciesState.Content(
+                _state.value = if (vacancies.isEmpty()) {
+                    FavouriteVacanciesState.Empty
+                } else {
+                    FavouriteVacanciesState.Content(
                         vacancies.map { it.toUi(resourceProvider) }
                     )
+                }
             }
         }
     }
