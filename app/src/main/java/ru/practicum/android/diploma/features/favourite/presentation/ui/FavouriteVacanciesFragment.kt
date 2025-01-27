@@ -6,6 +6,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavouriteVacanciesBinding
@@ -51,6 +52,8 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
 
         with(viewBinding) {
             favouriteRecyclerView.adapter = vacancyAdapter
+            favouriteRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             favouriteRecyclerView.itemAnimator = null
         }
 
@@ -70,7 +73,7 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
     private fun startVacancyInfoFragment(vacancyId: String) {
         findNavController()
             .navigate(
-                R.id.action_searchFragment_to_vacancyInfoFragment,
+                R.id.action_favouriteVacanciesFragment_to_vacancyInfoFragment,
                 VacancyInfoFragment.createArgs(vacancyId)
             )
     }
@@ -114,11 +117,5 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
     companion object {
         const val CLICK_DEBOUNCE_DELAY = 1000L
     }
-
-    override fun onStart() {
-        super.onStart()
-        //проверить, может тут вызывать viewModel.getFavourites()
-    }
-
 
 }

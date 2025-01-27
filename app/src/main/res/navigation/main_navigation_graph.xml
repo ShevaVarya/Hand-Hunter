@@ -81,7 +81,15 @@
         android:id="@+id/favouriteVacanciesFragment"
         android:name="ru.practicum.android.diploma.features.favourite.presentation.ui.FavouriteVacanciesFragment"
         android:label="fragment_favourite_vacancies"
-        tools:layout="@layout/fragment_favourite_vacancies" />
+        tools:layout="@layout/fragment_favourite_vacancies" >
+        <action
+            android:id="@+id/action_favouriteVacanciesFragment_to_vacancyInfoFragment"
+            app:destination="@id/vacancyInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/teamInfoFragment"
         android:name="ru.practicum.android.diploma.features.team.presentation.ui.TeamInfoFragment"
