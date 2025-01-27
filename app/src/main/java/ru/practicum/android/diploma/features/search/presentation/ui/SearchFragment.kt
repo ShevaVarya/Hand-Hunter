@@ -164,7 +164,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         findNavController()
             .navigate(
                 R.id.action_searchFragment_to_vacancyInfoFragment,
-                VacancyInfoFragment.createArgs(vacancyId)
+                VacancyInfoFragment.createArgs(true, vacancyId)
             )
     }
 

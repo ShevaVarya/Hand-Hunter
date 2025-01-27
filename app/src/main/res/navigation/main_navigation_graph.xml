@@ -74,6 +74,9 @@
         android:label="fragment_vacancy_info"
         tools:layout="@layout/fragment_vacancy_info" >
         <argument
+            android:name="wasOpenedFromSearch"
+            app:argType="boolean" />
+        <argument
             android:name="vacancyId"
             app:argType="string" />
     </fragment>

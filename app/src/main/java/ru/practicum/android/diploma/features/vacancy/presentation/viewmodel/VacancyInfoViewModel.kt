@@ -18,6 +18,7 @@ class VacancyInfoViewModel(
     private val resourceProvider: ResourceProvider,
     private val vacancyDetailsInteractor: VacancyDetailsInteractor,
     private val favouriteVacanciesInteractor: FavouriteVacanciesInteractor,
+    private val wasOpenedFromSearch: Boolean,
     private val vacancyId: String?
 ) : ViewModel() {
     private var isFavourite: Boolean = false

@@ -34,7 +34,6 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
     override fun initUi() {
         initAdapter()
         initClickDebounce()
-        viewModel.getFavourites()
     }
 
     override fun observeData() {
@@ -74,7 +73,7 @@ class FavouriteVacanciesFragment : BaseFragment<FragmentFavouriteVacanciesBindin
         findNavController()
             .navigate(
                 R.id.action_favouriteVacanciesFragment_to_vacancyInfoFragment,
-                VacancyInfoFragment.createArgs(vacancyId)
+                VacancyInfoFragment.createArgs(false, vacancyId)
             )
     }
 

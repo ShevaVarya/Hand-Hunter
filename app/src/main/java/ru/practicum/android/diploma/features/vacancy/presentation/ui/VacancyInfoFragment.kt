@@ -26,12 +26,16 @@ import ru.practicum.android.diploma.features.vacancy.presentation.viewmodel.Vaca
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
+    private val wasOpenedFromSearch by lazy {
+        arguments?.getBoolean(WAS_OPENED_FROM_SEARCH)
+    }
+
     private val vacancyId by lazy {
         arguments?.getString(VACANCY_ID)
     }
 
     private val viewModel by viewModel<VacancyInfoViewModel> {
-        parametersOf(vacancyId)
+        parametersOf(wasOpenedFromSearch, vacancyId)
     }
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyInfoBinding {
@@ -159,9 +163,13 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
     companion object {
         private const val SEND_INTENT_TYPE = "text/plain"
         private const val VACANCY_ID = "vacancyId"
+        private const val WAS_OPENED_FROM_SEARCH = "vacancyId"
 
-        fun createArgs(vacancyId: String): Bundle {
-            return bundleOf(VACANCY_ID to vacancyId)
+        fun createArgs(wasOpenedFromSearch: Boolean, vacancyId: String): Bundle {
+            return bundleOf(
+                WAS_OPENED_FROM_SEARCH to wasOpenedFromSearch,
+                VACANCY_ID to vacancyId
+            )
         }
     }
 }
