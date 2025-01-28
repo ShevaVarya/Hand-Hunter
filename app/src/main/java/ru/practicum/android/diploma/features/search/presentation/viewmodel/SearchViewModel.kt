@@ -89,7 +89,7 @@ class SearchViewModel(
                         0,
                         totalPages,
                         currentPage,
-                        20
+                        ITEMS_PER_PAGE
                     )
                 )
             )
