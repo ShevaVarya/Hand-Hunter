@@ -1,7 +1,10 @@
 package ru.practicum.android.diploma.features.favourite.data.dto
 
 import ru.practicum.android.diploma.features.common.data.database.VacancyDbEntity
+import ru.practicum.android.diploma.features.common.domain.model.Employer
+import ru.practicum.android.diploma.features.common.domain.model.Salary
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
+import ru.practicum.android.diploma.features.vacancy.data.dto.mapCurrencyToDomain
 
 fun VacancyDetails.toDb(): VacancyDbEntity {
     return VacancyDbEntity(
@@ -16,6 +19,30 @@ fun VacancyDetails.toDb(): VacancyDbEntity {
         location = location,
         experience = experience,
         employmentForm = employmentType,
-        description = description
+        description = description,
+        vacancyUrl = vacancyUrl
+    )
+}
+
+fun VacancyDbEntity.toDomain(skills: List<String> = emptyList()): VacancyDetails {
+    return VacancyDetails(
+        id = vacancyId,
+        title = title,
+        salary = Salary(
+            from = salaryFrom ?: 0,
+            to = salaryTo ?: 0,
+            currency = mapCurrencyToDomain(currencySymbol),
+            isGross = isGross ?: false
+        ),
+        employer = Employer(
+            name = employerName,
+            logoUrl = employerLogoUrl
+        ),
+        location = location,
+        experience = experience,
+        employmentType = employmentForm,
+        description = description,
+        keySkills = skills,
+        vacancyUrl = vacancyUrl
     )
 }

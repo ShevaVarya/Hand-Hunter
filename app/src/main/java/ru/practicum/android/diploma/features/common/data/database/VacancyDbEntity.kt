@@ -21,5 +21,6 @@ data class VacancyDbEntity(
     val experience: String,
     @ColumnInfo(name = "employment_form")
     val employmentForm: String,
-    val description: String
+    val description: String,
+    val vacancyUrl: String
 )

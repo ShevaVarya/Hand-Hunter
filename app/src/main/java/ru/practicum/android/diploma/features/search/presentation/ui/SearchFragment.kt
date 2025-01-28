@@ -22,8 +22,8 @@ import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
-import ru.practicum.android.diploma.features.search.presentation.model.VacancySearchUI
-import ru.practicum.android.diploma.features.search.presentation.recycler.VacancyAdapter
+import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
+import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.debounce
@@ -165,7 +165,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         findNavController()
             .navigate(
                 R.id.action_searchFragment_to_vacancyInfoFragment,
-                VacancyInfoFragment.createArgs(vacancyId)
+                VacancyInfoFragment.createArgs(true, vacancyId)
             )
     }
 

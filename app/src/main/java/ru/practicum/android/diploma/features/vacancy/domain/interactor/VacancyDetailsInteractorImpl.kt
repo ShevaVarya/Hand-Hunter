@@ -10,4 +10,8 @@ class VacancyDetailsInteractorImpl(
     override suspend fun getVacancyDetails(vacancyId: String): Result<VacancyDetails> {
         return vacancyDetailsRepository.getVacancyDetails(vacancyId)
     }
+
+    override suspend fun getFavouriteVacancy(vacancyId: String): VacancyDetails {
+        return vacancyDetailsRepository.getFavouriteVacancy(vacancyId)
+    }
 }
