@@ -36,7 +36,7 @@ class SearchViewModel(
         if (queryText.isNullOrEmpty() || queryText == lastSearchQuery && !isPagination) return
         if (isLoading) return
 
-        lastSearchQuery = queryText
+        lastSearchQuery = querySearch.text.trim()
         isLoading = true
 
         viewModelScope.launch {
