@@ -20,4 +20,9 @@ class VacancyDetailsRepositoryImpl(
         val pair = appDatabase.favouritesDao().getFavouriteVacancy(vacancyId)
         return pair.first.toDomain(pair.second)
     }
+
+    override suspend fun isFavouriteVacancy(vacancyId: String): Boolean {
+        return appDatabase.favouritesDao().isExisted(vacancyId)
+    }
+
 }

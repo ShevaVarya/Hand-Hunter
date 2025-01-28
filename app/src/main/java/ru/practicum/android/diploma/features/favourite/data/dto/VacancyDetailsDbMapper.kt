@@ -43,6 +43,7 @@ fun VacancyDbEntity.toDomain(skills: List<String> = emptyList()): VacancyDetails
         employmentType = employmentForm,
         description = description,
         keySkills = skills,
-        vacancyUrl = vacancyUrl
+        vacancyUrl = vacancyUrl,
+        isFavourite = true
     )
 }

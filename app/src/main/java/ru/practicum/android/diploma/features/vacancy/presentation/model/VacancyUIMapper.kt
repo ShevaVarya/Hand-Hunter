@@ -17,7 +17,8 @@ fun VacancyDetails.toUI(resourceProvider: ResourceProvider): VacancyInfoUI {
         experience = experience,
         employmentForm = employmentType,
         description = description,
-        keySkills = mapKeySkillsListToString(keySkills)
+        keySkills = mapKeySkillsListToString(keySkills),
+        isFavourite = isFavourite
     )
 }
 

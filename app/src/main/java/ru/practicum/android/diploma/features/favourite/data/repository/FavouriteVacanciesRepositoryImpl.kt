@@ -30,6 +30,10 @@ class FavouriteVacanciesRepositoryImpl(
             }
     }
 
+    override suspend fun deleteFavouriteVacancy(vacancyId: String) {
+        appDatabase.favouritesDao().deleteFavouriteVacancy(vacancyId)
+    }
+
     private fun createKeySkillEntity(vacancyId: String, skill: String): KeySkillEntity {
         return KeySkillEntity(
             vacancyId = vacancyId,
