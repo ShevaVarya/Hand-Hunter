@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.content.ContextCompat
@@ -184,7 +185,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private fun initListeners() {
         setupSearchEditTextTouchListener()
         onTextChanged()
-
+        setupEnterKeyListener()
     }
 
     private fun setupSearchEditTextTouchListener() {
@@ -232,6 +233,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         val view = activity?.currentFocus ?: view
         view?.let {
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
+    private fun setupEnterKeyListener() {
+        viewBinding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val queryText = viewBinding.searchEditText.text.toString().trim()
+                if (queryText.isNotEmpty()) {
+                    val querySearch = QuerySearch(text = queryText)
+                    viewModel.search(querySearch)
+                    hideKeyBoard()
+                }
+                true
+            } else {
+                false
+            }
         }
     }
 

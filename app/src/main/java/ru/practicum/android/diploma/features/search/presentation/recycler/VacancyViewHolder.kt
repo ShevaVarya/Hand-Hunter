@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.features.search.presentation.recycler
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -10,6 +11,7 @@ import ru.practicum.android.diploma.features.search.presentation.model.VacancySe
 class VacancyViewHolder(private val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(vacancy: VacancySearchUI) {
+        Log.d("MyLog", "bind: $vacancy")
         val cornerRadius = binding.root.context.resources.getDimensionPixelSize(R.dimen.radius_1x)
         with(binding) {
             professionTextView.text = vacancy.formatedProfession
