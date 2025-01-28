@@ -24,7 +24,12 @@ class SearchViewModel(
     private var lastSearchQuery: String? = null
 
     fun search(querySearch: QuerySearch) {
-        if (querySearch.text.isNullOrBlank() || querySearch.text == lastSearchQuery) return
+        val isStateError = when (searchStateFlow.value) {
+            is SearchState.EmptyError, SearchState.ServerError, SearchState.NetworkError -> true
+            else -> false
+        }
+
+        if (querySearch.text.isNullOrBlank() || querySearch.text == lastSearchQuery && !isStateError) return
 
         lastSearchQuery = querySearch.text
         viewModelScope.launch {
