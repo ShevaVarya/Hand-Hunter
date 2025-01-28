@@ -5,15 +5,14 @@ import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacanciesEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
 import ru.practicum.android.diploma.features.common.domain.CustomException
+import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.utils.NetworkChecker
 import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException
 
 interface NetworkClient {
     suspend fun getVacanciesList(
-        text: String,
-        page: Int,
-        params: Map<String, String> = mapOf()
+        querySearch: QuerySearch
     ): Result<VacanciesEntity>
 
     suspend fun getVacancyById(
@@ -27,34 +26,25 @@ class NetworkClientImpl(
     private val networkChecker: NetworkChecker
 ) : NetworkClient {
     override suspend fun getVacanciesList(
-        text: String,
-        page: Int,
-        params: Map<String, String>
+        querySearch: QuerySearch
     ): Result<VacanciesEntity> {
-        try {
-            val response = hhApi.getVacancies(
-                text = text,
-                page = page,
-                params = params
-            )
+        return runCatching {
+            if (networkChecker.isInternetAvailable()) {
+                val vacancies = hhApi.getVacancies(
+                    text = querySearch.text ?: "",
+                    page = querySearch.page,
+                    perPage = querySearch.perPage,
+                    params = querySearch.params
+                )
 
-            return if (response.resultCode == SUCCESS_RESULT_CODE) {
-                val vacancies = response
+                if (vacancies.items.isEmpty()) throw CustomException.EmptyError
 
-                if (vacancies != null) {
-                    // Код 200, тело запроса впорядке
-                    Result.success(vacancies)
-                } else {
-                    // непредвиденная ошибка, потеря тела ответа при его успешном выполнении (код 200)
-                    Result.failure(IllegalStateException("response is null"))
-                }
+                vacancies
             } else {
-                // обработка кастомных ошибок с сервера
-                Result.failure(IllegalStateException(response.resultCode.toString()))
+                throw CustomException.NetworkError
             }
-            // в случае, если корутина свалится, ловим ошибку (но какую?)
-        } catch (exception: IllegalStateException) {
-            return Result.failure(exception)
+        }.recoverCatching {
+            resolveError(it)
         }
     }
 
@@ -89,7 +79,6 @@ class NetworkClientImpl(
     }
 
     companion object {
-        private const val SUCCESS_RESULT_CODE = 200
         private const val START_OF_ERROR_RANGE = 400
         private const val END_OF_ERROR_RANGE = 499
     }
