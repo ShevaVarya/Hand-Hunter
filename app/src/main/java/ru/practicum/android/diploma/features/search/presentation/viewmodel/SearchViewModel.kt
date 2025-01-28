@@ -33,7 +33,7 @@ class SearchViewModel(
     fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
         val queryText = querySearch.text?.trim()
 
-        if (queryText.isNullOrEmpty() || (queryText == lastSearchQuery && !isPagination)) return
+        if (queryText.isNullOrEmpty() || queryText == lastSearchQuery && !isPagination) return
         if (isLoading) return
 
         lastSearchQuery = queryText
@@ -113,7 +113,7 @@ class SearchViewModel(
                     QuerySearch(
                         text = lastSearchQuery,
                         page = currentPage + 1,
-                        perPage = 20
+                        perPage = ITEMS_PER_PAGE
                     ),
                     isPagination = true
                 )
@@ -129,5 +129,9 @@ class SearchViewModel(
         currentPage = 0
         totalPages = Int.MAX_VALUE
         loadedVacancies.clear()
+    }
+
+    companion object {
+        const val ITEMS_PER_PAGE = 20
     }
 }

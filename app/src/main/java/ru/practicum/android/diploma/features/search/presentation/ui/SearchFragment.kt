@@ -216,7 +216,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     val totalItemCount = layoutManager.itemCount
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                    if (!viewModel.isLoading && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+                    if (!viewModel.isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
                         coroutineScope.launch {
                             val networkChecker = NetworkChecker(recyclerView.context)
                             val isInternetAvailable = networkChecker.isInternetAvailable()
@@ -235,7 +235,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             })
         }
     }
-
 
     private fun initListeners() {
         setupSearchEditTextTouchListener()
