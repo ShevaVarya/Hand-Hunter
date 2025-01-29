@@ -30,12 +30,15 @@ class SearchViewModel(
 
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
     private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
+    val networkErrorStateFlow = MutableStateFlow(false)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
+    fun getNetworkErrorStateFlow() = networkErrorStateFlow.asStateFlow()
 
     private var currentPage = 0
     private var totalPages = 0
+    private var totalFoundVacancies = 0
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
@@ -73,8 +76,10 @@ class SearchViewModel(
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
+        networkErrorStateFlow.value = false
         currentPage = vacancies.page
         totalPages = min(vacancies.pages, MAX_ITEMS - 1)
+        totalFoundVacancies = vacancies.found
 
         val newVacancies = vacancies.items.map { it.toUI(resourceProvider) }
         if (isPagination) {
@@ -105,20 +110,23 @@ class SearchViewModel(
                 SearchState.Content(
                     VacanciesSearchUI(
                         items = loadedVacancies,
-                        found = DEFAULT_TOTAL_ITEMS,
+                        found = totalFoundVacancies,
                         pages = totalPages,
                         page = currentPage,
                         perPage = ITEMS_PER_PAGE
                     )
                 )
             )
-            when (throwableError) {
-                is CustomException.NetworkError -> toastEventFlow.emit(ToastEvent.NetworkError)
-                else -> Unit
+            if (throwableError is CustomException.NetworkError) {
+                networkErrorStateFlow.value = true
+                toastEventFlow.emit(ToastEvent.NetworkError)
             }
         } else {
             when (throwableError) {
-                is CustomException.NetworkError -> searchStateFlow.emit(SearchState.NetworkError)
+                is CustomException.NetworkError -> {
+                    searchStateFlow.emit(SearchState.NetworkError)
+                    networkErrorStateFlow.value = true
+                }
                 is CustomException.EmptyError -> searchStateFlow.emit(SearchState.EmptyError)
                 is CustomException.ServerError -> searchStateFlow.emit(SearchState.ServerError)
                 is CancellationException -> throw throwableError
@@ -128,8 +136,10 @@ class SearchViewModel(
     }
 
     fun loadNextPage() {
-        if (!isLoading && currentPage < totalPages - 1) {
+        if (!isLoading && currentPage < totalPages) {
             viewModelScope.launch {
+                if (isLoading) return@launch
+
                 searchStateFlow.emit(SearchState.Pagination)
 
                 runCatching {
@@ -144,7 +154,11 @@ class SearchViewModel(
                 }.onFailure { error ->
                     isLoading = false
                     when (error) {
-                        is CustomException.NetworkError -> searchStateFlow.emit(SearchState.NetworkError)
+                        is CustomException.NetworkError -> {
+                            if (searchStateFlow.value !is SearchState.NetworkError) {
+                                searchStateFlow.emit(SearchState.NetworkError)
+                            }
+                        }
                     }
                 }
             }
@@ -164,7 +178,5 @@ class SearchViewModel(
     companion object {
         private const val MAX_ITEMS = 100
         private const val ITEMS_PER_PAGE = 20
-        private const val DEFAULT_TOTAL_ITEMS = 0
-
     }
 }
