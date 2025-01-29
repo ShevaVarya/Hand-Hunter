@@ -42,8 +42,12 @@ class SearchViewModel(
 
     fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
         val queryText = querySearch.text?.trim()
+        val isStateError = when (searchStateFlow.value) {
+            is SearchState.ServerError, SearchState.NetworkError -> true
+            else -> false
+        }
 
-        if (queryText.isNullOrEmpty() || queryText == lastSearchQuery && !isPagination) return
+        if (queryText.isNullOrEmpty() || queryText == lastSearchQuery && !isPagination && !isStateError) return
         if (isLoading) return
 
         lastSearchQuery = queryText
