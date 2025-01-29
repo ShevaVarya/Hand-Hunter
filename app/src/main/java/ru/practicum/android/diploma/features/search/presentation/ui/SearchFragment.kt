@@ -88,10 +88,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     is SearchViewModel.ToastEvent.NetworkError -> {
                         showToast(getString(R.string.bad_connection))
                     }
-
-                    is SearchViewModel.ToastEvent.ServerError -> {
-                        showToast(getString(R.string.server_error))
-                    }
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)

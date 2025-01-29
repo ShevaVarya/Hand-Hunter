@@ -26,11 +26,10 @@ class SearchViewModel(
 
     sealed class ToastEvent {
         data object NetworkError : ToastEvent()
-        data object ServerError : ToastEvent()
     }
 
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
-    private val toastEventFlow = MutableSharedFlow<ToastEvent>()
+    private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
@@ -108,7 +107,6 @@ class SearchViewModel(
             )
             when (throwableError) {
                 is CustomException.NetworkError -> toastEventFlow.emit(ToastEvent.NetworkError)
-                is CustomException.ServerError -> toastEventFlow.emit(ToastEvent.ServerError)
                 else -> Unit
             }
         } else {
