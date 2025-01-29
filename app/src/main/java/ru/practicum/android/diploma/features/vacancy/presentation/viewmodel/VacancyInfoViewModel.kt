@@ -64,7 +64,7 @@ class VacancyInfoViewModel(
                 _state.value = State.NoData
             }
 
-            is CustomException.ServerError -> _state.value = State.ServerError
+            is CustomException.ServerError, CustomException.DatabaseGettingError -> _state.value = State.ServerError
             is CancellationException -> throw error
             is CustomException.UpdateDatabaseError -> {
                 details?.let {
@@ -78,10 +78,17 @@ class VacancyInfoViewModel(
 
     private fun getVacancyInfoFromDb(vacancyId: String) {
         viewModelScope.launch {
-            details = vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
-            details?.let {
-                _state.value = State.Data(it.toUI(resourceProvider))
-            }
+            vacancyDetailsInteractor.getFavouriteVacancy(vacancyId)
+                .onSuccess {
+                    details = it
+                    details?.let {
+                        _state.value = State.Data(it.toUI(resourceProvider))
+                    }
+                }
+                .onFailure {
+                    handleError(it)
+                }
+
         }
     }
 
