@@ -2,7 +2,9 @@ package ru.practicum.android.diploma.features.search.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
@@ -15,14 +17,23 @@ import ru.practicum.android.diploma.features.search.presentation.model.SearchSta
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.model.toUI
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.min
 
 class SearchViewModel(
     private val interactor: VacanciesSearchInteractor,
     private val resourceProvider: ResourceProvider,
 ) : ViewModel() {
 
+    sealed class ToastEvent {
+        data object NetworkError : ToastEvent()
+        data object ServerError : ToastEvent()
+    }
+
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
+    private val toastEventFlow = MutableSharedFlow<ToastEvent>()
+
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
+    fun getToastEventFlow() = toastEventFlow.asSharedFlow()
 
     private var currentPage = 0
     private var totalPages = Int.MAX_VALUE
@@ -36,7 +47,7 @@ class SearchViewModel(
         if (queryText.isNullOrEmpty() || queryText == lastSearchQuery && !isPagination) return
         if (isLoading) return
 
-        lastSearchQuery = querySearch.text.trim()
+        lastSearchQuery = queryText
         isLoading = true
 
         viewModelScope.launch {
@@ -56,9 +67,10 @@ class SearchViewModel(
         }
     }
 
+
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
         currentPage = vacancies.page
-        totalPages = vacancies.pages
+        totalPages = min(vacancies.pages, 100)
 
         val newVacancies = vacancies.items.map { it.toUI(resourceProvider) }
         if (isPagination) {
@@ -71,7 +83,7 @@ class SearchViewModel(
         val vacanciesUI = VacanciesSearchUI(
             items = loadedVacancies,
             found = vacancies.found,
-            pages = vacancies.pages,
+            pages = totalPages,
             page = vacancies.page,
             perPage = vacancies.perPage
         )
@@ -79,44 +91,63 @@ class SearchViewModel(
         searchStateFlow.emit(SearchState.Content(vacanciesUI))
     }
 
-    private suspend fun handleError(error: Throwable, isPagination: Boolean) {
+    private suspend fun handleError(
+        throwableError: Throwable,
+        isLoadingNextPage: Boolean
+    ) {
         isLoading = false
-        if (isPagination) {
+        if (isLoadingNextPage) {
             searchStateFlow.emit(
                 SearchState.Content(
                     VacanciesSearchUI(
-                        loadedVacancies,
-                        0,
-                        totalPages,
-                        currentPage,
-                        ITEMS_PER_PAGE
+                        items = loadedVacancies,
+                        found = DEFAULT_TOTAL_ITEMS,
+                        pages = totalPages,
+                        page = currentPage,
+                        perPage = ITEMS_PER_PAGE
                     )
                 )
             )
-
+            when (throwableError) {
+                is CustomException.NetworkError -> toastEventFlow.emit(ToastEvent.NetworkError)
+                is CustomException.ServerError -> toastEventFlow.emit(ToastEvent.ServerError)
+                else -> Unit
+            }
         } else {
-            when (error) {
+            when (throwableError) {
                 is CustomException.NetworkError -> searchStateFlow.emit(SearchState.NetworkError)
                 is CustomException.EmptyError -> searchStateFlow.emit(SearchState.EmptyError)
                 is CustomException.ServerError -> searchStateFlow.emit(SearchState.ServerError)
-                is CancellationException -> throw error
+                is CancellationException -> throw throwableError
                 else -> Unit
             }
         }
     }
 
+
     fun loadNextPage() {
         if (!isLoading && currentPage < totalPages) {
             viewModelScope.launch {
-                searchStateFlow.emit(SearchState.Paginating)
-                search(
-                    QuerySearch(
-                        text = lastSearchQuery,
-                        page = currentPage + 1,
-                        perPage = ITEMS_PER_PAGE
-                    ),
-                    isPagination = true
-                )
+                try {
+                    searchStateFlow.emit(SearchState.Pagination)
+                    search(
+                        QuerySearch(
+                            text = lastSearchQuery,
+                            page = currentPage + 1,
+                            perPage = ITEMS_PER_PAGE
+                        ),
+                        isPagination = true
+                    )
+                } catch (e: Exception) {
+                    isLoading = false
+                    when (e) {
+                        is CustomException.NetworkError -> {
+                            searchStateFlow.emit(SearchState.NetworkError)
+                        }
+
+                        else -> Unit
+                    }
+                }
             }
         }
     }
@@ -133,5 +164,7 @@ class SearchViewModel(
 
     companion object {
         const val ITEMS_PER_PAGE = 20
+        private const val DEFAULT_TOTAL_ITEMS = 0
+
     }
 }

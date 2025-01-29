@@ -16,12 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
@@ -33,14 +29,11 @@ import ru.practicum.android.diploma.features.search.presentation.model.SearchSta
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
-import ru.practicum.android.diploma.utils.NetworkChecker
 import ru.practicum.android.diploma.utils.debounce
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private var vacancyAdapter: VacancyAdapter? = null
-
-    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
     private var onSearchDebounce: ((QuerySearch) -> Unit)? = null
@@ -83,7 +76,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     SearchState.EmptyError -> showEmptyError()
                     SearchState.NetworkError -> showNetworkError()
                     SearchState.ServerError -> showServerError()
-                    SearchState.Paginating -> showBottomProgressBar()
+                    SearchState.Pagination -> showBottomProgressBar()
+                }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.getToastEventFlow()
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { event ->
+                when (event) {
+                    is SearchViewModel.ToastEvent.NetworkError -> {
+                        showToast(getString(R.string.bad_connection))
+                    }
+
+                    is SearchViewModel.ToastEvent.ServerError -> {
+                        showToast(getString(R.string.server_error))
+                    }
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
@@ -217,19 +225,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                     if (!viewModel.isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
-                        coroutineScope.launch {
-                            val networkChecker = NetworkChecker(recyclerView.context)
-                            val isInternetAvailable = networkChecker.isInternetAvailable()
-
-                            if (isInternetAvailable) {
-                                viewModel.loadNextPage()
-                            } else {
-                                withContext(Dispatchers.Main) {
-                                    showToast(getString(R.string.bad_connection))
-                                    bottomProgressBar.isVisible = false
-                                }
-                            }
-                        }
+                        viewModel.loadNextPage()
                     }
                 }
             })
@@ -320,5 +316,4 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         private const val CLICK_DEBOUNCE_DELAY = 100L
         private const val RIGHT_CORNER = 2
     }
-
 }
