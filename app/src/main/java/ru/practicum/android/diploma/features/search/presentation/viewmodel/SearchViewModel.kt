@@ -30,9 +30,11 @@ class SearchViewModel(
 
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
     private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
+    val networkErrorStateFlow = MutableStateFlow(false)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
+    fun getNetworkErrorStateFlow() = networkErrorStateFlow.asStateFlow()
 
     private var currentPage = 0
     private var totalPages = 0
@@ -66,6 +68,7 @@ class SearchViewModel(
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
+        networkErrorStateFlow.value = false
         currentPage = vacancies.page
         totalPages = min(vacancies.pages, MAX_ITEMS - 1)
 
@@ -105,13 +108,16 @@ class SearchViewModel(
                     )
                 )
             )
-            when (throwableError) {
-                is CustomException.NetworkError -> toastEventFlow.emit(ToastEvent.NetworkError)
-                else -> Unit
+            if (throwableError is CustomException.NetworkError) {
+                networkErrorStateFlow.value = true
+                toastEventFlow.emit(ToastEvent.NetworkError)
             }
         } else {
             when (throwableError) {
-                is CustomException.NetworkError -> searchStateFlow.emit(SearchState.NetworkError)
+                is CustomException.NetworkError -> {
+                    searchStateFlow.emit(SearchState.NetworkError)
+                    networkErrorStateFlow.value = true
+                }
                 is CustomException.EmptyError -> searchStateFlow.emit(SearchState.EmptyError)
                 is CustomException.ServerError -> searchStateFlow.emit(SearchState.ServerError)
                 is CancellationException -> throw throwableError
@@ -121,8 +127,10 @@ class SearchViewModel(
     }
 
     fun loadNextPage() {
-        if (!isLoading && currentPage < totalPages - 1) {
+        if (!isLoading && currentPage < totalPages) {
             viewModelScope.launch {
+                if (isLoading) return@launch
+
                 searchStateFlow.emit(SearchState.Pagination)
 
                 runCatching {
@@ -137,7 +145,11 @@ class SearchViewModel(
                 }.onFailure { error ->
                     isLoading = false
                     when (error) {
-                        is CustomException.NetworkError -> searchStateFlow.emit(SearchState.NetworkError)
+                        is CustomException.NetworkError -> {
+                            if (searchStateFlow.value !is SearchState.NetworkError) {
+                                searchStateFlow.emit(SearchState.NetworkError)
+                            }
+                        }
                     }
                 }
             }

@@ -16,6 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -83,6 +86,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
         viewModel.getToastEventFlow()
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .combine(viewModel.networkErrorStateFlow) { event, hasError ->
+                if (hasError) event else null
+            }
+            .distinctUntilChanged()
+            .filterNotNull()
             .onEach { event ->
                 when (event) {
                     is SearchViewModel.ToastEvent.NetworkError -> {
@@ -227,6 +235,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             })
         }
     }
+
 
     private fun initListeners() {
         setupSearchEditTextTouchListener()
