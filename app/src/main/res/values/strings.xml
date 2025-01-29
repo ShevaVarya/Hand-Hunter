@@ -53,7 +53,7 @@
     <string name="vacancy_info_employer_logo_description">Логотип работодателя</string>
     <string name="vacancy_info_no_data_error">Вакансия не найдена или\nудалена</string>
     <string name="vacancy_info_server_error">Ошибка сервера</string>
-    <string name="vacancy_info_no_salary">Уровень дохода не указан</string>
+    <string name="vacancy_info_no_salary">Зарплата не указана</string>
     <string name="vacancy_info_salary_from">от %s</string>
     <string name="vacancy_info_salary_to">до %s</string>
     <string name="vacancy_info_salary_total_string">%s %s %s %s</string>

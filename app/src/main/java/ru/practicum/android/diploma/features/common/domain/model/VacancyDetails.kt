@@ -11,7 +11,8 @@ data class VacancyDetails(
     val description: String = "",
     val keySkills: List<String> = emptyList(),
     val vacancyUrl: String,
-    val isFavourite: Boolean = false
+    val isFavourite: Boolean = false,
+    val address: Address?
 )
 
 data class Salary(
@@ -45,3 +46,9 @@ data class Employer(
         val stub = Employer()
     }
 }
+
+data class Address(
+    val city: String?,
+    val street: String?,
+    val building: String?
+)
