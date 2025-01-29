@@ -236,7 +236,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-
     private fun initListeners() {
         setupSearchEditTextTouchListener()
         onTextChanged()
