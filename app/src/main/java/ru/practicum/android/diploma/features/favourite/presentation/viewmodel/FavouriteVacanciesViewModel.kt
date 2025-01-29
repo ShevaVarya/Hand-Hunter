@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.favourite.presentation.model.FavouriteVacanciesState
@@ -26,14 +28,22 @@ class FavouriteVacanciesViewModel(
 
     private fun getFavourites() {
         viewModelScope.launch {
-            interactor.getFavourites().collect { vacancies ->
-                _state.value = if (vacancies.isEmpty()) {
-                    FavouriteVacanciesState.Empty
-                } else {
-                    FavouriteVacanciesState.Content(
-                        vacancies.map { it.toUi(resourceProvider) }
-                    )
+            try {
+                interactor.getFavourites().catch {
+                    if (it is CustomException.DatabaseGettingError) {
+                        _state.value = FavouriteVacanciesState.DatabaseError
+                    }
+                }.collect { vacancies ->
+                    _state.value = if (vacancies.isEmpty()) {
+                        FavouriteVacanciesState.Empty
+                    } else {
+                        FavouriteVacanciesState.Content(
+                            vacancies.map { it.toUi(resourceProvider) }
+                        )
+                    }
                 }
+            } catch (e: CustomException.DatabaseGettingError) {
+                _state.value = FavouriteVacanciesState.DatabaseError
             }
         }
     }
