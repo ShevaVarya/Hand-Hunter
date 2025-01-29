@@ -38,6 +38,7 @@ class SearchViewModel(
 
     private var currentPage = 0
     private var totalPages = 0
+    private var totalFoundVacancies = 0
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
@@ -71,6 +72,7 @@ class SearchViewModel(
         networkErrorStateFlow.value = false
         currentPage = vacancies.page
         totalPages = min(vacancies.pages, MAX_ITEMS - 1)
+        totalFoundVacancies = vacancies.found
 
         val newVacancies = vacancies.items.map { it.toUI(resourceProvider) }
         if (isPagination) {
@@ -101,7 +103,7 @@ class SearchViewModel(
                 SearchState.Content(
                     VacanciesSearchUI(
                         items = loadedVacancies,
-                        found = DEFAULT_TOTAL_ITEMS,
+                        found = totalFoundVacancies,
                         pages = totalPages,
                         page = currentPage,
                         perPage = ITEMS_PER_PAGE
@@ -169,7 +171,5 @@ class SearchViewModel(
     companion object {
         private const val MAX_ITEMS = 100
         private const val ITEMS_PER_PAGE = 20
-        private const val DEFAULT_TOTAL_ITEMS = 0
-
     }
 }
