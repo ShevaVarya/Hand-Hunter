@@ -17,6 +17,7 @@
     <string name="logo">Логотип</string>
     <string name="empty_search">Изображение без поиска</string>
     <string name="bad_internet">Нет интернета</string>
+    <string name="bad_connection">Проверьте подключение к интернету</string>
     <string name="bad_request">Не удалось получить \nсписок вакансий</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="error_image">Изображение ошибки</string>

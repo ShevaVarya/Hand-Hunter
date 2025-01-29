@@ -10,6 +10,7 @@
     <string name="logo">Logotype</string>
     <string name="empty_search">Empty_search</string>
     <string name="bad_internet">Bad internet</string>
+    <string name="bad_connection">Check your connection</string>
     <string name="bad_request">Failed to get \nlist of vacancies</string>
     <string name="server_error">Server error</string>
     <string name="error_image">Image of error</string>

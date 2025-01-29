@@ -7,23 +7,26 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
+import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
-import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
-import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.debounce
@@ -58,12 +61,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { searchState ->
                 with(viewBinding) {
+                    bottomProgressBar.isVisible = false
                     progressBar.isVisible = false
                     contentRecyclerView.isVisible = false
                     messageTextView.isVisible = false
                     errorsImageView.isVisible = false
                     errorsTextView.isVisible = false
                 }
+
                 when (searchState) {
                     SearchState.Loading -> showProgressBar()
                     is SearchState.Content -> showVacancies(searchState.vacancies)
@@ -71,9 +76,30 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     SearchState.EmptyError -> showEmptyError()
                     SearchState.NetworkError -> showNetworkError()
                     SearchState.ServerError -> showServerError()
+                    SearchState.Pagination -> showBottomProgressBar()
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.getToastEventFlow()
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { event ->
+                when (event) {
+                    is SearchViewModel.ToastEvent.NetworkError -> {
+                        showToast(getString(R.string.bad_connection))
+                    }
+                }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showBottomProgressBar() {
+        viewBinding.bottomProgressBar.isVisible = true
+        viewBinding.contentRecyclerView.isVisible = true
     }
 
     private fun showProgressBar() {
@@ -180,6 +206,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             contentRecyclerView.adapter = vacancyAdapter
             contentRecyclerView.itemAnimator = null
         }
+
+        with(viewBinding) {
+            contentRecyclerView.adapter = vacancyAdapter
+            contentRecyclerView.itemAnimator = null
+
+            contentRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                    if (!viewModel.isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
+                        viewModel.loadNextPage()
+                    }
+                }
+            })
+        }
     }
 
     private fun initListeners() {
@@ -266,5 +312,4 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         private const val CLICK_DEBOUNCE_DELAY = 100L
         private const val RIGHT_CORNER = 2
     }
-
 }
