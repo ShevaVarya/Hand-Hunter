@@ -89,11 +89,15 @@ private fun getGrossInfoForUI(resourceProvider: ResourceProvider, isGross: Boole
 }
 
 private fun getAddressOrLocation(address: Address?, location: String): String {
-    return if (address == null || address.city == null && address.street == null && address.building == null) {
+    return if (address == null || isAddressFieldsNull(address)) {
         location
     } else {
         createAddressText(address)
     }
+}
+
+private fun isAddressFieldsNull(address: Address): Boolean {
+    return address.city == null && address.street == null && address.building == null
 }
 
 private fun createAddressText(address: Address): String {
