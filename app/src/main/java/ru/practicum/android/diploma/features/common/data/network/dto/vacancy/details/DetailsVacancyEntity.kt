@@ -21,6 +21,7 @@ data class DetailsVacancyEntity(
     val name: String,
     val salary: SalaryEntity?,
     val employer: EmployerEntity,
+    val address: AddressEntity?,
     val area: AreaEntity,
     val experience: ExperienceEntity,
     @SerializedName("employment")
@@ -45,3 +46,9 @@ data class DetailsVacancyEntity(
         val name: String
     )
 }
+
+data class AddressEntity(
+    val city: String?,
+    val street: String?,
+    val building: String?
+)

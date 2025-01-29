@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.favourite.data.dto
 
 import ru.practicum.android.diploma.features.common.data.database.VacancyDbEntity
+import ru.practicum.android.diploma.features.common.domain.model.Address
 import ru.practicum.android.diploma.features.common.domain.model.Employer
 import ru.practicum.android.diploma.features.common.domain.model.Salary
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
@@ -20,7 +21,10 @@ fun VacancyDetails.toDb(): VacancyDbEntity {
         experience = experience,
         employmentForm = employmentType,
         description = description,
-        vacancyUrl = vacancyUrl
+        vacancyUrl = vacancyUrl,
+        city = address?.city,
+        street = address?.street,
+        building = address?.building
     )
 }
 
@@ -44,6 +48,7 @@ fun VacancyDbEntity.toDomain(skills: List<String> = emptyList()): VacancyDetails
         description = description,
         keySkills = skills,
         vacancyUrl = vacancyUrl,
-        isFavourite = true
+        isFavourite = true,
+        address = Address(city, street, building)
     )
 }

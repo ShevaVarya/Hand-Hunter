@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.vacancy.presentation.model
 
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.features.common.domain.model.Address
 import ru.practicum.android.diploma.features.common.domain.model.Salary
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
@@ -16,7 +17,7 @@ fun VacancyDetails.toUI(resourceProvider: ResourceProvider): VacancyInfoUI {
         salary = salary.toUI(resourceProvider),
         employerLogoUrl = employer.logoUrl ?: "",
         employerName = employer.name,
-        location = location,
+        location = getAddressOrLocation(this.address, this.location),
         experience = experience,
         employmentForm = employmentType,
         description = description,
@@ -87,3 +88,24 @@ private fun getGrossInfoForUI(resourceProvider: ResourceProvider, isGross: Boole
     }
 }
 
+private fun getAddressOrLocation(address: Address?, location: String): String {
+    return if (address == null) {
+        location
+    } else {
+        createAddressText(address)
+    }
+}
+
+private fun createAddressText(address: Address): String {
+    val result = StringBuilder().append(address.city ?: "")
+
+        address.street?.let {
+            result.append(" $it")
+        }
+
+        address.building?.let {
+            result.append(" $it")
+        }
+
+        return result.toString()
+}
