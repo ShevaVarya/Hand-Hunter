@@ -33,6 +33,7 @@ import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfo
 import ru.practicum.android.diploma.utils.debounce
 import ru.practicum.android.diploma.utils.isRightDrawableClicked
 
+@Suppress("LargeClass")
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private var vacancyAdapter: VacancyAdapter? = null
     private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
