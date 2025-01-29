@@ -51,19 +51,18 @@ class SearchViewModel(
         isLoading = true
 
         viewModelScope.launch {
-            try {
-                if (!isPagination) searchStateFlow.emit(SearchState.Loading)
-                isLoading = true
-                interactor.getVacancies(querySearch)
-                    .onSuccess {
-                        handleSuccess(it, isPagination)
-                    }
-                    .onFailure {
-                        handleError(it, isPagination)
-                    }
-            } finally {
-                isLoading = false
-            }
+            if (!isPagination) searchStateFlow.emit(SearchState.Loading)
+            isLoading = true
+            interactor.getVacancies(querySearch)
+                .onSuccess {
+                    handleSuccess(it, isPagination)
+                }
+                .onFailure {
+                    handleError(it, isPagination)
+                }
+                .also {
+                    isLoading = false
+                }
         }
     }
 
