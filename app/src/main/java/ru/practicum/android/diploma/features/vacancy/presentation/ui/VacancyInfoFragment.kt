@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
@@ -61,6 +62,23 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
         viewModel.state.collectWithLifecycle(this) { state ->
             applyState(state)
         }
+        viewModel.dbErrorEvent.collectWithLifecycle(this) { isFavourite ->
+            showSnackbar(isFavourite)
+        }
+    }
+
+    private fun showSnackbar(isStillFavourite: Boolean) {
+        val snackBar = Snackbar.make(
+            requireContext(),
+            viewBinding.root,
+            if (isStillFavourite) {
+                resources.getString(R.string.vacancy_info_save_to_database_error)
+            } else {
+                resources.getString(R.string.vacancy_info_delete_from_database_error)
+            },
+            Snackbar.LENGTH_SHORT
+        )
+        snackBar.show()
     }
 
     private fun handleMenuItemClick(item: MenuItem) {
@@ -101,20 +119,24 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
 
             when (state) {
                 is VacancyInfoViewModel.State.Loading -> {
+                    hideToolbarMenu()
                     progressBar.isVisible = true
                 }
 
                 is VacancyInfoViewModel.State.Data -> {
+                    showToolbarMenu()
                     setData(state)
                     vacancyInfoContainer.isVisible = true
                 }
 
                 is VacancyInfoViewModel.State.ServerError -> {
+                    hideToolbarMenu()
                     setErrorResource(R.drawable.server_error2, R.string.vacancy_info_server_error)
                     errorContainer.isVisible = true
                 }
 
                 is VacancyInfoViewModel.State.NoData -> {
+                    showToolbarMenu()
                     setErrorResource(R.drawable.data_delete, R.string.vacancy_info_no_data_error)
                     errorContainer.isVisible = true
                 }
@@ -171,6 +193,20 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 menu.icon = ContextCompat.getDrawable(requireContext(), R.drawable.favorites_off_24px)
             }
         }
+    }
+
+    private fun hideToolbarMenu() {
+        val share = viewBinding.toolbar.menu.findItem(R.id.share)
+        val favourite = viewBinding.toolbar.menu.findItem(R.id.favourite)
+        share.isVisible = false
+        favourite.isVisible = false
+    }
+
+    private fun showToolbarMenu() {
+        val share = viewBinding.toolbar.menu.findItem(R.id.share)
+        val favourite = viewBinding.toolbar.menu.findItem(R.id.favourite)
+        share.isVisible = true
+        favourite.isVisible = true
     }
 
     companion object {

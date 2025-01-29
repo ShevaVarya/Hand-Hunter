@@ -2,8 +2,10 @@ package ru.practicum.android.diploma.features.vacancy.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
@@ -22,11 +24,13 @@ class VacancyInfoViewModel(
     private val wasOpenedFromSearch: Boolean,
     private val vacancyId: String?
 ) : ViewModel() {
-    private var isFavourite: Boolean = false
     private var details: VacancyDetails? = null
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state.asStateFlow()
+
+    private var _dbErrorEvent = MutableSharedFlow<Boolean>(REPLAY)
+    val dbErrorEvent = _dbErrorEvent.asSharedFlow()
 
     fun getVacancyInfo() {
         if (vacancyId == null) {
@@ -45,8 +49,8 @@ class VacancyInfoViewModel(
         viewModelScope.launch {
             vacancyDetailsInteractor.getVacancyDetails(vacancyId)
                 .onSuccess {
-                    isFavourite = vacancyDetailsInteractor.isFavouriteVacancy(vacancyId)
-                    details = it.copy(isFavourite = isFavourite)
+                    val isFavourite = vacancyDetailsInteractor.isFavouriteVacancy(vacancyId)
+                    details = it.copy(isFavourite = it.isFavourite)
                     _state.value =
                         State.Data(it.toUI(resourceProvider).copy(isFavourite = isFavourite))
                 }
@@ -54,7 +58,7 @@ class VacancyInfoViewModel(
         }
     }
 
-    private fun handleError(error: Throwable) {
+    private suspend fun handleError(error: Throwable) {
         when (error) {
             is CustomException.RequestError, CustomException.EmptyError, CustomException.NetworkError -> {
                 _state.value = State.NoData
@@ -62,6 +66,12 @@ class VacancyInfoViewModel(
 
             is CustomException.ServerError -> _state.value = State.ServerError
             is CancellationException -> throw error
+            is CustomException.UpdateDatabaseError -> {
+                details?.let {
+                    _dbErrorEvent.emit(!details!!.isFavourite)
+                }
+            }
+
             else -> Unit
         }
     }
@@ -72,7 +82,6 @@ class VacancyInfoViewModel(
             details?.let {
                 _state.value = State.Data(it.toUI(resourceProvider))
             }
-            isFavourite = true
         }
     }
 
@@ -81,19 +90,28 @@ class VacancyInfoViewModel(
     }
 
     fun toggleFavouriteVacancy(): Boolean {
-        if (_state.value is State.Data) {
-            viewModelScope.launch {
-                details?.let {
-                    if (isFavourite) {
+        details?.let {
+            if (_state.value is State.Data) {
+                viewModelScope.launch {
+                    if (details!!.isFavourite) {
                         favouriteVacanciesInteractor.deleteFavouriteVacancy(it.id)
+                            .onSuccess {
+                                details = details!!.copy(isFavourite = !details!!.isFavourite)
+                                _state.value = State.Data(details!!.toUI(resourceProvider))
+                            }
+                            .onFailure { handleError(CustomException.UpdateDatabaseError) }
                     } else {
                         favouriteVacanciesInteractor.addToFavourites(it)
+                            .onSuccess {
+                                details = details!!.copy(isFavourite = !details!!.isFavourite)
+                                _state.value = State.Data(details!!.toUI(resourceProvider))
+                            }
+                            .onFailure { handleError(CustomException.UpdateDatabaseError) }
                     }
                 }
             }
-            isFavourite = !isFavourite
         }
-        return isFavourite
+        return details?.isFavourite ?: false
     }
 
     override fun onCleared() {
@@ -110,5 +128,6 @@ class VacancyInfoViewModel(
 
     companion object {
         private const val EMPTY_STRING = ""
+        private const val REPLAY = 0
     }
 }
