@@ -89,9 +89,23 @@
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/message_text_view"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         tools:itemCount="7"
         tools:listitem="@layout/item_search" />
+
+    <ProgressBar
+        android:id="@+id/bottomProgressBar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_3x"
+        android:layout_marginBottom="@dimen/margin_3x"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content_recycler_view" />
 
     <ImageView
         android:id="@+id/errors_image_view"

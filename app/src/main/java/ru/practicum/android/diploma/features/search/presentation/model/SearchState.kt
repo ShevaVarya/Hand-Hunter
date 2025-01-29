@@ -7,4 +7,5 @@ sealed interface SearchState {
     data object EmptyError : SearchState
     data object NetworkError : SearchState
     data object ServerError : SearchState
+    data object Pagination : SearchState
 }

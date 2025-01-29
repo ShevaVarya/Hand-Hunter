@@ -17,7 +17,7 @@ class FavouriteVacanciesRepositoryImpl(
 ) : FavouriteVacanciesRepository {
 
     override suspend fun addToFavourites(vacancy: VacancyDetails): Result<Unit> {
-        return kotlin.runCatching {
+        return runCatching {
             val keySkills = vacancy.keySkills.map { skill ->
                 createKeySkillEntity(vacancy.id, skill)
             }
