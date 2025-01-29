@@ -43,6 +43,7 @@ class FavouriteVacanciesViewModel(
                     }
                 }
             } catch (e: CustomException.DatabaseGettingError) {
+                println(e)
                 _state.value = FavouriteVacanciesState.DatabaseError
             }
         }
