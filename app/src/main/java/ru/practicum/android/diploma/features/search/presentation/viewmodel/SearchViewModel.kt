@@ -134,7 +134,7 @@ class SearchViewModel(
             }
         }
     }
-
+    @Suppress("LabeledExpression")
     fun loadNextPage() {
         if (!isLoading && currentPage < totalPages) {
             viewModelScope.launch {
@@ -151,15 +151,17 @@ class SearchViewModel(
                         ),
                         isPagination = true
                     )
-                }.onFailure { error ->
-                    isLoading = false
-                    when (error) {
-                        is CustomException.NetworkError -> {
-                            if (searchStateFlow.value !is SearchState.NetworkError) {
-                                searchStateFlow.emit(SearchState.NetworkError)
-                            }
-                        }
-                    }
+                }.onFailure { handleNextPageError(it) }
+            }
+        }
+    }
+
+    private suspend fun handleNextPageError(error: Throwable) {
+        isLoading = false
+        when (error) {
+            is CustomException.NetworkError -> {
+                if (searchStateFlow.value !is SearchState.NetworkError) {
+                    searchStateFlow.emit(SearchState.NetworkError)
                 }
             }
         }
