@@ -89,7 +89,7 @@ private fun getGrossInfoForUI(resourceProvider: ResourceProvider, isGross: Boole
 }
 
 private fun getAddressOrLocation(address: Address?, location: String): String {
-    return if (address == null) {
+    return if (address == null || address.city == null && address.street == null && address.building == null) {
         location
     } else {
         createAddressText(address)
@@ -98,14 +98,8 @@ private fun getAddressOrLocation(address: Address?, location: String): String {
 
 private fun createAddressText(address: Address): String {
     val result = StringBuilder().append(address.city ?: "")
+    if (address.street != null) result.append(" ${address.street}")
+    if (address.building != null) result.append(" ${address.building}")
 
-        address.street?.let {
-            result.append(" $it")
-        }
-
-        address.building?.let {
-            result.append(" $it")
-        }
-
-        return result.toString()
+    return result.toString()
 }
