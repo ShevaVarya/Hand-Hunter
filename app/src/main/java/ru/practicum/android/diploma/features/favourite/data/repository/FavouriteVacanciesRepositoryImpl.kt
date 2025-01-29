@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.features.favourite.data.repository
 
+import android.database.sqlite.SQLiteException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.features.common.data.database.FavouritesDao
 import ru.practicum.android.diploma.features.common.data.database.KeySkillEntity
@@ -29,10 +31,18 @@ class FavouriteVacanciesRepositoryImpl(
     }
 
     override fun getFavourites(): Flow<List<VacancyDetails>> {
-        return favouritesDao.getFavourites()
-            .map { vacancies ->
-                vacancies.map { it.toDomain() }.reversed()
-            }
+        try {
+            return favouritesDao.getFavourites()
+                .map { vacancies ->
+                    vacancies.map { it.toDomain() }.reversed()
+                }.catch {
+                    throw CustomException.DatabaseGettingError
+                }
+        } catch (e: SQLiteException) {
+            println(e)
+            throw CustomException.DatabaseGettingError
+        }
+
     }
 
     override suspend fun deleteFavouriteVacancy(vacancyId: String): Result<Unit> {
@@ -51,3 +61,4 @@ class FavouriteVacanciesRepositoryImpl(
     }
 
 }
+
