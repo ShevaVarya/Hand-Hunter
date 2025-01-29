@@ -67,10 +67,9 @@ class SearchViewModel(
         }
     }
 
-
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
         currentPage = vacancies.page
-        totalPages = min(vacancies.pages, 100)
+        totalPages = min(vacancies.pages, MAX_ITEMS)
 
         val newVacancies = vacancies.items.map { it.toUI(resourceProvider) }
         if (isPagination) {
@@ -124,12 +123,12 @@ class SearchViewModel(
         }
     }
 
-
     fun loadNextPage() {
         if (!isLoading && currentPage < totalPages) {
             viewModelScope.launch {
-                try {
-                    searchStateFlow.emit(SearchState.Pagination)
+                searchStateFlow.emit(SearchState.Pagination)
+
+                runCatching {
                     search(
                         QuerySearch(
                             text = lastSearchQuery,
@@ -138,14 +137,10 @@ class SearchViewModel(
                         ),
                         isPagination = true
                     )
-                } catch (e: Exception) {
+                }.onFailure { error ->
                     isLoading = false
-                    when (e) {
-                        is CustomException.NetworkError -> {
-                            searchStateFlow.emit(SearchState.NetworkError)
-                        }
-
-                        else -> Unit
+                    when (error) {
+                        is CustomException.NetworkError -> searchStateFlow.emit(SearchState.NetworkError)
                     }
                 }
             }
@@ -163,7 +158,8 @@ class SearchViewModel(
     }
 
     companion object {
-        const val ITEMS_PER_PAGE = 20
+        private const val MAX_ITEMS = 100
+        private const val ITEMS_PER_PAGE = 20
         private const val DEFAULT_TOTAL_ITEMS = 0
 
     }
