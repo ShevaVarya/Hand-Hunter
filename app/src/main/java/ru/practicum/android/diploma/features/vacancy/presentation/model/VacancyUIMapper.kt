@@ -4,6 +4,8 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.features.common.domain.model.Salary
 import ru.practicum.android.diploma.features.common.domain.model.VacancyDetails
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
+import java.text.NumberFormat
+import java.util.Locale
 
 private const val EMPTY_STRING = ""
 private const val SALARY_STUB_VALUE = 0
@@ -52,18 +54,22 @@ private fun isStub(salary: Salary): Boolean {
 }
 
 private fun getFromValueForUI(resourceProvider: ResourceProvider, from: Int): String {
+    val numberFormat = NumberFormat.getInstance(Locale.getDefault())
     return if (from == 0) {
         EMPTY_STRING
     } else {
-        String.format(resourceProvider.getString(R.string.vacancy_info_salary_from), from)
+        val formattedString = numberFormat.format(from)
+        String.format(resourceProvider.getString(R.string.vacancy_info_salary_from), formattedString)
     }
 }
 
 private fun getToValueForUI(resourceProvider: ResourceProvider, to: Int): String {
+    val numberFormat = NumberFormat.getInstance(Locale.getDefault())
     return if (to == 0) {
         EMPTY_STRING
     } else {
-        String.format(resourceProvider.getString(R.string.vacancy_info_salary_to), to)
+        val formattedString = numberFormat.format(to)
+        String.format(resourceProvider.getString(R.string.vacancy_info_salary_to), formattedString)
     }
 }
 

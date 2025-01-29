@@ -17,6 +17,7 @@
     <string name="message_text">There are no such vacancies</string>
     <string name="salary_from">from </string>
     <string name="salary_to">to </string>
+    <string name="no_salary">The salary is not indicated</string>
 
     <string name="item_bottom_navigation_menu_home">Home</string>
     <string name="item_bottom_navigation_menu_favorites">Favorites</string>
@@ -45,12 +46,13 @@
     <string name="vacancy_info_no_data_error">Vacancy not found or\ndeleted</string>
     <string name="vacancy_info_server_error">Server error</string>
     <string name="vacancy_info_no_salary">Salary not specified</string>
-    <string name="vacancy_info_salary_from">from %d</string>
-    <string name="vacancy_info_salary_to">to %d</string>
+    <string name="vacancy_info_salary_from">from %s</string>
+    <string name="vacancy_info_salary_to">to %s</string>
     <string name="vacancy_info_salary_total_string">%s %s %s %s</string>
     <string name="vacancy_info_gross_info_true">gross</string>
     <string name="vacancy_info_gross_info_false">net</string>
-    <string name="no_salary">The salary is not indicated</string>
+    <string name="vacancy_info_save_to_database_error">Failed to add vacancy to favorites</string>
+    <string name="vacancy_info_delete_from_database_error">Failed to remove vacancy from favorites</string>
 
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
