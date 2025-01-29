@@ -35,7 +35,7 @@ class SearchViewModel(
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
 
     private var currentPage = 0
-    private var totalPages = Int.MAX_VALUE
+    private var totalPages = 0
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
@@ -67,7 +67,7 @@ class SearchViewModel(
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
         currentPage = vacancies.page
-        totalPages = min(vacancies.pages, MAX_ITEMS)
+        totalPages = min(vacancies.pages, MAX_ITEMS - 1)
 
         val newVacancies = vacancies.items.map { it.toUI(resourceProvider) }
         if (isPagination) {
@@ -121,7 +121,7 @@ class SearchViewModel(
     }
 
     fun loadNextPage() {
-        if (!isLoading && currentPage < totalPages) {
+        if (!isLoading && currentPage < totalPages - 1) {
             viewModelScope.launch {
                 searchStateFlow.emit(SearchState.Pagination)
 
