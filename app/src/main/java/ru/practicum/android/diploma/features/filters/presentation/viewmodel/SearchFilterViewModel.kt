@@ -18,31 +18,32 @@ class SearchFilterViewModel : ViewModel() {
 
     // Метод заменяющий отрасль
 //    fun setIndustry(industry: IndustryUI?) {
-        // TODO
+//
 //    }
 
     // Метод для фильтрации "не показывать без зарплаты"
 //    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-        // TODO
+//
 //    }
 
     // Метод заменяющий страну
 //    fun setChosenCountry(country: CountryUI?) {
-        // TODO
+//
 //    }
 
     // Метод заменяющий регион
 //    fun setChosenRegion(region: RegionUI?) {
-        // TODO
+//
 //    }
 
     fun setSalary(salary: Int?) {
         // Метод заменяющий сумму ожидаемой зарплаты
     }
 
-    fun clearPlaceOfWork() {
-        // Метод очищающий граф "Место работы"
-    }
+    // Метод очищающий граф "Место работы"
+//    fun clearPlaceOfWork() {
+//
+//    }
 
     fun saveFilter() {
         // Метод сохраняющий состояние "фильтра"

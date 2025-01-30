@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -103,19 +102,19 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     // Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
-    private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
-        if (item != null) {
-            til.setEndIconDrawable(R.drawable.close_24px)
-            til.setEndIconOnClickListener {
-                action.invoke()
-                til.setEndIconOnClickListener(null)
-            }
-        } else {
-            til.setEndIconDrawable(R.drawable.arrow_forward_24px)
-            til.isEndIconVisible = false
-            til.isEndIconVisible = true
-        }
-    }
+//    private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
+//        if (item != null) {
+//            til.setEndIconDrawable(R.drawable.close_24px)
+//            til.setEndIconOnClickListener {
+//                action.invoke()
+//                til.setEndIconOnClickListener(null)
+//            }
+//        } else {
+//            til.setEndIconDrawable(R.drawable.arrow_forward_24px)
+//            til.isEndIconVisible = false
+//            til.isEndIconVisible = true
+//        }
+//    }
 
     // Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
 //    private fun processFilterResult(filter: Filter) {
