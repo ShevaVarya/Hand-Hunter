@@ -15,6 +15,20 @@
         app:title="@string/vacancies_search"
         app:titleTextAppearance="@style/toolbarTextStyle" />
 
+    <FrameLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/blue" />
+
+    </FrameLayout>
+
     <EditText
         android:id="@+id/search_edit_text"
         style="@style/editTextSearchStyle"
@@ -23,6 +37,7 @@
         android:layout_marginHorizontal="@dimen/margin_4x"
         android:autofillHints="@string/search"
         android:hint="@string/location_hint"
+        android:drawableEnd="@drawable/search_24px"
         android:imeOptions="actionDone"
         android:singleLine="true"
         tools:ignore="LabelFor" />
