@@ -6,7 +6,7 @@
     <string name="filter_button">Search filter</string>
     <string name="search">Search</string>
     <string name="search_hint">Enter your request</string>
-    <string name="search_icon">Search icon</string>
+    <string name="search_clear_icon">Search/clear icon</string>
     <string name="logo">Logotype</string>
     <string name="empty_search">Empty_search</string>
     <string name="bad_internet">Bad internet</string>

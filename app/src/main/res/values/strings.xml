@@ -13,7 +13,7 @@
     <string name="filter_button">Фильтр поиска</string>
     <string name="search">Поиск</string>
     <string name="search_hint">Введите запрос</string>
-    <string name="search_icon">Иконка поиска</string>
+    <string name="search_clear_icon">Иконка поиска/очистки</string>
     <string name="logo">Логотип</string>
     <string name="empty_search">Изображение без поиска</string>
     <string name="bad_internet">Нет интернета</string>

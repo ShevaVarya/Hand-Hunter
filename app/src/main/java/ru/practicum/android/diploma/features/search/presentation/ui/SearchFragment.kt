@@ -2,11 +2,9 @@ package ru.practicum.android.diploma.features.search.presentation.ui
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -229,45 +227,45 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun initListeners() {
-        setupSearchEditTextTouchListener()
         onTextChanged()
         setupEnterKeyListener()
+        clearSearchString()
     }
 
-    private fun setupSearchEditTextTouchListener() {
-        with(viewBinding.searchEditText) {
-            setOnTouchListener { _, event ->
-                if (isRightDrawableClicked(event)) {
-                    viewModel.onClearedSearch()
-                    performClick()
-                    true
-                } else {
-                    false
-                }
+    private fun clearSearchString() {
+        viewBinding.searchClearImageView.setOnClickListener {
+            viewModel.onClearedSearch()
+            viewBinding.searchEditText.setText(EMPTY_TEXT)
+            hideKeyBoard()
+        }
+    }
+
+    private fun switchSearchClearIcon(isEditTextNotEmpty: Boolean) {
+        with(viewBinding) {
+            val image = if (isEditTextNotEmpty) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.close_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.search_24px
+                )
             }
+            searchClearImageView.setImageDrawable(image)
         }
     }
 
     private fun onTextChanged() {
         with(viewBinding) {
             searchEditText.doOnTextChanged { text, _, _, _ ->
-                val isNotEmpty = text.isNullOrEmpty().not()
                 val querySearch = QuerySearch(text = text.toString().trim())
-                if (!isNotEmpty) {
+                val isEditTextNotEmpty = text.isNullOrEmpty().not()
+                if (isEditTextNotEmpty) {
                     viewModel.onClearedSearch()
                 }
-
-                val drawableEnd = if (isNotEmpty) {
-                    ContextCompat.getDrawable(requireContext(), R.drawable.close_24px)
-                } else {
-                    ContextCompat.getDrawable(requireContext(), R.drawable.search_24px)
-                }
-                searchEditText.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    null,
-                    drawableEnd,
-                    null
-                )
+                switchSearchClearIcon(isEditTextNotEmpty)
                 onSearchDebounce?.invoke(querySearch)
             }
         }
@@ -298,18 +296,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun EditText.isRightDrawableClicked(event: MotionEvent): Boolean {
-        val rightDrawable = compoundDrawables[RIGHT_CORNER]
-        val drawableWidth = rightDrawable?.bounds?.width()
-        if (event.action != MotionEvent.ACTION_UP || drawableWidth == null) return false
-
-        return event.x >= width - paddingEnd - drawableWidth
-    }
-
     private companion object {
         private const val EMPTY_TEXT = ""
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 100L
-        private const val RIGHT_CORNER = 2
     }
 }
