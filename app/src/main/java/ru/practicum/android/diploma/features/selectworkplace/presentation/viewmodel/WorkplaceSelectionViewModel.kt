@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.selectworkplace.presentation.view_model
+package ru.practicum.android.diploma.features.selectworkplace.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,17 +17,13 @@ class WorkplaceSelectionViewModel : ViewModel() {
 
     fun getWorkplace() {
         viewModelScope.launch {
-
             val country = CountryUI(id = "RU", name = "Россия")
             val city = AreaUI(id = "MOW", name = "Москва")
-
-
             val location = WorkplaceLocation(
                 country = country,
                 area = city
             )
             workplaceLocationState.emit(WorkplaceLocationState.Success(location))
-
         }
     }
 }

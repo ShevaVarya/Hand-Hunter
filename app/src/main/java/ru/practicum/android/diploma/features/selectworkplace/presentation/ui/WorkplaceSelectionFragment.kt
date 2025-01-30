@@ -9,11 +9,10 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentWorkplaceSelectionBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.selectworkplace.presentation.model.WorkplaceLocationState
-import ru.practicum.android.diploma.features.selectworkplace.presentation.view_model.WorkplaceSelectionViewModel
+import ru.practicum.android.diploma.features.selectworkplace.presentation.viewmodel.WorkplaceSelectionViewModel
 
 class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBinding>() {
 
