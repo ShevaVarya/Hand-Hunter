@@ -62,6 +62,15 @@
     <string name="vacancy_info_save_to_database_error">Не удалось добавить вакансию в избранное</string>
     <string name="vacancy_info_delete_from_database_error">Не удалось удалить вакансию из избранного</string>
 
+    <string name="vacancy_search_filters_title">Настройка фильтрации</string>
+    <string name="vacancy_search_filters_place_of_work">Место работы</string>
+    <string name="vacancy_search_filters_industry">Отрасль</string>
+    <string name="vacancy_search_filters_salary_expected">Ожидаемая зарплата</string>
+    <string name="vacancy_search_filters_enter_salary">Введите сумму</string>
+    <string name="vacancy_search_filters_without_salary">Не показывать без зарплаты</string>
+    <string name="vacancy_search_filters_accept">Применить</string>
+    <string name="vacancy_search_filters_reset">Сбросить</string>
+
     <plurals name="vacancies_count">
         <item quantity="one">Найдено %d вакансия</item>
         <item quantity="few">Найдено %d вакансии</item>
