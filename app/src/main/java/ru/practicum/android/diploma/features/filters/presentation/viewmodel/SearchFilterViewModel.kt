@@ -20,6 +20,10 @@ class SearchFilterViewModel : ViewModel() {
         // Метод заменяющий отрасль
     }
 
+    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
+        // Метод для фильтрации "не показывать без зарплаты"
+    }
+
     fun setChosenCountry(country: CountryUI?) {
         // Метод заменяющий страну
     }
