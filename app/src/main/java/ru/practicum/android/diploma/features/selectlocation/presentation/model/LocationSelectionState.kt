@@ -8,7 +8,7 @@ sealed interface LocationSelectionState {
 
     data class ContentRegion(
         val regions: List<RegionUI>
-    ): LocationSelectionState
+    ) : LocationSelectionState
 
     data object NetworkError : LocationSelectionState
 

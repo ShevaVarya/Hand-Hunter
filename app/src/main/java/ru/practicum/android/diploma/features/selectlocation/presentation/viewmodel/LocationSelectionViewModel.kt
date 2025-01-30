@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.selectlocation.presentation.view_model
+package ru.practicum.android.diploma.features.selectlocation.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

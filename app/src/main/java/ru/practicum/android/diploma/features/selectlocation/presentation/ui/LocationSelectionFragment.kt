@@ -24,7 +24,7 @@ import ru.practicum.android.diploma.features.selectlocation.presentation.model.L
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.RegionUI
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.Regionable
 import ru.practicum.android.diploma.features.selectlocation.presentation.recycler.LocationAdapter
-import ru.practicum.android.diploma.features.selectlocation.presentation.view_model.LocationSelectionViewModel
+import ru.practicum.android.diploma.features.selectlocation.presentation.viewmodel.LocationSelectionViewModel
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
@@ -193,14 +193,17 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         }
     }
 
+    @Suppress("LabeledExpression")
     @SuppressLint("ClickableViewAccessibility")
     private fun clearSearchString() {
         viewBinding.searchEditText.setOnTouchListener { view, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                val drawableEnd = viewBinding.searchEditText.compoundDrawables[2]  // DrawableEnd (Right)
+                val drawableEnd = viewBinding.searchEditText.compoundDrawables[2] // DrawableEnd (Right)
                 if (drawableEnd != null) {
                     val drawableStartX =
-                        viewBinding.searchEditText.width - viewBinding.searchEditText.paddingEnd - drawableEnd.intrinsicWidth
+                        viewBinding.searchEditText.width -
+                            viewBinding.searchEditText.paddingEnd -
+                            drawableEnd.intrinsicWidth
                     if (event.rawX >= drawableStartX) {
                         viewBinding.searchEditText.text.clear()
                         hideKeyBoard()
