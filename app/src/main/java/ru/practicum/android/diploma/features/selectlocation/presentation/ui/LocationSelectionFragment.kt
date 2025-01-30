@@ -193,12 +193,6 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
 
     @SuppressLint("ClickableViewAccessibility")
     private fun clearSearchString() {
-        /*viewBinding.searchClearImageView.setOnClickListener {
-            viewModel.onClearedSearch()
-            viewBinding.searchEditText.setText(EMPTY_TEXT)
-            hideKeyBoard()
-        }
-         */
         viewBinding.searchEditText.setOnTouchListener { view, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 val drawableEnd = viewBinding.searchEditText.compoundDrawables[2]  // DrawableEnd (Right)
