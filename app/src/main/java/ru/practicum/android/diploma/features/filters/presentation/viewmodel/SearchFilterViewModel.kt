@@ -16,21 +16,25 @@ class SearchFilterViewModel : ViewModel() {
         // Метод возвращающий "Отрасль"
     }
 
-    fun setIndustry(industry: IndustryUI?) {
-        // Метод заменяющий отрасль
-    }
+    // Метод заменяющий отрасль
+//    fun setIndustry(industry: IndustryUI?) {
+        // TODO
+//    }
 
-    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-        // Метод для фильтрации "не показывать без зарплаты"
-    }
+    // Метод для фильтрации "не показывать без зарплаты"
+//    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
+        // TODO
+//    }
 
-    fun setChosenCountry(country: CountryUI?) {
-        // Метод заменяющий страну
-    }
+    // Метод заменяющий страну
+//    fun setChosenCountry(country: CountryUI?) {
+        // TODO
+//    }
 
-    fun setChosenRegion(region: RegionUI?) {
-        // Метод заменяющий регион
-    }
+    // Метод заменяющий регион
+//    fun setChosenRegion(region: RegionUI?) {
+        // TODO
+//    }
 
     fun setSalary(salary: Int?) {
         // Метод заменяющий сумму ожидаемой зарплаты

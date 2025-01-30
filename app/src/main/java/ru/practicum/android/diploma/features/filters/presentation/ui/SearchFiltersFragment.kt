@@ -46,14 +46,14 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     override fun observeData() {
         viewModel.getIndustries()
 
-        viewModel.currentFilter.observe(viewLifecycleOwner) { filter ->
-            currentFilter = filter
-            processFilterResult(filter)
-            viewModel.setChosenCountry(filter.country)
-            viewModel.setChosenRegion(filter.region)
-            setupClearButton(filter.country, binding.placeOfWork) { viewModel.clearPlaceOfWork() }
-            setupClearButton(filter.industry, binding.industry) { viewModel.setIndustry(null) }
-        }
+//        viewModel.currentFilter.observe(viewLifecycleOwner) { filter ->
+//            currentFilter = filter
+//            processFilterResult(filter)
+//            viewModel.setChosenCountry(filter.country)
+//            viewModel.setChosenRegion(filter.region)
+//            setupClearButton(filter.country, binding.placeOfWork) { viewModel.clearPlaceOfWork() }
+//            setupClearButton(filter.industry, binding.industry) { viewModel.setIndustry(null) }
+//        }
     }
 
     private fun initializeViews() {
@@ -97,9 +97,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
         }
 
-        binding.withoutSalary.setOnClickListener {
-            binding.withoutSalary.setOnClickListener { viewModel.setOnlyWithSalary(binding.withoutSalary.isChecked) }
-        }
+//        binding.withoutSalary.setOnClickListener {
+//            binding.withoutSalary.setOnClickListener { viewModel.setOnlyWithSalary(binding.withoutSalary.isChecked) }
+//        }
     }
 
     // Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
@@ -118,24 +118,24 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     // Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
-    private fun processFilterResult(filter: Filter) {
-        setButtonVisibility(filter)
-        if (!filter.isDefault) {
-            processArea(filter.country, filter.region)
-            binding.industryEnter.setText(filter.industry?.name ?: "")
-            binding.withoutSalary.isChecked = filter.onlyWithSalary
-            val newSalary = filter.salary
-            if (newSalary != oldSalary) {
-                binding.salaryEnter.setText(newSalary.toString())
-            }
-        } else {
-            binding.placeOfWorkEnter.text = null
-            binding.industryEnter.text = null
-            binding.withoutSalary.isChecked = false
-            binding.salaryEnter.text = null
-        }
-        setCheckedIcon(filter.onlyWithSalary)
-    }
+//    private fun processFilterResult(filter: Filter) {
+//        setButtonVisibility(filter)
+//        if (!filter.isDefault) {
+//            processArea(filter.country, filter.region)
+//            binding.industryEnter.setText(filter.industry?.name ?: "")
+//            binding.withoutSalary.isChecked = filter.onlyWithSalary
+//            val newSalary = filter.salary
+//            if (newSalary != oldSalary) {
+//                binding.salaryEnter.setText(newSalary.toString())
+//            }
+//        } else {
+//            binding.placeOfWorkEnter.text = null
+//            binding.industryEnter.text = null
+//            binding.withoutSalary.isChecked = false
+//            binding.salaryEnter.text = null
+//        }
+//        setCheckedIcon(filter.onlyWithSalary)
+//    }
 
 //    Метод для сохранения страны и региона в "Место работы"
 //    private fun processArea(country: CountryUI?, region: RegionUI?) {
