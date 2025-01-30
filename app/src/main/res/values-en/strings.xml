@@ -55,6 +55,11 @@
     <string name="vacancy_info_save_to_database_error">Failed to add vacancy to favorites</string>
     <string name="vacancy_info_delete_from_database_error">Failed to remove vacancy from favorites</string>
 
+    <string name="choosing_place_of_work_toolbar">Choosing a place of work</string>
+    <string name="country_hint">Country</string>
+    <string name="region_hint">Region</string>
+    <string name="choose_button_text">Choose</string>
+
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
         <item quantity="other">Found %d vacancies</item>
