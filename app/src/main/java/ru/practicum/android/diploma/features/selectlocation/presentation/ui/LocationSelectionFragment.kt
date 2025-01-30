@@ -84,12 +84,14 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
     private fun showContentCountry(countries: List<CountryUI>) {
         locationAdapter?.submitList(countries)
         viewBinding.contentRecyclerView.isVisible = true
+        viewBinding.toolbar.title = getString(R.string.location_country_toolbar_title)
     }
 
     private fun showContentRegion(regions: List<RegionUI>) {
         locationAdapter?.submitList(regions)
         viewBinding.contentRecyclerView.isVisible = true
         viewBinding.searchEditText.isVisible = true
+        viewBinding.toolbar.title = getString(R.string.location_region_toolbar_title)
     }
 
     private fun showLoading() {

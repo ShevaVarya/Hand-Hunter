@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:title="@string/vacancies_search"
+        app:title="@string/location_country_toolbar_title"
         app:titleTextAppearance="@style/toolbarTextStyle" />
 
     <FrameLayout
