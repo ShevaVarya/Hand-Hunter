@@ -10,9 +10,9 @@ package ru.practicum.android.diploma.features.filters.domain.model
  */
 
 data class Filter(
-    //val country: CountryUI? = null,
-    //val region: RegionUI? = null,
-    //val industry: IndustryUI? = null,
+    // val country: CountryUI? = null,
+    // val region: RegionUI? = null,
+    // val industry: IndustryUI? = null,
     val salary: Int? = null,
     val onlyWithSalary: Boolean = false
 ) {

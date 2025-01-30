@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.domain.model.Filter
-import ru.practicum.android.diploma.features.filters.presentation.view_model.SearchFilterViewModel
+import ru.practicum.android.diploma.features.filters.presentation.viewmodel.SearchFilterViewModel
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
@@ -64,7 +64,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         }
 
         binding.industryEnter.setOnClickListener {
-            //Навигация к выбору отрасли
+            // Навигация к выбору отрасли
         }
 
         binding.toolbar.setNavigationOnClickListener {
@@ -101,7 +101,8 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
         }
     }
-    //Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
+
+    // Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
     private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
         if (item != null) {
             til.setEndIconDrawable(R.drawable.close_24px)
@@ -115,7 +116,8 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             til.isEndIconVisible = true
         }
     }
-    //Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
+
+    // Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
     private fun processFilterResult(filter: Filter) {
         setButtonVisibility(filter)
         if (!filter.isDefault) {
@@ -146,12 +148,14 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 //        }
 //        binding.placeOfWorkEnter.setText(result)
 //    }
-    //Метод отвечающий за отображение кнопок "Применить" "Сбросить"
+
+    // Метод отвечающий за отображение кнопок "Применить" "Сбросить"
     private fun setButtonVisibility(filter: Filter) {
 //        binding.resetButton.isVisible = !filter.isDefault
 //        binding.acceptButton.isVisible = filter != viewModel.latestSearchFilter
     }
-    //Метод отвечающий за check box
+
+    // Метод отвечающий за check box
     fun setCheckedIcon(isChecked: Boolean) {
         if (isChecked) {
             binding.withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
