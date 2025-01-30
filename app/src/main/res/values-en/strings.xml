@@ -54,6 +54,9 @@
     <string name="vacancy_info_gross_info_false">net</string>
     <string name="vacancy_info_save_to_database_error">Failed to add vacancy to favorites</string>
     <string name="vacancy_info_delete_from_database_error">Failed to remove vacancy from favorites</string>
+    <string name="choose_industry">Choosing an industry</string>
+    <string name="enter_an_industry">Enter an industry</string>
+    <string name="could_not_get_the_list">Could not get the list</string>
 
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
