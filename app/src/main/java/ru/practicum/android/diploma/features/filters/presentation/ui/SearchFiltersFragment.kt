@@ -101,7 +101,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
         }
     }
-
+    //Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
     private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
         if (item != null) {
             til.setEndIconDrawable(R.drawable.close_24px)
@@ -115,7 +115,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             til.isEndIconVisible = true
         }
     }
-
+    //Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
     private fun processFilterResult(filter: Filter) {
         setButtonVisibility(filter)
         if (!filter.isDefault) {
@@ -146,12 +146,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 //        }
 //        binding.placeOfWorkEnter.setText(result)
 //    }
-
+    //Метод отвечающий за отображение кнопок "Применить" "Сбросить"
     private fun setButtonVisibility(filter: Filter) {
 //        binding.resetButton.isVisible = !filter.isDefault
 //        binding.acceptButton.isVisible = filter != viewModel.latestSearchFilter
     }
-
+    //Метод отвечающий за check box
     fun setCheckedIcon(isChecked: Boolean) {
         if (isChecked) {
             binding.withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
