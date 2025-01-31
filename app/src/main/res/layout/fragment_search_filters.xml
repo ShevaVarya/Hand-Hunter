@@ -89,7 +89,7 @@
             android:textAppearance="@style/textStyleRegular16"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
-            android:textCursorDrawable="@drawable/edit_text_cursor"/>
+            android:textCursorDrawable="@drawable/custom_edit_text_cursor"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

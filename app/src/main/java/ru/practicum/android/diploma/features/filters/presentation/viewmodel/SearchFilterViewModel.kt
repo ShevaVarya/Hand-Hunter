@@ -62,7 +62,7 @@ class SearchFilterViewModel : ViewModel() {
         // Метод сбрасывающий настройки фильтра
     }
 
-    fun salaryEnterTextChanged(text: CharSequence?, view: TextInputLayout ) {
+    fun salaryEnterTextChanged(text: CharSequence?, view: TextInputLayout) {
         val newSalary = text.toString().toIntOrNull()
         if (oldSalary != newSalary) {
             oldSalary = newSalary

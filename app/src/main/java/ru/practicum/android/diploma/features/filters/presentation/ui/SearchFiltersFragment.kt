@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
-import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
@@ -26,7 +24,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
 
-    private var oldSalary: Int? = null
     private var currentFilter = Filter()
 
     override fun onCreateView(
