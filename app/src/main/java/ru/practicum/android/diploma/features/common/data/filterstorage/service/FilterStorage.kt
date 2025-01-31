@@ -1,12 +1,15 @@
 package ru.practicum.android.diploma.features.common.data.filterstorage.service
 
+import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterCountryEntity
+import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterIndustryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterMainDataEntity
+import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterRegionEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FullLocationDataEntity
 
 interface FilterStorage {
-    fun setCountry(value: String)
-    fun setRegion(value: String)
-    fun setIndustry(value: String)
+    fun setCountry(value: FilterCountryEntity)
+    fun setRegion(value: FilterRegionEntity)
+    fun setIndustry(value: FilterIndustryEntity)
     fun setSalary(value: String)
     fun setIsNeedToHideVacancyWithoutSalary(value: Boolean)
 
@@ -15,21 +18,21 @@ interface FilterStorage {
 }
 
 class FilterStorageImpl : FilterStorage {
-    private var country: String = ""
-    private var region: String = ""
-    private var industry: String = ""
+    private var country: FilterCountryEntity = FilterCountryEntity.default()
+    private var region: FilterRegionEntity = FilterRegionEntity.default()
+    private var industry: FilterIndustryEntity = FilterIndustryEntity.default()
     private var salary: String = ""
     private var isNeedToHideVacancyWithoutSalary: Boolean = false
 
-    override fun setCountry(value: String) {
+    override fun setCountry(value: FilterCountryEntity) {
         this.country = value
     }
 
-    override fun setRegion(value: String) {
+    override fun setRegion(value: FilterRegionEntity) {
         this.region = value
     }
 
-    override fun setIndustry(value: String) {
+    override fun setIndustry(value: FilterIndustryEntity) {
         this.industry = value
     }
 
