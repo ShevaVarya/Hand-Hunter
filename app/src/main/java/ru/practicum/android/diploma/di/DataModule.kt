@@ -5,6 +5,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,6 +16,7 @@ import ru.practicum.android.diploma.features.common.data.database.FavouritesDao
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClientImpl
+import ru.practicum.android.diploma.utils.NetworkChecker
 
 private const val BASE_URL = "https://api.hh.ru/"
 private const val BASE_EMAIL = "Kazesteam@yandex.ru"
@@ -50,9 +53,7 @@ val dataModule = module {
             .create(HHApi::class.java)
     }
 
-    single<NetworkClient> {
-        NetworkClientImpl(get())
-    }
+    singleOf(::NetworkClientImpl) bind NetworkClient::class
 
     single<AppDatabase> {
         Room.databaseBuilder(
@@ -66,4 +67,6 @@ val dataModule = module {
         val db: AppDatabase = get()
         db.favouritesDao()
     }
+
+    single<NetworkChecker> { NetworkChecker(get()) }
 }

@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="?attr/mainBackgroundColor"
-    tools:context=".features.team.presentation.ui.TeamInfoFragment"
-    >
+    android:background="?attr/mainBackgroundColor"
+    tools:context=".features.team.presentation.ui.TeamInfoFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/team_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_6x"
-        app:title="@string/team_title"
-        app:titleTextAppearance="@style/toolbarTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/team_title"
+        app:titleTextAppearance="@style/toolbarTextStyle"
         tools:ignore="RtlSymmetry" />
 
     <TextView
@@ -27,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_6x"
-        android:textColor="?attr/mainTextColor"
-        android:text="@string/team_subtitle"
         android:paddingStart="@dimen/margin_4x"
+        android:text="@string/team_subtitle"
+        android:textColor="?attr/mainTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/team_title"
         tools:ignore="RtlSymmetry" />

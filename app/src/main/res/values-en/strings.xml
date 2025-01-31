@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hand Hunter</string>
+
+    <string name="vacancies_search">Vacancies search</string>
+    <string name="filter_button">Search filter</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Enter your request</string>
+    <string name="search_icon">Search icon</string>
+    <string name="logo">Logotype</string>
+    <string name="empty_search">Empty_search</string>
+    <string name="bad_internet">Bad internet</string>
+    <string name="bad_connection">Check your connection</string>
+    <string name="bad_request">Failed to get \nlist of vacancies</string>
+    <string name="server_error">Server error</string>
+    <string name="error_image">Image of error</string>
+    <string name="error_text">Text of error</string>
+    <string name="message_text">There are no such vacancies</string>
+    <string name="salary_from">from </string>
+    <string name="salary_to">to </string>
+    <string name="no_salary">The salary is not indicated</string>
+
     <string name="item_bottom_navigation_menu_home">Home</string>
     <string name="item_bottom_navigation_menu_favorites">Favorites</string>
     <string name="item_bottom_navigation_menu_team">Team</string>
+
     <string name="team_title">Team</string>
     <string name="team_subtitle">The following people worked\non the application</string>
     <string name="dev_name1">Igor Starkov</string>
@@ -11,4 +31,32 @@
     <string name="dev_name3">Olga Devyatlovskaya</string>
     <string name="dev_name4">Nikita Stepanenko</string>
     <string name="dev_name5">Kirill Matveev</string>
+
+    <string name="favourite_title">Favourites</string>
+    <string name="content_description_error_message">Something went wrong</string>
+    <string name="message_error_empty_data">Empty list</string>
+    <string name="message_error_could_not_get_data">Couldn\'t get a list of vacancies</string>
+
+    <string name="vacancy_info_title">Vacancy</string>
+    <string name="vacancy_info_title_experience">Required experience</string>
+    <string name="vacancy_info_title_description">Vacancy description</string>
+    <string name="vacancy_info_title_key_skills">Key skills</string>
+    <string name="vacancy_info_menu_share">Share</string>
+    <string name="vacancy_info_menu_favourite">Favourite</string>
+    <string name="vacancy_info_employer_logo_description">Employer logo</string>
+    <string name="vacancy_info_no_data_error">Vacancy not found or\ndeleted</string>
+    <string name="vacancy_info_server_error">Server error</string>
+    <string name="vacancy_info_no_salary">Salary not specified</string>
+    <string name="vacancy_info_salary_from">from %s</string>
+    <string name="vacancy_info_salary_to">to %s</string>
+    <string name="vacancy_info_salary_total_string">%s %s %s %s</string>
+    <string name="vacancy_info_gross_info_true">gross</string>
+    <string name="vacancy_info_gross_info_false">net</string>
+    <string name="vacancy_info_save_to_database_error">Failed to add vacancy to favorites</string>
+    <string name="vacancy_info_delete_from_database_error">Failed to remove vacancy from favorites</string>
+
+    <plurals name="vacancies_count">
+        <item quantity="one">Found %d vacancy</item>
+        <item quantity="other">Found %d vacancies</item>
+    </plurals>
 </resources>
