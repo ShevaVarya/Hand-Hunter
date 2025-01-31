@@ -48,8 +48,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="@string/search"
-        android:singleLine="true"
+        android:hint="@string/search_hint"
         android:imeOptions="actionDone"
+        android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -97,10 +98,10 @@
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/message_text_view"
-        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         tools:itemCount="7"
         tools:listitem="@layout/item_search" />
 
