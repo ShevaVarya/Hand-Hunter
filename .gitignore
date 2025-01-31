@@ -23,7 +23,6 @@ captures/
 output.json
 
 # Built application files
-*.apk
 *.aar
 *.ap_
 *.aab

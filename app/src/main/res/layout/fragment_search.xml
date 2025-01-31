@@ -48,13 +48,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="@string/search"
-        android:drawableEnd="@drawable/search_24px"
-        android:singleLine="true"
+        android:hint="@string/search_hint"
         android:imeOptions="actionDone"
+        android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="LabelFor" />
+
+    <ImageView
+        android:id="@+id/search_clear_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_1x"
+        android:contentDescription="@string/search_clear_icon"
+        android:padding="@dimen/margin_3x"
+        android:src="@drawable/search_24px"
+        app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintEnd_toEndOf="@+id/search_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -86,10 +98,10 @@
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/message_text_view"
-        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         tools:itemCount="7"
         tools:listitem="@layout/item_search" />
 

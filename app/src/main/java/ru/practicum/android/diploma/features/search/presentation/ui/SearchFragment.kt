@@ -2,11 +2,9 @@ package ru.practicum.android.diploma.features.search.presentation.ui
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -34,18 +32,18 @@ import ru.practicum.android.diploma.features.search.presentation.viewmodel.Searc
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.debounce
 
+@Suppress("LargeClass")
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private var vacancyAdapter: VacancyAdapter? = null
 
     private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
     private var onSearchDebounce: ((QuerySearch) -> Unit)? = null
+    private val viewModel by viewModel<SearchViewModel>()
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
         return FragmentSearchBinding.inflate(layoutInflater)
     }
-
-    private val viewModel by viewModel<SearchViewModel>()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -159,7 +157,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             errorsImageView.setImageResource(R.drawable.empty_search)
             errorsImageView.isVisible = true
             errorsTextView.isVisible = true
-
             searchEditText.setText(EMPTY_TEXT)
             searchEditText.clearFocus()
         }
@@ -218,7 +215,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             contentRecyclerView.adapter = vacancyAdapter
             contentRecyclerView.itemAnimator = null
-
             contentRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -237,45 +233,44 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun initListeners() {
-        setupSearchEditTextTouchListener()
         onTextChanged()
         setupEnterKeyListener()
+        clearSearchString()
     }
 
-    private fun setupSearchEditTextTouchListener() {
-        with(viewBinding.searchEditText) {
-            setOnTouchListener { _, event ->
-                if (isRightDrawableClicked(event)) {
-                    viewModel.onClearedSearch()
-                    performClick()
-                    true
-                } else {
-                    false
-                }
+    private fun clearSearchString() {
+        viewBinding.searchClearImageView.setOnClickListener {
+            viewModel.onClearedSearch()
+            viewBinding.searchEditText.setText(EMPTY_TEXT)
+            hideKeyBoard()
+        }
+    }
+
+    private fun switchSearchClearIcon(isEditTextEmpty: Boolean) {
+        with(viewBinding) {
+            val image = if (isEditTextEmpty.not()) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.close_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.search_24px
+                )
             }
+            searchClearImageView.setImageDrawable(image)
         }
     }
 
     private fun onTextChanged() {
         with(viewBinding) {
             searchEditText.doOnTextChanged { text, _, _, _ ->
-                val isNotEmpty = text.isNullOrEmpty().not()
                 val querySearch = QuerySearch(text = text.toString().trim())
-                if (!isNotEmpty) {
+                if (text.isNullOrEmpty()) {
                     viewModel.onClearedSearch()
                 }
-
-                val drawableEnd = if (isNotEmpty) {
-                    ContextCompat.getDrawable(requireContext(), R.drawable.close_24px)
-                } else {
-                    ContextCompat.getDrawable(requireContext(), R.drawable.search_24px)
-                }
-                searchEditText.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    null,
-                    drawableEnd,
-                    null
-                )
+                switchSearchClearIcon(text.isNullOrEmpty())
                 onSearchDebounce?.invoke(querySearch)
             }
         }
@@ -306,18 +301,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun EditText.isRightDrawableClicked(event: MotionEvent): Boolean {
-        val rightDrawable = compoundDrawables[RIGHT_CORNER]
-        val drawableWidth = rightDrawable?.bounds?.width()
-        if (event.action != MotionEvent.ACTION_UP || drawableWidth == null) return false
-
-        return event.x >= width - paddingEnd - drawableWidth
-    }
-
     private companion object {
         private const val EMPTY_TEXT = ""
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 100L
-        private const val RIGHT_CORNER = 2
     }
 }
