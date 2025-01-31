@@ -44,11 +44,11 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             salaryFrameContainer.requestFocus()
 
             placeOfWorkEditText.setOnClickListener {
-                // Навигация к выбору места работы(Страна, Регион)
+                findNavController().navigate(R.id.action_searchFiltersFragment_to_workplaceSelectionFragment)
             }
 
             industryEditText.setOnClickListener {
-                // Навигация к выбору отрасли
+                findNavController().navigate(R.id.action_searchFiltersFragment_to_specializationSelectionFragment)
             }
 
             toolbar.setNavigationOnClickListener {
