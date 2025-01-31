@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.search.presentation.ui
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
@@ -239,7 +241,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun clearSearchString() {
-        viewBinding.searchClearImageView.setOnClickListener {
+        viewBinding.searchTextInput.setEndIconOnClickListener {
             viewModel.onClearedSearch()
             viewBinding.searchEditText.setText(EMPTY_TEXT)
             hideKeyBoard()
@@ -259,12 +261,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     R.drawable.search_24px
                 )
             }
-            searchClearImageView.setImageDrawable(image)
+            searchTextInput.endIconDrawable = image
         }
     }
 
     private fun onTextChanged() {
         with(viewBinding) {
+            searchTextInput.isHintEnabled = false
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val querySearch = QuerySearch(text = text.toString().trim())
                 if (text.isNullOrEmpty()) {
