@@ -47,7 +47,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                     WorkplaceLocationState.Loading -> showProgressBar()
                     is WorkplaceLocationState.Success -> {
                         val location = workplaceLocationState.location
-                        showSuccess(location.country.name, location.area.name)
+                        showSuccess(location.country.name, location.city.name)
                     }
                 }
             }

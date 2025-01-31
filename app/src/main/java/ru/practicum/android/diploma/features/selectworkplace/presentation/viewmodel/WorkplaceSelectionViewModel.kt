@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.features.selectworkplace.presentation.model.AreaUI
+import ru.practicum.android.diploma.features.selectworkplace.presentation.model.CityUI
 import ru.practicum.android.diploma.features.selectworkplace.presentation.model.CountryUI
 import ru.practicum.android.diploma.features.selectworkplace.presentation.model.WorkplaceLocation
 import ru.practicum.android.diploma.features.selectworkplace.presentation.model.WorkplaceLocationState
@@ -18,10 +18,10 @@ class WorkplaceSelectionViewModel : ViewModel() {
     fun getWorkplace() {
         viewModelScope.launch {
             val country = CountryUI(id = "RU", name = "Россия")
-            val city = AreaUI(id = "MOW", name = "Москва")
+            val city = CityUI(id = "MOW", parentId = "MOWP", name = "Москва")
             val location = WorkplaceLocation(
                 country = country,
-                area = city
+                city = city
             )
             workplaceLocationState.emit(WorkplaceLocationState.Success(location))
         }
