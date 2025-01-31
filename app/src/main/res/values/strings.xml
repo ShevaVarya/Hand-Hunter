@@ -69,6 +69,11 @@
     <string name="location_no_region_error">Такого региона нет</string>
     <string name="location_server_error">Не удалось получить список</string>
 
+    <string name="choosing_place_of_work_toolbar">Выбор места работы</string>
+    <string name="country_hint">Страна</string>
+    <string name="region_hint">Регион</string>
+    <string name="choose_button_text">Выбрать</string>
+
     <plurals name="vacancies_count">
         <item quantity="one">Найдено %d вакансия</item>
         <item quantity="few">Найдено %d вакансии</item>

@@ -61,6 +61,10 @@
     <string name="location_no_region_error">There is no such region</string>
     <string name="location_server_error">Couldn\'t get a list of regions</string>
 
+    <string name="choosing_place_of_work_toolbar">Choosing a place of work</string>
+    <string name="country_hint">Country</string>
+    <string name="region_hint">Region</string>
+    <string name="choose_button_text">Choose</string>
 
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
