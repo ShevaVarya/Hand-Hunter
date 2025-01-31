@@ -62,7 +62,14 @@
         android:id="@+id/locationSelectionFragment"
         android:name="ru.practicum.android.diploma.features.selectlocation.presentation.ui.LocationSelectionFragment"
         android:label="fragment_location_selection"
-        tools:layout="@layout/fragment_location_selection" />
+        tools:layout="@layout/fragment_location_selection" >
+        <argument
+            android:name="isCountry"
+            app:argType="boolean" />
+        <argument
+            android:name="countryId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/specializationSelectionFragment"
         android:name="ru.practicum.android.diploma.features.selectspecialization.presentation.ui.SpecializationSelectionFragment"
