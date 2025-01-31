@@ -62,6 +62,18 @@
     <string name="vacancy_info_save_to_database_error">Не удалось добавить вакансию в избранное</string>
     <string name="vacancy_info_delete_from_database_error">Не удалось удалить вакансию из избранного</string>
 
+    <string name="location_country_toolbar_title">Выбор страны</string>
+    <string name="location_region_toolbar_title">Выбор региона</string>
+    <string name="location_hint">Введите регион</string>
+    <string name="location_stub" translatable="false">Country</string>
+    <string name="location_no_region_error">Такого региона нет</string>
+    <string name="location_server_error">Не удалось получить список</string>
+
+    <string name="choosing_place_of_work_toolbar">Выбор места работы</string>
+    <string name="country_hint">Страна</string>
+    <string name="region_hint">Регион</string>
+    <string name="choose_button_text">Выбрать</string>
+
     <plurals name="vacancies_count">
         <item quantity="one">Найдено %d вакансия</item>
         <item quantity="few">Найдено %d вакансии</item>
