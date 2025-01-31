@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.filters.domain.model
+package ru.practicum.android.diploma.features.filters.presentation.model
 
 /**
  * @param country `Nullable` Хранит экземпляр класса `CountryUI` с информацией о стране

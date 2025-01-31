@@ -1,16 +1,21 @@
 package ru.practicum.android.diploma.features.filters.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.practicum.android.diploma.features.filters.domain.model.Filter
+import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
+import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.features.filters.presentation.model.Filter
 
 class SearchFilterViewModel : ViewModel() {
 
-    private val _currentFilter = MutableLiveData<Filter>(Filter())
-    val currentFilter: LiveData<Filter> = _currentFilter
+    private val _currentFilter = MutableStateFlow<Filter>(Filter())
+    val currentFilter: StateFlow<Filter> = _currentFilter
 
     val latestSearchFilter = Filter()
+    private var oldSalary: Int? = null
 
     fun getIndustries() {
         // Метод возвращающий "Отрасль"
@@ -55,5 +60,20 @@ class SearchFilterViewModel : ViewModel() {
 
     fun clearFilter() {
         // Метод сбрасывающий настройки фильтра
+    }
+
+    fun salaryEnterTextChanged(text: CharSequence?, view: TextInputLayout ) {
+        val newSalary = text.toString().toIntOrNull()
+        if (oldSalary != newSalary) {
+            oldSalary = newSalary
+            setSalary(newSalary)
+        }
+        if (text?.isBlank() == false) {
+            view.endIconMode = END_ICON_CLEAR_TEXT
+            view.setEndIconDrawable(R.drawable.close_24px)
+        } else {
+            view.endIconMode = END_ICON_NONE
+            view.endIconDrawable = null
+        }
     }
 }

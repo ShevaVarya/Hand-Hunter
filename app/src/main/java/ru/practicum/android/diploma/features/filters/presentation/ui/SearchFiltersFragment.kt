@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.filters.domain.model.Filter
+import ru.practicum.android.diploma.features.filters.presentation.model.Filter
 import ru.practicum.android.diploma.features.filters.presentation.viewmodel.SearchFilterViewModel
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
@@ -82,18 +82,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
         binding.salaryEnter.doOnTextChanged { s, _, _, _ ->
             setButtonVisibility(currentFilter)
-            val newSalary = s.toString().toIntOrNull()
-            if (oldSalary != newSalary) {
-                oldSalary = newSalary
-                viewModel.setSalary(newSalary)
-            }
-            if (s?.isBlank() == false) {
-                binding.salaryFrame.endIconMode = END_ICON_CLEAR_TEXT
-                binding.salaryFrame.setEndIconDrawable(R.drawable.close_24px)
-            } else {
-                binding.salaryFrame.endIconMode = END_ICON_NONE
-                binding.salaryFrame.endIconDrawable = null
-            }
+            viewModel.salaryEnterTextChanged(s, binding.salaryFrame)
         }
 
 //        binding.withoutSalary.setOnClickListener {
