@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.di
 
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import ru.practicum.android.diploma.features.favourite.presentation.viewmodel.FavouriteVacanciesViewModel
@@ -15,8 +16,10 @@ val viewModelModule = module {
     viewModelOf(::FavouriteVacanciesViewModel)
     viewModelOf(::VacancyInfoViewModel)
     viewModelOf(::SearchViewModel)
-    viewModelOf(::LocationSelectionViewModel)
     viewModelOf(::WorkplaceSelectionViewModel)
     viewModelOf(::SearchFilterViewModel)
     viewModelOf(::SpecializationSelectionViewModel)
+    viewModel { (isCountry: Boolean, countryId: String?) ->
+        LocationSelectionViewModel(isCountry, countryId)
+    }
 }
