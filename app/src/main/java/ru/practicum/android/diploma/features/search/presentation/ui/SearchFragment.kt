@@ -248,7 +248,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private fun switchSearchClearIcon(isEditTextEmpty: Boolean) {
         with(viewBinding) {
-            val image = if (!isEditTextEmpty) {
+            val image = if (isEditTextEmpty.not()) {
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.close_24px
@@ -259,6 +259,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     R.drawable.search_24px
                 )
             }
+            searchClearImageView.setImageDrawable(image)
         }
     }
 
