@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.features.selectspecialization.presentation.
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemSpecializationBinding
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
@@ -13,7 +12,7 @@ class SpecializationSelectionAdapter(
 ) : RecyclerView.Adapter<SpecializationSelectionViewHolder>() {
 
     private val items: MutableList<IndustryUI> = mutableListOf()
-    private var selectedItemPosition = -1
+    var selectedItemPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecializationSelectionViewHolder {
         val binding = ItemSpecializationBinding.inflate(
@@ -25,12 +24,16 @@ class SpecializationSelectionAdapter(
     }
 
     override fun onBindViewHolder(holder: SpecializationSelectionViewHolder, position: Int) {
-        val item = items[holder.getAdapterPosition()]
-        holder.bind(item, holder.getAdapterPosition(), selectedItemPosition)
+        val item = items[position]
+        holder.bind(item, position == selectedItemPosition)
         holder.itemView.setOnClickListener {
             onItemClick(item)
             val previousSelectedItemPosition = selectedItemPosition
-            selectedItemPosition = holder.getAdapterPosition()
+            selectedItemPosition = if (position == selectedItemPosition) {
+                -1
+            } else {
+                position
+            }
             notifyItemChanged(previousSelectedItemPosition)
             notifyItemChanged(selectedItemPosition)
         }
@@ -39,10 +42,10 @@ class SpecializationSelectionAdapter(
     override fun getItemCount(): Int = items.size
 
     fun updateItems(newItems: List<IndustryUI>) {
-        val diffCallback = IndustryDiffCallback(items, newItems)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
         items.clear()
         items.addAll(newItems)
-        diffResult.dispatchUpdatesTo(this)
+        selectedItemPosition = -1
+        notifyDataSetChanged()
     }
 }
+

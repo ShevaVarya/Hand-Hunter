@@ -55,14 +55,11 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun initAdapter() {
-        specializationAdapter = SpecializationSelectionAdapter(onItemClick = { industry ->
+        specializationAdapter = SpecializationSelectionAdapter { industry ->
             binding.specializationEditText.setText(industry.name)
-
-            specializationAdapter?.updateItems(listOf(industry))
-
             binding.chooseButton.isVisible = true
             hideKeyBoard()
-        })
+        }
         binding.specializationRecyclerView.adapter = specializationAdapter
     }
 
@@ -136,7 +133,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
                     progressBar.isVisible = false
                     errorsTextView.isVisible = false
                     errorsImageView.isVisible = false
-                    chooseButton.isVisible = false
+                    chooseButton.isVisible = specializationAdapter?.selectedItemPosition != -1
                 }
                 is IndustriesState.Loading -> {
                     specializationRecyclerView.isVisible = false
@@ -161,8 +158,3 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }
-
-
-
-
-

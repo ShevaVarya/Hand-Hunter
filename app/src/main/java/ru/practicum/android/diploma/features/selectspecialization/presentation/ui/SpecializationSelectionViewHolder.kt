@@ -10,10 +10,10 @@ class SpecializationSelectionViewHolder(
     private val binding: ItemSpecializationBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: IndustryUI, adapterPosition: Int, selectedItemPosition: Int) {
+    fun bind(item: IndustryUI, isSelected: Boolean) {
         with(binding) {
             specializationItem.text = item.name
-            val drawableEnd = if (adapterPosition == selectedItemPosition) {
+            val drawableEnd = if (isSelected) {
                 ContextCompat.getDrawable(binding.root.context, R.drawable.radio_button_on_24px)
             } else {
                 ContextCompat.getDrawable(binding.root.context, R.drawable.radio_button_off_24px)
@@ -22,3 +22,5 @@ class SpecializationSelectionViewHolder(
         }
     }
 }
+
+
