@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        style="@style/textStyleRegular16"
+        android:id="@+id/specialization_item"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/choose_industry"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/padding_4x"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:drawableEndCompat="@drawable/radio_button_off_24px" />
+
+</FrameLayout>
