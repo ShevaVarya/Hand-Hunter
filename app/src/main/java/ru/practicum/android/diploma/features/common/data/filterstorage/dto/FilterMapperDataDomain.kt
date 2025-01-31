@@ -23,6 +23,28 @@ fun FullLocationDataEntity.toDomain(): FullLocationData {
     )
 }
 
+fun FilterCountry.toEntity(): FilterCountryEntity {
+    return FilterCountryEntity(
+        id = id,
+        name = name
+    )
+}
+
+fun FilterRegion.toEntity(): FilterRegionEntity {
+    return FilterRegionEntity(
+        id = id,
+        name = name,
+        parentId = parentId
+    )
+}
+
+fun FilterIndustry.toEntity(): FilterIndustryEntity {
+    return FilterIndustryEntity(
+        id = id,
+        name = name
+    )
+}
+
 private fun FilterCountryEntity.toDomain(): FilterCountry {
     return FilterCountry(
         id = id,
