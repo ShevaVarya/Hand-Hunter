@@ -22,7 +22,7 @@
         app:titleTextAppearance="@style/toolbarTextStyle" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/place_of_work"
+        android:id="@+id/place_of_work_container"
         style="@style/filterTextAction"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/place_of_work_enter"
+            android:id="@+id/place_of_work_edit_text"
             style="@style/filterEditTextAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,17 +41,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/industry"
+        android:id="@+id/industry_container"
         style="@style/filterTextAction"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center_vertical"
         android:hint="@string/vacancy_search_filters_industry"
-        app:layout_constraintTop_toBottomOf="@+id/place_of_work">
+        app:layout_constraintTop_toBottomOf="@+id/place_of_work_container">
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/industry_enter"
+            android:id="@+id/industry_edit_text"
             style="@style/filterEditTextAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/salary_frame"
+        android:id="@+id/salary_frame_container"
         style="@style/CustomOutlineBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,10 +75,10 @@
         app:layout_constraintBottom_toTopOf="@id/without_salary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/industry">
+        app:layout_constraintTop_toBottomOf="@id/industry_container">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/salary_enter"
+            android:id="@+id/salary_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/vacancy_search_filters_enter_salary"
@@ -103,7 +103,7 @@
         app:icon="@drawable/check_box_off_24px"
         app:iconTint="@color/blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/salary_frame"
+        app:layout_constraintTop_toBottomOf="@+id/salary_frame_container"
         app:toggleCheckedStateOnClick="true" />
 
     <com.google.android.material.button.MaterialButton
