@@ -55,6 +55,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         initClickDebounce()
         initAdapters()
         initListeners()
+        viewBinding.filter.setOnClickListener {
+            findNavController().navigate(R.id.action_searchFragment_to_searchFiltersFragment)
+        }
     }
 
     override fun observeData() {
