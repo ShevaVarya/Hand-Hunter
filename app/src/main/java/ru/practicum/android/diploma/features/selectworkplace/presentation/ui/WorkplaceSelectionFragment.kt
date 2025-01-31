@@ -37,11 +37,14 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             .onEach { workplaceLocationState ->
                 with(viewBinding) {
                     chooseButton.isVisible = false
+                    progressBar.isVisible = false
+                    countryEditText.isVisible = false
+                    regionEditText.isVisible = false
                 }
 
                 when (workplaceLocationState) {
                     WorkplaceLocationState.Error -> Unit
-                    WorkplaceLocationState.Loading -> Unit
+                    WorkplaceLocationState.Loading -> showProgressBar()
                     is WorkplaceLocationState.Success -> {
                         val location = workplaceLocationState.location
                         showSuccess(location.country.name, location.area.name)
@@ -51,11 +54,17 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun showProgressBar() {
+        viewBinding.progressBar.isVisible = true
+    }
+
     private fun showSuccess(country: String, city: String) {
         with(viewBinding) {
             countryEditText.setText(country)
             regionEditText.setText(city)
-            chooseButton.isVisible = true
+            countryEditText.isVisible = true
+            regionEditText.isVisible = true
+            chooseButton.isVisible = (countryEditText.text.isNullOrEmpty() || regionEditText.text.isNullOrEmpty()).not()
         }
     }
 
