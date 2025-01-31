@@ -7,15 +7,16 @@ import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.features.filters.presentation.model.Filter
+import ru.practicum.android.diploma.features.filters.presentation.model.FilterUI
 
 class SearchFilterViewModel : ViewModel() {
 
-    private val _currentFilter = MutableStateFlow<Filter>(Filter())
-    val currentFilter: StateFlow<Filter> = _currentFilter
+    private val _stateFilterUI = MutableStateFlow<FilterUI>(FilterUI())
+    val stateFilterUI: StateFlow<FilterUI> = _stateFilterUI
 
-    val latestSearchFilter = Filter()
+    val latestSearchFilterUI = FilterUI()
     private var oldSalary: Int? = null
+    var currentFilterUI = FilterUI()
 
     fun getIndustries() {
         // Метод возвращающий "Отрасль"
