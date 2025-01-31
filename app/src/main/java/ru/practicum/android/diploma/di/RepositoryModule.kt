@@ -3,6 +3,8 @@ package ru.practicum.android.diploma.di
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import ru.practicum.android.diploma.features.common.data.filterstorage.repository.FilterRepositoryImpl
+import ru.practicum.android.diploma.features.common.domain.filter.repositoryapi.FilterRepository
 import ru.practicum.android.diploma.features.favourite.data.repository.FavouriteVacanciesRepositoryImpl
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesRepository
 import ru.practicum.android.diploma.features.search.data.repository.VacanciesSearchRepositoryImpl
@@ -14,4 +16,5 @@ val repositoryModule = module {
     singleOf(::VacancyDetailsRepositoryImpl) bind VacancyDetailsRepository::class
     singleOf(::VacanciesSearchRepositoryImpl) bind VacanciesSearchRepository::class
     singleOf(::FavouriteVacanciesRepositoryImpl) bind FavouriteVacanciesRepository::class
+    singleOf(::FilterRepositoryImpl) bind FilterRepository::class
 }
