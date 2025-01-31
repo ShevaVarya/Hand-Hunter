@@ -248,9 +248,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun switchSearchClearIcon(isEditTextNotEmpty: Boolean) {
+    private fun switchSearchClearIcon(isEditTextEmpty: Boolean) {
         with(viewBinding) {
-            val image = if (isEditTextNotEmpty) {
+            val image = if (!isEditTextEmpty) {
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.close_24px
@@ -269,11 +269,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val querySearch = QuerySearch(text = text.toString().trim())
-                val isEditTextNotEmpty = text.isNullOrEmpty().not()
-                if (isEditTextNotEmpty) {
+                if (text.isNullOrEmpty()) {
                     viewModel.onClearedSearch()
                 }
-                switchSearchClearIcon(isEditTextNotEmpty)
+                switchSearchClearIcon(text.isNullOrEmpty())
                 onSearchDebounce?.invoke(querySearch)
             }
         }
