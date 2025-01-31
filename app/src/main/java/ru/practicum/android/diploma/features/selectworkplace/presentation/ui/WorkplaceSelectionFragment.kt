@@ -37,7 +37,8 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                 R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
                 LocationSelectionFragment.createArgs(
                     true,
-                    null)
+                    null
+                )
             )
         }
 
@@ -46,7 +47,8 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                 R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
                 LocationSelectionFragment.createArgs(
                     false,
-                    null)
+                    null
+                )
             )
         }
     }
