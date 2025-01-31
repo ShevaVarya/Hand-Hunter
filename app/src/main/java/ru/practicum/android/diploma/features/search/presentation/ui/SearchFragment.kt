@@ -32,18 +32,18 @@ import ru.practicum.android.diploma.features.search.presentation.viewmodel.Searc
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
 import ru.practicum.android.diploma.utils.debounce
 
+@Suppress("LargeClass")
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private var vacancyAdapter: VacancyAdapter? = null
 
     private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
     private var onSearchDebounce: ((QuerySearch) -> Unit)? = null
+    private val viewModel by viewModel<SearchViewModel>()
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
         return FragmentSearchBinding.inflate(layoutInflater)
     }
-
-    private val viewModel by viewModel<SearchViewModel>()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -157,7 +157,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             errorsImageView.setImageResource(R.drawable.empty_search)
             errorsImageView.isVisible = true
             errorsTextView.isVisible = true
-
             searchEditText.setText(EMPTY_TEXT)
             searchEditText.clearFocus()
         }
@@ -216,7 +215,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             contentRecyclerView.adapter = vacancyAdapter
             contentRecyclerView.itemAnimator = null
-
             contentRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -248,9 +246,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun switchSearchClearIcon(isEditTextNotEmpty: Boolean) {
+    private fun switchSearchClearIcon(isEditTextEmpty: Boolean) {
         with(viewBinding) {
-            val image = if (isEditTextNotEmpty) {
+            val image = if (isEditTextEmpty.not()) {
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.close_24px
@@ -269,11 +267,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val querySearch = QuerySearch(text = text.toString().trim())
-                val isEditTextNotEmpty = text.isNullOrEmpty().not()
-                if (isEditTextNotEmpty) {
+                if (text.isNullOrEmpty()) {
                     viewModel.onClearedSearch()
                 }
-                switchSearchClearIcon(isEditTextNotEmpty)
+                switchSearchClearIcon(text.isNullOrEmpty())
                 onSearchDebounce?.invoke(querySearch)
             }
         }

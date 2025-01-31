@@ -6,6 +6,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -154,20 +155,7 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
             vacancyNameTextView.text = state.vacancyInfo.title
             vacancySalaryTextView.text = state.vacancyInfo.salary
 
-            Glide.with(employerInfoView.employerLogoImageView)
-                .load(state.vacancyInfo.employerLogoUrl)
-                .placeholder(R.drawable.placeholder_32px)
-                .transform(
-                    FitCenter(),
-                    RoundedCorners(
-                        dpToPx(
-                            resources.getDimension(R.dimen.radius_1x),
-                            resources.displayMetrics
-                        ).toInt()
-                    )
-                )
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .into(employerInfoView.employerLogoImageView)
+            setImage(employerInfoView.employerLogoImageView, state.vacancyInfo.employerLogoUrl)
 
             employerInfoView.employerNameTextView.text = state.vacancyInfo.employerName
             employerInfoView.vacancyLocationTextView.text = state.vacancyInfo.location
@@ -193,6 +181,23 @@ class VacancyInfoFragment : BaseFragment<FragmentVacancyInfoBinding>() {
                 menu.icon = ContextCompat.getDrawable(requireContext(), R.drawable.favorites_off_24px)
             }
         }
+    }
+
+    private fun setImage(image: ImageView, logoUrl: String) {
+        Glide.with(image)
+            .load(logoUrl)
+            .placeholder(R.drawable.placeholder_32px)
+            .transform(
+                FitCenter(),
+                RoundedCorners(
+                    dpToPx(
+                        resources.getDimension(R.dimen.radius_1x),
+                        resources.displayMetrics
+                    ).toInt()
+                )
+            )
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .into(image)
     }
 
     private fun hideToolbarMenu() {
