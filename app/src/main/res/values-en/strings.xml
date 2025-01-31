@@ -69,6 +69,15 @@
     <string name="region_hint">Region</string>
     <string name="choose_button_text">Choose</string>
 
+    <string name="vacancy_search_filters_title">Filtering setup</string>
+    <string name="vacancy_search_filters_place_of_work">Place of work</string>
+    <string name="vacancy_search_filters_industry">Industry</string>
+    <string name="vacancy_search_filters_salary_expected">Salary expected</string>
+    <string name="vacancy_search_filters_enter_salary">Enter salary</string>
+    <string name="vacancy_search_filters_without_salary">Do not show without salary</string>
+    <string name="vacancy_search_filters_accept">Accept</string>
+    <string name="vacancy_search_filters_reset">Reset</string>
+
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
         <item quantity="other">Found %d vacancies</item>

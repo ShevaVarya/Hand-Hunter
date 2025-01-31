@@ -77,6 +77,15 @@
     <string name="region_hint">Регион</string>
     <string name="choose_button_text">Выбрать</string>
 
+    <string name="vacancy_search_filters_title">Настройка фильтрации</string>
+    <string name="vacancy_search_filters_place_of_work">Место работы</string>
+    <string name="vacancy_search_filters_industry">Отрасль</string>
+    <string name="vacancy_search_filters_salary_expected">Ожидаемая зарплата</string>
+    <string name="vacancy_search_filters_enter_salary">Введите сумму</string>
+    <string name="vacancy_search_filters_without_salary">Не показывать без зарплаты</string>
+    <string name="vacancy_search_filters_accept">Применить</string>
+    <string name="vacancy_search_filters_reset">Сбросить</string>
+
     <plurals name="vacancies_count">
         <item quantity="one">Найдено %d вакансия</item>
         <item quantity="few">Найдено %d вакансии</item>

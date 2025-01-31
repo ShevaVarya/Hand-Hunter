@@ -9,8 +9,10 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentWorkplaceSelectionBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
+import ru.practicum.android.diploma.features.selectlocation.presentation.ui.LocationSelectionFragment
 import ru.practicum.android.diploma.features.selectworkplace.presentation.model.WorkplaceLocationState
 import ru.practicum.android.diploma.features.selectworkplace.presentation.viewmodel.WorkplaceSelectionViewModel
 
@@ -28,6 +30,26 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
 
         viewBinding.chooseButton.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        viewBinding.countryTextInput.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
+                LocationSelectionFragment.createArgs(
+                    true,
+                    null
+                )
+            )
+        }
+
+        viewBinding.regionEditText.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
+                LocationSelectionFragment.createArgs(
+                    false,
+                    null
+                )
+            )
         }
     }
 
