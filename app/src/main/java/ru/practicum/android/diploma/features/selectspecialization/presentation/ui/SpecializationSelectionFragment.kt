@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.selectspecialization.presentation.ui.adapter
+package ru.practicum.android.diploma.features.selectspecialization.presentation.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,14 +14,12 @@ import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionB
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustriesState
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
+import ru.practicum.android.diploma.features.selectspecialization.presentation.ui.adapter.SpecializationSelectionAdapter
 import ru.practicum.android.diploma.features.selectspecialization.presentation.viewmodel.SpecializationSelectionViewModel
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
 class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelectionBinding>() {
-
-    private var _binding: FragmentSpecializationSelectionBinding? = null
-    val binding get() = _binding!!
 
     private var specializationAdapter: SpecializationSelectionAdapter? = null
     private var onIndustryClickDebounce: ((IndustryUI) -> Unit?)? = null
@@ -51,16 +49,15 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     override fun onDestroyView() {
         super.onDestroyView()
         specializationAdapter = null
-        _binding = null
     }
 
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter { industry ->
-            binding.specializationEditText.setText(industry.name)
-            binding.chooseButton.isVisible = true
+            viewBinding.specializationEditText.setText(industry.name)
+            viewBinding.chooseButton.isVisible = true
             hideKeyBoard()
         }
-        binding.specializationRecyclerView.adapter = specializationAdapter
+        viewBinding.specializationRecyclerView.adapter = specializationAdapter
     }
 
     private fun initSearchDebounce() {
@@ -79,13 +76,13 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun setupToolbar() {
-        binding.toolbar.setOnClickListener {
+        viewBinding.toolbar.setOnClickListener {
             goBack()
         }
     }
 
     private fun onTextChanged() {
-        with(binding) {
+        with(viewBinding) {
             specializationEditText.doOnTextChanged { text, _, _, _ ->
                 val querySearch = text.toString()
                 val isEditTextNotEmpty = text.isNullOrEmpty().not()
@@ -96,7 +93,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun switchSearchIcon(isEditTextNotEmpty: Boolean) {
-        with(binding) {
+        with(viewBinding) {
             val editTextIcon = if (isEditTextNotEmpty) {
                 ContextCompat.getDrawable(
                     requireContext(),
@@ -126,29 +123,24 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun renderState(state: IndustriesState) {
-        with(binding) {
+        with(viewBinding) {
+            specializationRecyclerView.isVisible = false
+            progressBar.isVisible = false
+            errorsTextView.isVisible = false
+            errorsImageView.isVisible = false
+            chooseButton.isVisible = false
+
             when (state) {
                 is IndustriesState.Content -> {
                     specializationRecyclerView.isVisible = true
-                    progressBar.isVisible = false
-                    errorsTextView.isVisible = false
-                    errorsImageView.isVisible = false
                     chooseButton.isVisible = specializationAdapter?.selectedItemPosition != -1
                 }
                 is IndustriesState.Loading -> {
-                    specializationRecyclerView.isVisible = false
                     progressBar.isVisible = true
-                    errorsTextView.isVisible = false
-                    errorsImageView.isVisible = false
-                    chooseButton.isVisible = false
                 }
-
                 is IndustriesState.Error -> {
-                    specializationRecyclerView.isVisible = false
-                    progressBar.isVisible = false
                     errorsTextView.isVisible = true
                     errorsImageView.isVisible = true
-                    chooseButton.isVisible = false
                 }
             }
         }

@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.selectspecialization.presentation.ui
+package ru.practicum.android.diploma.features.selectspecialization.presentation.ui.adapter
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView

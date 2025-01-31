@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemSpecializationBinding
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
-import ru.practicum.android.diploma.features.selectspecialization.presentation.ui.SpecializationSelectionViewHolder
 
 class SpecializationSelectionAdapter(
     private val onItemClick: (IndustryUI) -> Unit
@@ -48,4 +47,3 @@ class SpecializationSelectionAdapter(
         notifyDataSetChanged()
     }
 }
-

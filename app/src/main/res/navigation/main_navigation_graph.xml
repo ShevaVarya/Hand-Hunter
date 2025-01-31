@@ -65,7 +65,7 @@
         tools:layout="@layout/fragment_location_selection" />
     <fragment
         android:id="@+id/specializationSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.selectspecialization.presentation.ui.adapter.SpecializationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.selectspecialization.presentation.ui.SpecializationSelectionFragment"
         android:label="fragment_specialization_selection"
         tools:layout="@layout/fragment_specialization_selection" />
     <fragment
