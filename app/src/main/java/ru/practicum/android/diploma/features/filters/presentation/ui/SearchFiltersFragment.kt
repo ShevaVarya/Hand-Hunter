@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
+import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
@@ -16,22 +18,11 @@ import ru.practicum.android.diploma.features.filters.presentation.viewmodel.Sear
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
-    private var _binding: FragmentSearchFiltersBinding? = null
-    private val binding get() = _binding!!
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchFiltersBinding {
         return FragmentSearchFiltersBinding.inflate(inflater, container, false)
     }
 
     private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchFiltersBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun initUi() {
         initializeViews()
@@ -51,38 +42,53 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     private fun initializeViews() {
-        binding.salaryFrame.requestFocus()
+        with(viewBinding) {
+            salaryFrameContainer.requestFocus()
 
-        binding.placeOfWorkEnter.setOnClickListener {
-            // Навигация к выбору места работы(Страна, Регион)
-        }
+            placeOfWorkEditText.setOnClickListener {
+                // Навигация к выбору места работы(Страна, Регион)
+            }
 
-        binding.industryEnter.setOnClickListener {
-            // Навигация к выбору отрасли
-        }
+            industryEditText.setOnClickListener {
+                // Навигация к выбору отрасли
+            }
 
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
+            toolbar.setNavigationOnClickListener {
+                findNavController().navigateUp()
+            }
 
-        binding.resetButton.setOnClickListener {
-            viewModel.clearFilter()
-        }
+            resetButton.setOnClickListener {
+                viewModel.clearFilter()
+            }
 
-        binding.acceptButton.setOnClickListener {
-            viewModel.saveFilter()
-            viewModel.retrySearchQueryWithFilterSearch()
-            findNavController().navigateUp()
-        }
+            acceptButton.setOnClickListener {
+                viewModel.saveFilter()
+                viewModel.retrySearchQueryWithFilterSearch()
+                findNavController().navigateUp()
+            }
 
-        binding.salaryEnter.doOnTextChanged { s, _, _, _ ->
-            setButtonVisibility(viewModel.currentFilterUI)
-            viewModel.salaryEnterTextChanged(s, binding.salaryFrame)
-        }
+            salaryEditText.doOnTextChanged { s, _, _, _ ->
+                setButtonVisibility(viewModel.currentFilterUI)
+                viewModel.salaryEnterTextChanged(s)
+                salaryEnterClearIcon(s)
+            }
 
 //        binding.withoutSalary.setOnClickListener {
 //            binding.withoutSalary.setOnClickListener { viewModel.setOnlyWithSalary(binding.withoutSalary.isChecked) }
 //        }
+        }
+    }
+
+    private fun salaryEnterClearIcon(text: CharSequence?) {
+        with(viewBinding) {
+            if (text?.isBlank() == false) {
+                salaryFrameContainer.endIconMode = END_ICON_CLEAR_TEXT
+                salaryFrameContainer.setEndIconDrawable(R.drawable.close_24px)
+            } else {
+                salaryFrameContainer.endIconMode = END_ICON_NONE
+                salaryFrameContainer.endIconDrawable = null
+            }
+        }
     }
 
     // Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
@@ -140,15 +146,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     // Метод отвечающий за check box
     fun setCheckedIcon(isChecked: Boolean) {
-        if (isChecked) {
-            binding.withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
-        } else {
-            binding.withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_off_24px)
+        with(viewBinding) {
+            if (isChecked) {
+                withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
+            } else {
+                withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_off_24px)
+            }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
