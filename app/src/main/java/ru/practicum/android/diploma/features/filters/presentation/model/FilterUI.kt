@@ -9,7 +9,7 @@ package ru.practicum.android.diploma.features.filters.presentation.model
  * @property isDefault  Хранит флаг, указывающий на то, являются ли значения фильтра значениями по умолчанию
  */
 
-data class Filter(
+data class FilterUI(
     // val country: CountryUI? = null,
     // val region: RegionUI? = null,
     // val industry: IndustryUI? = null,
