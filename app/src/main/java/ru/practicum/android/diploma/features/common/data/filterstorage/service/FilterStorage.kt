@@ -78,7 +78,6 @@ class FilterStorageImpl(
         name = sharedPrefs.getString(COUNTRY_NAME, "") ?: ""
     )
 
-
     private fun getRegionFromPrefs() = FilterRegionEntity(
         id = sharedPrefs.getString(REGION_ID, "") ?: "",
         name = sharedPrefs.getString(REGION_NAME, "") ?: "",
