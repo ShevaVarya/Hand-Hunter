@@ -1,7 +1,9 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -41,7 +43,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private fun initializeViews() {
         with(viewBinding) {
-            salaryFrameContainer.requestFocus()
 
             placeOfWorkEditText.setOnClickListener {
                 findNavController().navigate(R.id.action_searchFiltersFragment_to_workplaceSelectionFragment)
@@ -77,11 +78,25 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         }
     }
 
+    private fun hideKeyBoard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val view = activity?.currentFocus ?: view
+        view?.let {
+            inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
     private fun salaryEnterClearIcon(text: CharSequence?) {
         with(viewBinding) {
             if (text?.isBlank() == false) {
                 salaryFrameContainer.endIconMode = END_ICON_CLEAR_TEXT
                 salaryFrameContainer.setEndIconDrawable(R.drawable.close_24px)
+                salaryFrameContainer.setEndIconOnClickListener {
+                    salaryEditText.text?.clear()
+                    salaryEditText.clearFocus()
+                    hideKeyBoard()
+                }
             } else {
                 salaryFrameContainer.endIconMode = END_ICON_NONE
                 salaryFrameContainer.endIconDrawable = null
