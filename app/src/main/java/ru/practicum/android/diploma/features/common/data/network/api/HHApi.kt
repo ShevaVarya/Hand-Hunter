@@ -77,7 +77,7 @@ interface HHApi {
     @GET("/areas/countries")
     fun getCountriesList(
         @QueryMap params: Map<String, Any>
-    ): Call<List<CountryEntity>>
+    ): List<CountryEntity>
 
     /**
      * Запрос, возвращающий древовидный список всех регионов.
