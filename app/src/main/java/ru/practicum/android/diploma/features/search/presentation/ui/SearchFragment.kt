@@ -239,10 +239,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun clearSearchString() {
-        viewBinding.searchTextInput.setEndIconOnClickListener {
-            viewModel.onClearedSearch()
-            viewBinding.searchEditText.setText(EMPTY_TEXT)
-            hideKeyBoard()
+        with(viewBinding) {
+            searchTextInput.setEndIconOnClickListener {
+                viewModel.onClearedSearch()
+                searchEditText.text?.clear()
+                searchEditText.clearFocus()
+                hideKeyBoard()
+            }
         }
     }
 
