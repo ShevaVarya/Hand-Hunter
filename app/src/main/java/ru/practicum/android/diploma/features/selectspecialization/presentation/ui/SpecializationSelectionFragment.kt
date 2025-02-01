@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionBinding
@@ -53,8 +54,8 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter { industry ->
-            viewBinding.specializationEditText.setText(industry.name)
-            viewBinding.chooseButton.isVisible = true
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("selectedIndustry", industry)
+            findNavController().popBackStack()
             hideKeyBoard()
         }
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
