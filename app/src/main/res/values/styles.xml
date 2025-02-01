@@ -62,7 +62,7 @@
 
     <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/light_gray</item>
-        <item name="android:textColorHint">@color/blue</item>
+        <item name="android:textColorHint">@color/gray</item>
         <item name="hintTextColor">@color/blue</item>
         <item name="cursorColor">@color/blue</item>
         <item name="maxLines">1</item>
@@ -75,6 +75,10 @@
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="android:inputType">number</item>
         <item name="expandedHintEnabled">false</item>
+        <item name="android:textCursorDrawable">@drawable/custom_edit_text_cursor</item>
+        <item name="android:textSelectHandle">@drawable/custom_handle</item>
+        <item name="android:textSelectHandleLeft">@drawable/custom_handle</item>
+        <item name="android:textSelectHandleRight">@drawable/custom_handle</item>
     </style>
 
     <style name="withoutSalary">
