@@ -54,6 +54,9 @@
     <string name="vacancy_info_gross_info_false">net</string>
     <string name="vacancy_info_save_to_database_error">Failed to add vacancy to favorites</string>
     <string name="vacancy_info_delete_from_database_error">Failed to remove vacancy from favorites</string>
+    <string name="choose_industry">Choosing an industry</string>
+    <string name="enter_an_industry">Enter an industry</string>
+    <string name="could_not_get_the_list">Could not get the list</string>
 
     <string name="location_country_toolbar_title">Choose country</string>
     <string name="location_region_toolbar_title">Choose region</string>
@@ -65,6 +68,15 @@
     <string name="country_hint">Country</string>
     <string name="region_hint">Region</string>
     <string name="choose_button_text">Choose</string>
+
+    <string name="vacancy_search_filters_title">Filtering setup</string>
+    <string name="vacancy_search_filters_place_of_work">Place of work</string>
+    <string name="vacancy_search_filters_industry">Industry</string>
+    <string name="vacancy_search_filters_salary_expected">Salary expected</string>
+    <string name="vacancy_search_filters_enter_salary">Enter salary</string>
+    <string name="vacancy_search_filters_without_salary">Do not show without salary</string>
+    <string name="vacancy_search_filters_accept">Accept</string>
+    <string name="vacancy_search_filters_reset">Reset</string>
 
     <plurals name="vacancies_count">
         <item quantity="one">Found %d vacancy</item>
