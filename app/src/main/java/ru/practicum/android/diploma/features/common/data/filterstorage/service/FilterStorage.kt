@@ -58,19 +58,9 @@ class FilterStorageImpl(
 
     override fun getFilterMainData(): FilterMainDataEntity {
         return FilterMainDataEntity(
-            country = FilterCountryEntity(
-                id = sharedPrefs.getString(COUNTRY_ID, "") ?: "",
-                name = sharedPrefs.getString(COUNTRY_NAME, "") ?: ""
-            ),
-            region = FilterRegionEntity(
-                id = sharedPrefs.getString(REGION_ID, "") ?: "",
-                name = sharedPrefs.getString(REGION_NAME, "") ?: "",
-                parentId = sharedPrefs.getString(REGION_PARENT_ID, "") ?: ""
-            ),
-            industry = FilterIndustryEntity(
-                id = sharedPrefs.getString(INDUSTRY_ID, "") ?: "",
-                name = sharedPrefs.getString(INDUSTRY_NAME, "") ?: ""
-            ),
+            country = getCountryFromPrefs(),
+            region = getRegionFromPrefs(),
+            industry = getIndustryFromPrefs(),
             salary = sharedPrefs.getString(SALARY, "") ?: "",
             isNeedToHideVacancyWithoutSalary = sharedPrefs.getBoolean(SHOW_WITHOUT_SALARY_FLAG, false)
         )
@@ -78,17 +68,27 @@ class FilterStorageImpl(
 
     override fun getFullLocationData(): FullLocationDataEntity {
         return FullLocationDataEntity(
-            country = FilterCountryEntity(
-                id = sharedPrefs.getString(COUNTRY_ID, "") ?: "",
-                name = sharedPrefs.getString(COUNTRY_NAME, "") ?: ""
-            ),
-            region = FilterRegionEntity(
-                id = sharedPrefs.getString(REGION_ID, "") ?: "",
-                name = sharedPrefs.getString(REGION_NAME, "") ?: "",
-                parentId = sharedPrefs.getString(REGION_PARENT_ID, "") ?: ""
-            ),
+            country = getCountryFromPrefs(),
+            region = getRegionFromPrefs(),
         )
     }
+
+    private fun getCountryFromPrefs() = FilterCountryEntity(
+        id = sharedPrefs.getString(COUNTRY_ID, "") ?: "",
+        name = sharedPrefs.getString(COUNTRY_NAME, "") ?: ""
+    )
+
+
+    private fun getRegionFromPrefs() = FilterRegionEntity(
+        id = sharedPrefs.getString(REGION_ID, "") ?: "",
+        name = sharedPrefs.getString(REGION_NAME, "") ?: "",
+        parentId = sharedPrefs.getString(REGION_PARENT_ID, "") ?: ""
+    )
+
+    private fun getIndustryFromPrefs() = FilterIndustryEntity(
+        id = sharedPrefs.getString(INDUSTRY_ID, "") ?: "",
+        name = sharedPrefs.getString(INDUSTRY_NAME, "") ?: ""
+    )
 
     companion object {
         private const val COUNTRY_NAME = "country_name"
