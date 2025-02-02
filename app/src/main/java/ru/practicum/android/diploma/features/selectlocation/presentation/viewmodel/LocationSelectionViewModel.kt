@@ -41,7 +41,7 @@ class LocationSelectionViewModel(
                 (region as CountryUI).fromUI()
             )
         } else {
-            //locationInteractor.setRegion(...)
+            // locationInteractor.setRegion(...)
         }
 
     }
@@ -62,7 +62,7 @@ class LocationSelectionViewModel(
         // для регионов
     }
 
-    private suspend fun handleError(error: Throwable) {
+    private fun handleError(error: Throwable) {
         when (error) {
             is CustomException.RequestError, CustomException.NetworkError, CustomException.ServerError -> {
                 _state.value = LocationSelectionState.NetworkError

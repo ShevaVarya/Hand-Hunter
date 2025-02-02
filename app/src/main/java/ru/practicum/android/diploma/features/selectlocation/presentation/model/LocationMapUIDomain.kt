@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
 
 fun Country.toUI(): CountryUI {
     return CountryUI(
-        id= id,
+        id = id,
         name = name
     )
 }
