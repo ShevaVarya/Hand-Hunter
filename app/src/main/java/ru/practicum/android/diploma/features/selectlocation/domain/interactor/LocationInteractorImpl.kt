@@ -13,7 +13,9 @@ class LocationInteractorImpl(
     }
 
     override suspend fun getAllAreasList(params: Map<String, String>): Result<List<Region>> {
-        return locationRepository.getAllAreasList(params)
+        return locationRepository.getAllAreasList(params).map { list ->
+            list.filter { it.parentId.isNotEmpty() }
+        }
     }
 
     override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<Region>> {

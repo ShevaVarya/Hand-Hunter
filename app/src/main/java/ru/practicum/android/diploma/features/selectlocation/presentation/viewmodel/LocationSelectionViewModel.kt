@@ -17,6 +17,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 class LocationSelectionViewModel(
     private val isCountry: Boolean,
+    private val countryId: String?,
     private val locationInteractor: LocationInteractor
 ) : ViewModel() {
 
@@ -66,9 +67,14 @@ class LocationSelectionViewModel(
 
     private fun getRegionList() {
         viewModelScope.launch {
-            locationInteractor.getAllAreasList(mapOf())
+            val params = countryId?.takeIf { it.isNotEmpty() }?.let {
+                mapOf("countryId" to it)
+            } ?: mapOf()
+
+            locationInteractor.getAllAreasList(params)
                 .onSuccess { list ->
-                    _state.value = LocationSelectionState.ContentRegion(list.map { it.toUI() })
+                    val filteredList = list.filter { it.parentId.isNotEmpty() }
+                    _state.value = LocationSelectionState.ContentRegion(filteredList.map { it.toUI() })
                 }
                 .onFailure {
                     handleError(it)
