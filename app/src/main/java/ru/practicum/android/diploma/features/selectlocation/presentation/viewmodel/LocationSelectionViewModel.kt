@@ -17,7 +17,6 @@ import kotlin.coroutines.cancellation.CancellationException
 
 class LocationSelectionViewModel(
     private val isCountry: Boolean,
-    private val countryId: String?,
     private val locationInteractor: LocationInteractor
 ) : ViewModel() {
 

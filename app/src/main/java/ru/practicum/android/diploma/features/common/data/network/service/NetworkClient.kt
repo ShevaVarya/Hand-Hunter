@@ -25,6 +25,10 @@ interface NetworkClient {
     suspend fun getCountriesList(params: Map<String, String>): Result<List<CountryEntity>>
 
     suspend fun getAllAreasList(params: Map<String, String>): Result<List<AreaEntity>>
+    suspend fun getAllAreasByIdList(
+        countryId: String,
+        params: Map<String, String>
+    ): Result<List<AreaEntity>>
 }
 
 class NetworkClientImpl(
@@ -87,6 +91,16 @@ class NetworkClientImpl(
             }
         }.recoverCatching {
             resolveError(it)
+        }
+    }
+
+    override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<AreaEntity>> {
+        return runCatching {
+            if (networkChecker.isInternetAvailable()) {
+                hhApi.getAllAreasByIdList(countryId, params)
+            } else {
+                throw CustomException.NetworkError
+            }
         }
     }
 

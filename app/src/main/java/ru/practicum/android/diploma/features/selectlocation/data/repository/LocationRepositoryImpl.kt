@@ -24,6 +24,12 @@ class LocationRepositoryImpl(
         }
     }
 
+    override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<Region>> {
+        return networkClient.getAllAreasByIdList(countryId, params).map { list ->
+            list.map { it.toDomain() }
+        }
+    }
+
     override fun setCountry(country: Country) {
         filterStorage.setCountry(country.toFilterEntity())
     }
