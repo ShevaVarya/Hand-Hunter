@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationInteractor
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.CountryUI
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.LocationSelectionState
+import ru.practicum.android.diploma.features.selectlocation.presentation.model.RegionUI
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.Regionable
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.fromUI
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.toUI
@@ -37,7 +38,9 @@ class LocationSelectionViewModel(
                 (region as CountryUI).fromUI()
             )
         } else {
-            // locationInteractor.setRegion(...)
+            locationInteractor.setRegion(
+                (region as RegionUI).fromUI()
+            )
         }
 
     }
@@ -63,7 +66,15 @@ class LocationSelectionViewModel(
     }
 
     private fun getRegionList() {
-        // для регионов
+        viewModelScope.launch {
+            locationInteractor.getAllAreasList(mapOf())
+                .onSuccess { list ->
+                    _state.value = LocationSelectionState.ContentRegion(list.map { it.toUI() })
+                }
+                .onFailure {
+                    handleError(it)
+                }
+        }
     }
 
     private fun handleError(error: Throwable) {
