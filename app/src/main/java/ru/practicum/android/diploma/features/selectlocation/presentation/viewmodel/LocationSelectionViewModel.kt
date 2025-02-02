@@ -23,16 +23,12 @@ class LocationSelectionViewModel(
     private var _state = MutableStateFlow<LocationSelectionState>(LocationSelectionState.Loading)
     val state = _state.asStateFlow()
 
-    fun search(text: String) {
-        val a = 0
+    init {
+        getData()
     }
 
-    fun getData() {
-        if (isCountry) {
-            getCountryList()
-        } else {
-            getRegionList()
-        }
+    fun search(text: String) {
+        val a = 0
     }
 
     fun saveRegion(region: Regionable) {
@@ -44,6 +40,14 @@ class LocationSelectionViewModel(
             // locationInteractor.setRegion(...)
         }
 
+    }
+
+    private fun getData() {
+        if (isCountry) {
+            getCountryList()
+        } else {
+            getRegionList()
+        }
     }
 
     private fun getCountryList() {

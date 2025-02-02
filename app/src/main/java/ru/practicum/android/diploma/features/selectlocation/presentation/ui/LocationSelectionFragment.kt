@@ -55,7 +55,6 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         initClickDebounce()
         initSearchDebounce()
         initListeners()
-        viewModel.getData()
     }
 
     override fun observeData() {
