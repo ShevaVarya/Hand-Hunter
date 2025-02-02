@@ -1,9 +1,11 @@
 package ru.practicum.android.diploma.di
 
+import android.content.Context
 import androidx.room.Room
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -23,6 +25,7 @@ import ru.practicum.android.diploma.utils.NetworkChecker
 private const val BASE_URL = "https://api.hh.ru/"
 private const val BASE_EMAIL = "Kazesteam@yandex.ru"
 private const val APP_NAME = "Hand Hunter"
+private const val PREFS = "hand_hunter_shared_preferences"
 
 val dataModule = module {
 
@@ -73,4 +76,8 @@ val dataModule = module {
     single<NetworkChecker> { NetworkChecker(get()) }
 
     singleOf(::FilterStorageImpl) bind FilterStorage::class
+
+    single {
+        androidApplication().getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+    }
 }
