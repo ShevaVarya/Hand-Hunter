@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.features.selectlocation.domain.api
 
-import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
+import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 
 interface LocationRepository {
     suspend fun getCountriesList(params: Map<String, String>): Result<List<Country>>

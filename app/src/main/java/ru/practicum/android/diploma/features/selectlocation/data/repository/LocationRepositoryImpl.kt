@@ -5,8 +5,8 @@ import ru.practicum.android.diploma.features.common.data.network.service.Network
 import ru.practicum.android.diploma.features.selectlocation.data.dto.toDomain
 import ru.practicum.android.diploma.features.selectlocation.data.dto.toFilterEntity
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationRepository
-import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
+import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 
 class LocationRepositoryImpl(
     private val networkClient: NetworkClient,

@@ -2,8 +2,8 @@ package ru.practicum.android.diploma.features.selectlocation.domain.interactor
 
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationInteractor
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationRepository
-import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
+import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 
 class LocationInteractorImpl(
     private val locationRepository: LocationRepository

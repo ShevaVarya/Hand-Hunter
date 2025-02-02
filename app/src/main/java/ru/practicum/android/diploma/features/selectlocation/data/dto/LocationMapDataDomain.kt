@@ -4,8 +4,8 @@ import ru.practicum.android.diploma.features.common.data.filterstorage.dto.Filte
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterRegionEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.area.CountryEntity
-import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
+import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 
 fun CountryEntity.toDomain(): Country {
     return Country(
