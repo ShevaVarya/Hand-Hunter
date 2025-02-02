@@ -75,8 +75,8 @@ interface HHApi {
      * @param params - список Query-параметров в виде Map<Key, Value>.
      */
     @GET("/areas/countries")
-    fun getCountriesList(
-        @QueryMap params: Map<String, Any>
+    suspend fun getCountriesList(
+        @QueryMap params: Map<String, String>
     ): List<CountryEntity>
 
     /**
@@ -91,9 +91,26 @@ interface HHApi {
      * @param params - список Query-параметров в виде Map<Key, Value>.
      */
     @GET("/areas")
-    fun getAllAreasList(
-        @QueryMap params: Map<String, Any>
-    ): Call<List<AreaEntity>>
+    suspend fun getAllAreasList(
+        @QueryMap params: Map<String, String>
+    ): List<AreaEntity>
+
+    /**
+     * Запрос, возвращающий древовидный список регионов по id страны.
+     *
+     * Список возможных передаваемых параметров:
+     *
+     * **locate**: String - Язык, на котором будут приходить вакансии, по умолчанию RU;
+     *
+     * **host**: String - Сайт, с которого берутся вакансии, по умолчанию hh.ru;
+     *
+     * @param params - список Query-параметров в виде Map<Key, Value>.
+     */
+    @GET("/areas/{countryId}")
+    suspend fun getAllAreasByIdList(
+        @Path("countryId") countryId: String,
+        @QueryMap params: Map<String, String>
+    ): List<AreaEntity>
 
     /**
      * Запрос, возвращающий двухуровневый справочник всех отраслей(список отраслей, содержащих в себе список подотраслей).
@@ -107,7 +124,7 @@ interface HHApi {
      * @param params - список Query-параметров в виде Map<Key, Value>.
      */
     @GET("/industries")
-    fun getAllIndustriesList(
-        @QueryMap params: Map<String, Any>
-    ): Call<List<IndustryEntity>>
+    suspend fun getAllIndustriesList(
+        @QueryMap params: Map<String, String>
+    ): List<IndustryEntity>
 }

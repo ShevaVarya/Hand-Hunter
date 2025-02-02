@@ -7,6 +7,9 @@ import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacan
 import ru.practicum.android.diploma.features.favourite.domain.interactor.FavouriteVacanciesInteractorImpl
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractorImpl
+import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationInteractor
+import ru.practicum.android.diploma.features.selectlocation.domain.interactor.LocationInteractorImpl
+import ru.practicum.android.diploma.features.selectlocation.presentation.viewmodel.LocationSelectionViewModel
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDetailsInteractorImpl
 
@@ -15,5 +18,5 @@ val interactorModule = module {
     singleOf(::VacancyDetailsInteractorImpl).bind<VacancyDetailsInteractor>()
     singleOf(::VacanciesSearchInteractorImpl) bind VacanciesSearchInteractor::class
     singleOf(::FavouriteVacanciesInteractorImpl) bind FavouriteVacanciesInteractor::class
-
+    singleOf(::LocationInteractorImpl) bind LocationInteractor::class
 }

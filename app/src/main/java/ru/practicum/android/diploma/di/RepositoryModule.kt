@@ -9,6 +9,8 @@ import ru.practicum.android.diploma.features.favourite.data.repository.Favourite
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesRepository
 import ru.practicum.android.diploma.features.search.data.repository.VacanciesSearchRepositoryImpl
 import ru.practicum.android.diploma.features.search.domain.api.VacanciesSearchRepository
+import ru.practicum.android.diploma.features.selectlocation.data.repository.LocationRepositoryImpl
+import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationRepository
 import ru.practicum.android.diploma.features.vacancy.data.repository.VacancyDetailsRepositoryImpl
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsRepository
 
@@ -17,4 +19,5 @@ val repositoryModule = module {
     singleOf(::VacanciesSearchRepositoryImpl) bind VacanciesSearchRepository::class
     singleOf(::FavouriteVacanciesRepositoryImpl) bind FavouriteVacanciesRepository::class
     singleOf(::FilterRepositoryImpl) bind FilterRepository::class
+    singleOf(::LocationRepositoryImpl) bind LocationRepository::class
 }
