@@ -71,7 +71,13 @@ class LocationSelectionViewModel(
                 mapOf("countryId" to it)
             } ?: mapOf()
 
-            locationInteractor.getAllAreasList(params)
+            val result = if (countryId.isNullOrEmpty()) {
+                locationInteractor.getAllAreasList(params)
+            } else {
+                locationInteractor.getAllAreasByIdList(countryId, params)
+            }
+
+            result
                 .onSuccess { list ->
                     val filteredList = list.filter { it.parentId.isNotEmpty() }
                     _state.value = LocationSelectionState.ContentRegion(filteredList.map { it.toUI() })
