@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.bundle.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -137,7 +136,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
             viewLifecycleOwner.lifecycleScope,
             false
         ) { region ->
-            goBack(region.id)
+            goBack(region)
         }
     }
 
@@ -160,8 +159,10 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         clearSearchString()
     }
 
-    private fun goBack(regionId: String?) {
-        parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY to regionId))
+    private fun goBack(region: Regionable?) {
+        region?.let {
+            viewModel.saveRegion(region)
+        }
         parentFragmentManager.popBackStack()
     }
 
