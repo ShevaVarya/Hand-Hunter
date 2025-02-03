@@ -36,7 +36,8 @@ class SearchFilterViewModel(
     private val _chosenRegion = MutableStateFlow<RegionUI?>(RegionUI("", "", ""))
     val chosenRegion: StateFlow<RegionUI?> = _chosenRegion
 
-    val latestSearchFilterUI = FilterUI()
+    var baseFilterUI = FilterUI()
+    var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: Int? = null
     var currentFilterUI: FilterUI? = _stateFilterUI.value
 
@@ -44,12 +45,14 @@ class SearchFilterViewModel(
         if (sharedPrefInteractor.loadFilter().toUI().country?.name?.isEmpty() ?: false ||
             sharedPrefInteractor.loadFilter().toUI().region?.name?.isEmpty() ?: false ||
             sharedPrefInteractor.loadFilter().toUI().industry?.name?.isEmpty() ?: false) {
-
-            _stateFilterUI.value?.region = null
-            _stateFilterUI.value?.country = null
-            _stateFilterUI.value?.industry = null
-            _stateFilterUI.value?.salary = sharedPrefInteractor.loadFilter().toUI().salary
-            _stateFilterUI.value?.onlyWithSalary = sharedPrefInteractor.loadFilter().toUI().onlyWithSalary
+            latestSearchFilterUI = _stateFilterUI.value?.copy(
+                region = null,
+                country = null,
+                industry = null,
+                salary = sharedPrefInteractor.loadFilter().toUI().salary,
+                onlyWithSalary = sharedPrefInteractor.loadFilter().toUI().onlyWithSalary
+                )
+            _stateFilterUI.value = latestSearchFilterUI
         } else {
             _stateFilterUI.value = sharedPrefInteractor.loadFilter().toUI()
         }
