@@ -28,7 +28,6 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
     }
 
     override fun initUi() {
-
         viewBinding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -106,8 +105,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             switchForwardClearIconCountry(country.isEmpty())
             switchForwardClearIconRegion(city.isEmpty())
 
-            chooseButton.isVisible =
-                (country.isNotEmpty() || city.isNotEmpty())
+            chooseButton.isVisible = country.isNotEmpty() || city.isNotEmpty()
         }
     }
 
