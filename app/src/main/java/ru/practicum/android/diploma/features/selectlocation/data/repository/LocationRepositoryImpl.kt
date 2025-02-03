@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.features.selectlocation.data.repository
 
 import ru.practicum.android.diploma.features.common.data.filterstorage.service.FilterStorage
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
+import ru.practicum.android.diploma.features.selectlocation.data.dto.mapRegionsToDomain
 import ru.practicum.android.diploma.features.selectlocation.data.dto.toDomain
 import ru.practicum.android.diploma.features.selectlocation.data.dto.toFilterEntity
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationRepository
@@ -20,13 +21,13 @@ class LocationRepositoryImpl(
 
     override suspend fun getAllAreasList(params: Map<String, String>): Result<List<Region>> {
         return networkClient.getAllAreasList(params).map { list ->
-            list.map { it.toDomain() }
+            mapRegionsToDomain(list, mutableListOf())
         }
     }
 
     override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<Region>> {
         return networkClient.getAllAreasByIdList(countryId, params).map { list ->
-            list.map { it.toDomain() }
+            mapRegionsToDomain(list, mutableListOf())
         }
     }
 

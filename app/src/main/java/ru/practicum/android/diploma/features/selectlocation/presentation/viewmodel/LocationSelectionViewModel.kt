@@ -29,7 +29,11 @@ class LocationSelectionViewModel(
     }
 
     fun search(text: String) {
-        val a = 0
+        if (_state.value is LocationSelectionState.ContentRegion) {
+            _state.value = LocationSelectionState.ContentRegion(
+                (_state.value as LocationSelectionState.ContentRegion).regions.filter { it.name.contains(text) }
+            )
+        }
     }
 
     fun saveRegion(region: Regionable) {
