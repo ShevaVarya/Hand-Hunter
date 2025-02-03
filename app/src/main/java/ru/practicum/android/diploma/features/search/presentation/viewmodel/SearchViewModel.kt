@@ -186,7 +186,7 @@ class SearchViewModel(
             searchStateFlow.emit(SearchState.Init)
         }
         lastSearchQuery = null
-        currentPage = 0
+        currentPage = DEFAULT_PAGE
         totalPages = Int.MAX_VALUE
         loadedVacancies.clear()
     }
