@@ -165,7 +165,8 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     // Метод отвечающий за отображение кнопок "Применить" "Сбросить"
     private fun setButtonVisibility(filterUI: FilterUI?): Unit = with(viewBinding) {
         resetButton.isVisible = if (filterUI?.isDefault == true) false else true
-        acceptButton.isVisible = filterUI != viewModel.latestSearchFilterUI
+        acceptButton.isVisible = filterUI != viewModel.baseFilterUI
+        viewModel.baseFilterUI = filterUI ?: FilterUI()
     }
 
     // Метод отвечающий за check box
