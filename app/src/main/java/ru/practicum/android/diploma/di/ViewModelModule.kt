@@ -19,7 +19,7 @@ val viewModelModule = module {
     viewModelOf(::WorkplaceSelectionViewModel)
     viewModelOf(::SearchFilterViewModel)
     viewModelOf(::SpecializationSelectionViewModel)
-    viewModel { (isCountry: Boolean, countryId: String?) ->
-        LocationSelectionViewModel(isCountry, countryId)
+    viewModel { (isCountry: Boolean) ->
+        LocationSelectionViewModel(isCountry, get())
     }
 }

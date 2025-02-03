@@ -35,20 +35,14 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
         viewBinding.countryTextInput.setOnClickListener {
             findNavController().navigate(
                 R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
-                LocationSelectionFragment.createArgs(
-                    true,
-                    null
-                )
+                LocationSelectionFragment.createArgs(true)
             )
         }
 
         viewBinding.regionEditText.setOnClickListener {
             findNavController().navigate(
                 R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
-                LocationSelectionFragment.createArgs(
-                    false,
-                    null
-                )
+                LocationSelectionFragment.createArgs(false)
             )
         }
     }
@@ -62,6 +56,8 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                     progressBar.isVisible = false
                     countryEditText.isVisible = false
                     regionEditText.isVisible = false
+                    countryTextInput.isEndIconVisible = false
+                    regionTextInput.isEndIconVisible = false
                 }
 
                 when (workplaceLocationState) {
@@ -86,6 +82,8 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             regionEditText.setText(city)
             countryEditText.isVisible = true
             regionEditText.isVisible = true
+            countryTextInput.isEndIconVisible = true
+            regionTextInput.isEndIconVisible = true
             chooseButton.isVisible = (countryEditText.text.isNullOrEmpty() || regionEditText.text.isNullOrEmpty()).not()
         }
     }

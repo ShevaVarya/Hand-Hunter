@@ -41,6 +41,10 @@ class FilterRepositoryImpl(
         return filterStorage.getFullLocationData().toDomain()
     }
 
+    override fun getCountryId(): String {
+        return filterStorage.getCountryId()
+    }
+
     override fun deleteFilterMainData() {
         filterStorage.deleteFilterMainData()
     }

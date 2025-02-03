@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.bundle.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -137,7 +136,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
             viewLifecycleOwner.lifecycleScope,
             false
         ) { region ->
-            goBack(region.id)
+            goBack(region)
         }
     }
 
@@ -160,8 +159,10 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         clearSearchString()
     }
 
-    private fun goBack(regionId: String?) {
-        parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY to regionId))
+    private fun goBack(region: Regionable?) {
+        region?.let {
+            viewModel.saveRegion(region)
+        }
         parentFragmentManager.popBackStack()
     }
 
@@ -235,13 +236,10 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val IS_COUNTRY = "is_country"
         private const val COUNTRY_ID = "country_id"
-        const val REQUEST_KEY = "request_key"
-        const val RESULT_KEY = "region_id"
 
-        fun createArgs(isCountry: Boolean, countryId: String?): Bundle {
+        fun createArgs(isCountry: Boolean): Bundle {
             return androidx.core.os.bundleOf(
-                IS_COUNTRY to isCountry,
-                COUNTRY_ID to countryId
+                IS_COUNTRY to isCountry
             )
         }
     }
