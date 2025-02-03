@@ -17,8 +17,6 @@ import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.FilterUI
 import ru.practicum.android.diploma.features.filters.presentation.viewmodel.SearchFilterViewModel
-import ru.practicum.android.diploma.features.selectlocation.presentation.model.CountryUI
-import ru.practicum.android.diploma.features.selectlocation.presentation.model.RegionUI
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
@@ -39,15 +37,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     override fun observeData() {
-        viewModel.getIndustries()
 
         viewModel.stateFilterUI.collectWithLifecycle(this) { filterUI ->
             viewModel.currentFilterUI = filterUI
             processFilterResult(filterUI)
-            viewModel.setChosenCountry(filterUI?.country)
-            viewModel.setChosenRegion(filterUI?.region)
             setupClearButton(filterUI?.country, viewBinding.placeOfWorkContainer) { viewModel.clearPlaceOfWork() }
-            setupClearButton(filterUI?.industry, viewBinding.industryContainer) { viewModel.setIndustry(null) }
+            setupClearButton(filterUI?.industry, viewBinding.industryContainer) { viewModel.clearIndustry() }
         }
     }
 
@@ -134,7 +129,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             setButtonVisibility(filter)
             if (filter?.isDefault == false) {
                 processArea(filter.country, filter.region)
-                industryEditText.setText(filter.industry?.name ?: "")
+                industryEditText.setText(filter.industry ?: "")
                 withoutSalary.isChecked = filter.onlyWithSalary
                 val newSalary = filter.salary
                 if (newSalary != viewModel.oldSalary) {
@@ -151,13 +146,13 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
 //    Метод для сохранения страны и региона в "Место работы"
-    private fun processArea(country: CountryUI?, region: RegionUI?) {
+    private fun processArea(country: String?, region: String?) {
         var result = ""
         if (country != null) {
-            result += country.name
+            result += country
         }
         if (region != null) {
-            result += ", ${region.name}"
+            result += ", ${region}"
         }
         viewBinding.placeOfWorkEditText.setText(result)
     }
