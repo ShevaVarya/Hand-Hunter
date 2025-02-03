@@ -82,7 +82,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             withoutSalary.setOnClickListener {
-                 viewModel.setOnlyWithSalary(withoutSalary.isChecked)
+                viewModel.setOnlyWithSalary(withoutSalary.isChecked)
             }
         }
     }

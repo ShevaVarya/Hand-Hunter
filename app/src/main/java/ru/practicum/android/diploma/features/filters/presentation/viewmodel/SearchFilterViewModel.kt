@@ -51,7 +51,7 @@ class SearchFilterViewModel(
                 industry = null,
                 salary = sharedPrefInteractor.loadFilter().toUI().salary,
                 onlyWithSalary = sharedPrefInteractor.loadFilter().toUI().onlyWithSalary
-                )
+            )
             _stateFilterUI.value = latestSearchFilterUI
         } else {
             _stateFilterUI.value = sharedPrefInteractor.loadFilter().toUI()
