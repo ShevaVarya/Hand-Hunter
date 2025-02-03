@@ -53,21 +53,11 @@ fun FilterRegion.toUI(): RegionUI {
     )
 }
 
-fun FilterUI.toDomain(): FilterMainData {
-    return FilterMainData(
-        country = country?.toDomain() ?: FilterCountry(id = "", name = ""),
-        region = region?.toDomain() ?: FilterRegion(id = "", name = "", parentId = ""),
-        industry = industry?.toDomain() ?: FilterIndustry(id = "", name = ""),
-        salary = salary.toString(),
-        isNeedToHideVacancyWithoutSalary = onlyWithSalary
-    )
-}
-
 fun FilterMainData.toUI(): FilterUI {
     return FilterUI(
-        country = country.toUI(),
-        region = region.toUI(),
-        industry = industry.toUI(),
+        country = country.toUI().name,
+        region = region.toUI().name,
+        industry = industry.toUI().name,
         salary = salary.toIntOrNull(),
         onlyWithSalary = isNeedToHideVacancyWithoutSalary,
     )
