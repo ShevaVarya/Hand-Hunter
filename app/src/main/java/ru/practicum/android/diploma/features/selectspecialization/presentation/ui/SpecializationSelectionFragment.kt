@@ -64,8 +64,8 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             true
-        ) { querySearch ->
-            viewModel.getSpecialization(querySearch)
+        ) { _ ->
+            viewModel.getSpecialization()
         }
     }
 

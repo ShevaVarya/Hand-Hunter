@@ -14,7 +14,8 @@ class SpecializationSelectionViewModel(
     private val industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
     fun getIndustriesState() = industriesState.asStateFlow()
 
-    fun getSpecialization(){
+    fun getSpecialization() {
+        industriesState.value = IndustriesState.Content(listOf())
     }
 
     fun saveSpecialization() {
