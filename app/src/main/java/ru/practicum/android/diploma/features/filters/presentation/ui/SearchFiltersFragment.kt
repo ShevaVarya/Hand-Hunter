@@ -37,7 +37,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     override fun observeData() {
-
         viewModel.stateFilterUI.collectWithLifecycle(this) { filterUI ->
             viewModel.currentFilterUI = filterUI
             processFilterResult(filterUI)
@@ -148,12 +147,8 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 //    Метод для сохранения страны и региона в "Место работы"
     private fun processArea(country: String?, region: String?) {
         var result = ""
-        if (country != null) {
-            result += country
-        }
-        if (region != null) {
-            result += ", ${region}"
-        }
+        if (country != null) result += country
+        if (region != null) result += ", ${region}"
         viewBinding.placeOfWorkEditText.setText(result)
     }
 

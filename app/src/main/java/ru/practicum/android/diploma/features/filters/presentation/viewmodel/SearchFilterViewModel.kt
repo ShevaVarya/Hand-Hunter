@@ -22,7 +22,7 @@ class SearchFilterViewModel(
     fun getData() {
         val loadedData = sharedPrefInteractor.loadFilter().toUI()
         latestSearchFilterUI = FilterUI(
-            country = loadedData.country?.let { it.ifEmpty {null} },
+            country = loadedData.country?.let { it.ifEmpty { null } },
             region = loadedData.region?.let { it.ifEmpty { null } },
             industry = loadedData.industry?.let { it.ifEmpty { null } },
             salary = sharedPrefInteractor.loadFilter().toUI().salary,
