@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.common.data.filterstorage.service
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterCountryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterIndustryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterMainDataEntity
@@ -14,6 +15,7 @@ interface FilterStorage {
     fun setSalary(value: String)
     fun setIsNeedToHideVacancyWithoutSalary(value: Boolean)
 
+    fun deleteFilterMainData()
     fun getFilterMainData(): FilterMainDataEntity
     fun getFullLocationData(): FullLocationDataEntity
 }
@@ -21,6 +23,18 @@ interface FilterStorage {
 class FilterStorageImpl(
     private val sharedPrefs: SharedPreferences
 ) : FilterStorage {
+
+    companion object {
+        private const val COUNTRY_NAME = "country_name"
+        private const val COUNTRY_ID = "country_id"
+        private const val REGION_NAME = "region_name"
+        private const val REGION_ID = "region_id"
+        private const val REGION_PARENT_ID = "region_parent_id"
+        private const val INDUSTRY_NAME = "industry_name"
+        private const val INDUSTRY_ID = "industry_id "
+        private const val SALARY = "salary"
+        private const val SHOW_WITHOUT_SALARY_FLAG = "showWithoutSalary"
+    }
 
     override fun setCountry(value: FilterCountryEntity) {
         sharedPrefs.edit()
@@ -66,6 +80,20 @@ class FilterStorageImpl(
         )
     }
 
+    override fun deleteFilterMainData() {
+        sharedPrefs.edit {
+            remove(COUNTRY_ID)
+            remove(COUNTRY_NAME)
+            remove(REGION_ID)
+            remove(REGION_NAME)
+            remove(REGION_PARENT_ID)
+            remove(INDUSTRY_NAME)
+            remove(INDUSTRY_ID)
+            remove(SALARY)
+            remove(SHOW_WITHOUT_SALARY_FLAG)
+        }
+    }
+
     override fun getFullLocationData(): FullLocationDataEntity {
         return FullLocationDataEntity(
             country = getCountryFromPrefs(),
@@ -88,16 +116,4 @@ class FilterStorageImpl(
         id = sharedPrefs.getString(INDUSTRY_ID, "") ?: "",
         name = sharedPrefs.getString(INDUSTRY_NAME, "") ?: ""
     )
-
-    companion object {
-        private const val COUNTRY_NAME = "country_name"
-        private const val COUNTRY_ID = "country_id"
-        private const val REGION_NAME = "region_name"
-        private const val REGION_ID = "region_id"
-        private const val REGION_PARENT_ID = "region_parent_id"
-        private const val INDUSTRY_NAME = "industry_name"
-        private const val INDUSTRY_ID = "industry_id "
-        private const val SALARY = "salary"
-        private const val SHOW_WITHOUT_SALARY_FLAG = "showWithoutSalary"
-    }
 }
