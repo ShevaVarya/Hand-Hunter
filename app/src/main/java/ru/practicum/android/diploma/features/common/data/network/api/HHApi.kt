@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.features.common.data.network.api
 
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -11,4 +11,8 @@ class SpecializationInteractorImpl(
     override fun setIndustry(industry: Industry) {
         return specializationRepository.setIndustry(industry)
     }
+
+    override suspend fun getIndustriesList(params: Map<String, String>): Result<List<Industry>> {
+        return specializationRepository.getIndustriesList(params)
+    }
 }

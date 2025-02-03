@@ -1,7 +1,9 @@
 package ru.practicum.android.diploma.features.selectspecialization.presentation.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
@@ -22,10 +24,10 @@ import ru.practicum.android.diploma.utils.debounce
 class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelectionBinding>() {
 
     private var specializationAdapter: SpecializationSelectionAdapter? = null
-    private var onIndustryClickDebounce: ((IndustryUI) -> Unit?)? = null
     private var onSearchDebounce: ((String) -> Unit)? = null
-
     private val viewModel by viewModel<SpecializationSelectionViewModel>()
+
+    private var selectedIndustry: IndustryUI? = null
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -38,11 +40,12 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         initAdapter()
         initSearchDebounce()
         initListeners()
+        initChooseButtonListener()
     }
 
     override fun observeData() {
-        viewModel.getIndustriesState().collectWithLifecycle(this) {
-            renderState(it)
+        viewModel.getIndustriesState().collectWithLifecycle(this) { state ->
+            renderState(state)
         }
     }
 
@@ -52,10 +55,15 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun initAdapter() {
-        specializationAdapter = SpecializationSelectionAdapter { _ ->
-            specializationAdapter?.selectedItemPosition
-            viewBinding.chooseButton.isVisible = true
-        }
+        specializationAdapter = SpecializationSelectionAdapter(
+            onItemClick = { industryUI, position ->
+                selectedIndustry = industryUI
+                specializationAdapter?.updateSelectedItemPosition(position)
+            },
+            onSelectionChanged = { isSelected ->
+                updateChooseButtonVisibility(isSelected)
+            }
+        )
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
     }
 
@@ -64,38 +72,57 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             true
-        ) { _ ->
-            viewModel.getSpecialization()
+        ) {
+            viewModel.search(it)
         }
     }
 
     private fun initListeners() {
         setupToolbar()
         onTextChanged()
-        onChooseButtonClick()
+    }
+
+    private fun initChooseButtonListener() {
+        viewBinding.chooseButton.setOnClickListener {
+            selectedIndustry?.let { industry ->
+                viewModel.selectAndSaveIndustry(industry)
+                goBack()
+            }
+        }
     }
 
     private fun setupToolbar() {
         viewBinding.toolbar.setOnClickListener {
-            hideKeyBoard()
             goBack()
         }
     }
 
-    private fun onChooseButtonClick() {
-        viewBinding.chooseButton.setOnClickListener {
-            viewModel.saveSpecialization()
-            goBack()
-        }
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     private fun onTextChanged() {
         with(viewBinding) {
             specializationEditText.doOnTextChanged { text, _, _, _ ->
-                val querySearch = text.toString()
-                val isEditTextNotEmpty = text.isNullOrEmpty().not()
+                val querySearch = text.toString().trim()
+                val isEditTextNotEmpty = querySearch.isNotBlank()
                 switchSearchIcon(isEditTextNotEmpty)
                 onSearchDebounce?.invoke(querySearch)
+            }
+
+            specializationEditText.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    val drawableEnd = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.close_24px
+                    )
+
+                    val drawableWidth = drawableEnd?.intrinsicWidth ?: 0
+                    val touchAreaStart = specializationEditText.width - specializationEditText.paddingEnd - drawableWidth
+                    if (event.rawX >= touchAreaStart) {
+                        specializationEditText.text?.clear()
+                        hideKeyBoard()
+                        return@setOnTouchListener true
+                    }
+                }
+                false
             }
         }
     }
@@ -115,6 +142,10 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             }
             specializationEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, editTextIcon, null)
         }
+    }
+
+    private fun updateChooseButtonVisibility(isVisible: Boolean) {
+        viewBinding.chooseButton.isVisible = isVisible
     }
 
     private fun hideKeyBoard() {
@@ -143,7 +174,6 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
                     specializationRecyclerView.isVisible = true
                     progressBar.isVisible = false
                     specializationAdapter?.updateItems(state.industries)
-                    chooseButton.isVisible = specializationAdapter?.selectedItemPosition != -1
                 }
                 is IndustriesState.Loading -> {
                     progressBar.isVisible = true

@@ -127,6 +127,7 @@ class SearchViewModel(
                     searchStateFlow.emit(SearchState.NetworkError)
                     networkErrorStateFlow.value = true
                 }
+
                 is CustomException.EmptyError -> searchStateFlow.emit(SearchState.EmptyError)
                 is CustomException.ServerError -> searchStateFlow.emit(SearchState.ServerError)
                 is CancellationException -> throw throwableError
@@ -134,6 +135,7 @@ class SearchViewModel(
             }
         }
     }
+
     @Suppress("LabeledExpression")
     fun loadNextPage() {
         if (!isLoading && currentPage < totalPages) {

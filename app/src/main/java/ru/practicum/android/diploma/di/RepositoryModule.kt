@@ -11,8 +11,8 @@ import ru.practicum.android.diploma.features.search.data.repository.VacanciesSea
 import ru.practicum.android.diploma.features.search.domain.api.VacanciesSearchRepository
 import ru.practicum.android.diploma.features.selectlocation.data.repository.LocationRepositoryImpl
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationRepository
-import ru.practicum.android.diploma.features.selectspecialization.domain.api.SpecializationRepository
 import ru.practicum.android.diploma.features.selectspecialization.data.repository.SpecializationRepositoryImpl
+import ru.practicum.android.diploma.features.selectspecialization.domain.api.SpecializationRepository
 import ru.practicum.android.diploma.features.vacancy.data.repository.VacancyDetailsRepositoryImpl
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsRepository
 
