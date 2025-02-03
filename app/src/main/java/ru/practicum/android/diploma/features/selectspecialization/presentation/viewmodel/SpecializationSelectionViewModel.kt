@@ -13,4 +13,8 @@ class SpecializationSelectionViewModel : ViewModel() {
     fun getSpecialization(industry: String) { // пустышка
         industriesState.value
     }
+
+    fun saveSpecialization(){
+
+    }
 }

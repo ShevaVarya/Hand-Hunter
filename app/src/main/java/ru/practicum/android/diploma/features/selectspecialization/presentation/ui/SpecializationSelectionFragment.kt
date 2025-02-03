@@ -53,10 +53,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun initAdapter() {
-        specializationAdapter = SpecializationSelectionAdapter { industry ->
-            findNavController().previousBackStackEntry?.savedStateHandle?.set("selectedIndustry", industry)
-            findNavController().popBackStack()
-            hideKeyBoard()
+        specializationAdapter = SpecializationSelectionAdapter { _ ->
         }
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
     }
@@ -120,6 +117,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun goBack() {
+        viewModel.saveSpecialization()
         parentFragmentManager.popBackStack()
     }
 
