@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.features.common.data.filterstorage.service
 
+import android.content.SharedPreferences
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterCountryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterIndustryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterMainDataEntity
@@ -17,47 +18,86 @@ interface FilterStorage {
     fun getFullLocationData(): FullLocationDataEntity
 }
 
-class FilterStorageImpl : FilterStorage {
-    private var country: FilterCountryEntity = FilterCountryEntity.default()
-    private var region: FilterRegionEntity = FilterRegionEntity.default()
-    private var industry: FilterIndustryEntity = FilterIndustryEntity.default()
-    private var salary: String = ""
-    private var isNeedToHideVacancyWithoutSalary: Boolean = false
+class FilterStorageImpl(
+    private val sharedPrefs: SharedPreferences
+) : FilterStorage {
 
     override fun setCountry(value: FilterCountryEntity) {
-        this.country = value
+        sharedPrefs.edit()
+            .putString(COUNTRY_NAME, value.name)
+            .putString(COUNTRY_ID, value.id)
+            .apply()
     }
 
     override fun setRegion(value: FilterRegionEntity) {
-        this.region = value
+        sharedPrefs.edit()
+            .putString(REGION_NAME, value.name)
+            .putString(REGION_ID, value.id)
+            .putString(REGION_PARENT_ID, value.parentId)
+            .apply()
     }
 
     override fun setIndustry(value: FilterIndustryEntity) {
-        this.industry = value
+        sharedPrefs.edit()
+            .putString(INDUSTRY_NAME, value.name)
+            .putString(INDUSTRY_ID, value.id)
+            .apply()
     }
 
     override fun setSalary(value: String) {
-        this.salary = value
+        sharedPrefs.edit()
+            .putString(SALARY, value)
+            .apply()
     }
 
     override fun setIsNeedToHideVacancyWithoutSalary(value: Boolean) {
-        this.isNeedToHideVacancyWithoutSalary = value
+        sharedPrefs.edit()
+            .putBoolean(SHOW_WITHOUT_SALARY_FLAG, value)
+            .apply()
     }
 
     override fun getFilterMainData(): FilterMainDataEntity {
         return FilterMainDataEntity(
-            country = country,
-            region = region,
-            industry = industry,
-            salary = salary,
-            isNeedToHideVacancyWithoutSalary = isNeedToHideVacancyWithoutSalary
+            country = getCountryFromPrefs(),
+            region = getRegionFromPrefs(),
+            industry = getIndustryFromPrefs(),
+            salary = sharedPrefs.getString(SALARY, "") ?: "",
+            isNeedToHideVacancyWithoutSalary = sharedPrefs.getBoolean(SHOW_WITHOUT_SALARY_FLAG, false)
         )
     }
 
     override fun getFullLocationData(): FullLocationDataEntity {
         return FullLocationDataEntity(
-            country = country,
-            region = region
+            country = getCountryFromPrefs(),
+            region = getRegionFromPrefs(),
         )
+    }
+
+    private fun getCountryFromPrefs() = FilterCountryEntity(
+        id = sharedPrefs.getString(COUNTRY_ID, "") ?: "",
+        name = sharedPrefs.getString(COUNTRY_NAME, "") ?: ""
+    )
+
+    private fun getRegionFromPrefs() = FilterRegionEntity(
+        id = sharedPrefs.getString(REGION_ID, "") ?: "",
+        name = sharedPrefs.getString(REGION_NAME, "") ?: "",
+        parentId = sharedPrefs.getString(REGION_PARENT_ID, "") ?: ""
+    )
+
+    private fun getIndustryFromPrefs() = FilterIndustryEntity(
+        id = sharedPrefs.getString(INDUSTRY_ID, "") ?: "",
+        name = sharedPrefs.getString(INDUSTRY_NAME, "") ?: ""
+    )
+
+    companion object {
+        private const val COUNTRY_NAME = "country_name"
+        private const val COUNTRY_ID = "country_id"
+        private const val REGION_NAME = "region_name"
+        private const val REGION_ID = "region_id"
+        private const val REGION_PARENT_ID = "region_parent_id"
+        private const val INDUSTRY_NAME = "industry_name"
+        private const val INDUSTRY_ID = "industry_id "
+        private const val SALARY = "salary"
+        private const val SHOW_WITHOUT_SALARY_FLAG = "showWithoutSalary"
     }
 }

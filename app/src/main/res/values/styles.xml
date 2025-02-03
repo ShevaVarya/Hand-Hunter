@@ -62,7 +62,7 @@
 
     <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/light_gray</item>
-        <item name="android:textColorHint">@color/blue</item>
+        <item name="android:textColorHint">@color/gray</item>
         <item name="hintTextColor">@color/blue</item>
         <item name="cursorColor">@color/blue</item>
         <item name="maxLines">1</item>
@@ -75,6 +75,10 @@
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="android:inputType">number</item>
         <item name="expandedHintEnabled">false</item>
+        <item name="android:textCursorDrawable">@drawable/custom_edit_text_cursor</item>
+        <item name="android:textSelectHandle">@drawable/custom_handle</item>
+        <item name="android:textSelectHandleLeft">@drawable/custom_handle</item>
+        <item name="android:textSelectHandleRight">@drawable/custom_handle</item>
     </style>
 
     <style name="withoutSalary">
@@ -129,6 +133,39 @@
         <item name="android:textSelectHandle">@drawable/custom_handle</item>
         <item name="android:textSelectHandleLeft">@drawable/custom_handle</item>
         <item name="android:textSelectHandleRight">@drawable/custom_handle</item>
+    </style>
+
+    <style name="textInputSearchStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:background">@drawable/edit_text_background</item>
+        <item name="boxStrokeColor">?attr/mainBackgroundColor</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="android:textAppearance">@style/textStyleRegular16</item>
+        <item name="android:textColorHint">?attr/hintEditTextColor</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:imeOptions">actionDone|flagNoExtractUi</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="endIconTint">@color/black</item>
+        <item name="android:layout_marginVertical">@dimen/margin_2x</item>
+        <item name="hintAnimationEnabled">false</item>
+        <item name="layout_scrollFlags">scroll|enterAlways</item>
+    </style>
+
+    <style name="editTextSearchStyleForTextInput">
+        <item name="android:textColorHint">?attr/hintEditTextColor</item>
+        <item name="android:textAppearance">@style/textStyleRegular16</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textCursorDrawable">@drawable/custom_edit_text_cursor</item>
+        <item name="android:textSelectHandle">@drawable/custom_handle</item>
+        <item name="android:textSelectHandleLeft">@drawable/custom_handle</item>
+        <item name="android:textSelectHandleRight">@drawable/custom_handle</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:imeOptions">actionDone|flagNoExtractUi</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="textViewMessageStyle">

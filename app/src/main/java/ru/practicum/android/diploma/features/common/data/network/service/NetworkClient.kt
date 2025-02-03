@@ -2,6 +2,8 @@ package ru.practicum.android.diploma.features.common.data.network.service
 
 import retrofit2.HttpException
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
+import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEntity
+import ru.practicum.android.diploma.features.common.data.network.dto.area.CountryEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacanciesEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
 import ru.practicum.android.diploma.features.common.domain.CustomException
@@ -19,6 +21,14 @@ interface NetworkClient {
         id: String,
         params: Map<String, String> = mapOf()
     ): Result<DetailsVacancyEntity>
+
+    suspend fun getCountriesList(params: Map<String, String>): Result<List<CountryEntity>>
+
+    suspend fun getAllAreasList(params: Map<String, String>): Result<List<AreaEntity>>
+    suspend fun getAllAreasByIdList(
+        countryId: String,
+        params: Map<String, String>
+    ): Result<List<AreaEntity>>
 }
 
 class NetworkClientImpl(
@@ -57,6 +67,40 @@ class NetworkClientImpl(
             }
         }.recoverCatching {
             resolveError(it)
+        }
+    }
+
+    override suspend fun getCountriesList(params: Map<String, String>): Result<List<CountryEntity>> {
+        return runCatching {
+            if (networkChecker.isInternetAvailable()) {
+                hhApi.getCountriesList(params)
+            } else {
+                throw CustomException.NetworkError
+            }
+        }.recoverCatching {
+            resolveError(it)
+        }
+    }
+
+    override suspend fun getAllAreasList(params: Map<String, String>): Result<List<AreaEntity>> {
+        return runCatching {
+            if (networkChecker.isInternetAvailable()) {
+                hhApi.getAllAreasList(params)
+            } else {
+                throw CustomException.NetworkError
+            }
+        }.recoverCatching {
+            resolveError(it)
+        }
+    }
+
+    override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<AreaEntity>> {
+        return runCatching {
+            if (networkChecker.isInternetAvailable()) {
+                hhApi.getAllAreasByIdList(countryId, params)
+            } else {
+                throw CustomException.NetworkError
+            }
         }
     }
 
