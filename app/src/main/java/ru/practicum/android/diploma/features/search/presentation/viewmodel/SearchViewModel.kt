@@ -90,7 +90,6 @@ class SearchViewModel(
         isSearchWithFilters.value = filters != null
     }
 
-
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
         networkErrorStateFlow.value = false
         currentPage = vacancies.page
@@ -205,13 +204,18 @@ class SearchViewModel(
                 page = page,
                 perPage = perPage,
                 params = mapFiltersToMap()
-            ), isPagination
+            ),
+            isPagination
         )
     }
 
     private fun mapFiltersToMap(): Map<String, String> {
-        val area = filters?.region?.id ?: filters?.country?.id
-        val industry = (filters?.industry?.id)
+        val area = when {
+            !filters?.region?.id.isNullOrBlank() -> filters?.region?.id
+            !filters?.country?.id.isNullOrBlank() -> filters?.country?.id
+            else -> null
+        }
+        val industry = filters?.industry?.id
         val salary = filters?.salary
         val isNeedToHideVacancyWithoutSalary = filters?.isNeedToHideVacancyWithoutSalary
 

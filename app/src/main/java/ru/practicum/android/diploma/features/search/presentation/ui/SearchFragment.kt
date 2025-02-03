@@ -102,8 +102,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.isSearchWithFilters().collectWithLifecycle(this) {
-            if (it)
+            if (it) {
                 viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+            }
         }
     }
 
