@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.features.selectlocation.domain.api
 
+import ru.practicum.android.diploma.features.common.domain.filter.model.FilterCountry
+import ru.practicum.android.diploma.features.common.domain.filter.model.FilterRegion
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 
@@ -10,6 +12,8 @@ interface LocationInteractor {
         countryId: String,
         params: Map<String, String>
     ): Result<List<Region>>
-    fun setCountry(country: Country)
-    fun setRegion(region: Region)
+
+    fun setCountry(country: FilterCountry)
+    fun setRegion(region: FilterRegion)
+    fun getCountryId(): String
 }
