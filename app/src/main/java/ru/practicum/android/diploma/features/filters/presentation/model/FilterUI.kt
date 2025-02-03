@@ -14,11 +14,11 @@ import ru.practicum.android.diploma.features.selectspecialization.presentation.m
  */
 
 data class FilterUI(
-    var country: CountryUI? = null,
-    var region: RegionUI? = null,
-    var industry: IndustryUI? = null,
-    var salary: Int? = null,
-    var onlyWithSalary: Boolean = false
+    val country: CountryUI? = null,
+    val region: RegionUI? = null,
+    val industry: IndustryUI? = null,
+    val salary: Int? = null,
+    val onlyWithSalary: Boolean = false
 ) {
     val isDefault: Boolean
         get() = country == null && region == null && industry == null && onlyWithSalary == false && salary == null
