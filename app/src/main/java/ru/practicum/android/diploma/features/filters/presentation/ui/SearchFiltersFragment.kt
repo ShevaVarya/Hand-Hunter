@@ -148,7 +148,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     private fun processArea(country: String?, region: String?) {
         var result = ""
         if (country != null) result += country
-        if (region != null) result += ", ${region}"
+        if (region != null) result += ", $region"
         viewBinding.placeOfWorkEditText.setText(result)
     }
 
