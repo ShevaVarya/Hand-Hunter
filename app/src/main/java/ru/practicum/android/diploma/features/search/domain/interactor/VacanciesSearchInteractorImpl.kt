@@ -14,8 +14,18 @@ class VacanciesSearchInteractorImpl(
         return repository.searchVacancies(querySearch).mapCatching { it }
     }
 
-    override fun getFilters(): FilterMainData {
-        return filterRepository.getFilterMainData()
+    override fun getFilters(): FilterMainData? {
+        val filters = filterRepository.getFilterMainData()
+        return if (checkFilters(filters)) filters else null
+    }
+
+    private fun checkFilters(filters: FilterMainData): Boolean {
+        val isContented = filters.region.id.isNotEmpty() ||
+            filters.country.id.isNotEmpty() ||
+            filters.industry.id.isNotEmpty() ||
+            filters.salary.isNotEmpty() ||
+            filters.isNeedToHideVacancyWithoutSalary
+        return isContented
     }
 
 }

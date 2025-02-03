@@ -29,6 +29,7 @@ import ru.practicum.android.diploma.features.search.presentation.model.SearchSta
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
+import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
 @Suppress("LargeClass")
@@ -74,7 +75,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
                 when (searchState) {
                     SearchState.Loading -> showProgressBar()
-                    is SearchState.Content -> showVacancies(searchState.vacancies, searchState.isSearchFilters)
+                    is SearchState.Content -> showVacancies(searchState.vacancies)
                     SearchState.Init -> showInit()
                     SearchState.EmptyError -> showEmptyError()
                     SearchState.NetworkError -> showNetworkError()
@@ -99,6 +100,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.isSearchWithFilters().collectWithLifecycle(this) {
+            if (it)
+                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+        }
     }
 
     private fun showToast(message: String) {
@@ -114,15 +120,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewBinding.progressBar.isVisible = true
     }
 
-    private fun showVacancies(vacancies: VacanciesSearchUI, isSearchWithFilters: Boolean) {
+    private fun showVacancies(vacancies: VacanciesSearchUI) {
         vacancyAdapter?.submitList(vacancies.items)
         with(viewBinding) {
             messageTextView.text = getTotalVacanciesText(vacancies)
             contentRecyclerView.isVisible = true
             messageTextView.isVisible = true
-
-            if (isSearchWithFilters)
-                filter.setImageResource(R.drawable.filter_on_24px)
         }
     }
 

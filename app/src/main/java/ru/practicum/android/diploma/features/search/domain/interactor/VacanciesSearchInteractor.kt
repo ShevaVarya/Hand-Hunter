@@ -7,5 +7,5 @@ import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 interface VacanciesSearchInteractor {
     suspend fun getVacancies(querySearch: QuerySearch): Result<Vacancies>
 
-    fun getFilters(): FilterMainData
+    fun getFilters(): FilterMainData?
 }

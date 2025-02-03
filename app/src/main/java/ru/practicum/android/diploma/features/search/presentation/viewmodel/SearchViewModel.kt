@@ -34,10 +34,12 @@ class SearchViewModel(
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
     private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
     val networkErrorStateFlow = MutableStateFlow(false)
+    private val isSearchWithFilters = MutableStateFlow(false)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
     fun getNetworkErrorStateFlow() = networkErrorStateFlow.asStateFlow()
+    fun isSearchWithFilters() = isSearchWithFilters.asStateFlow()
 
     private var currentPage = 0
     private var totalPages = 0
@@ -48,7 +50,7 @@ class SearchViewModel(
     private var filters: FilterMainData? = null
 
     init {
-        filters = getFilters()
+        getFilters()
     }
 
     private fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
@@ -83,9 +85,11 @@ class SearchViewModel(
         }
     }
 
-    private fun getFilters(): FilterMainData {
-        return interactor.getFilters()
+    private fun getFilters() {
+        filters = interactor.getFilters()
+        isSearchWithFilters.value = filters != null
     }
+
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
         networkErrorStateFlow.value = false
@@ -109,7 +113,7 @@ class SearchViewModel(
             perPage = vacancies.perPage
         )
 
-        searchStateFlow.emit(SearchState.Content(vacanciesUI, filters != null))
+        searchStateFlow.emit(SearchState.Content(vacanciesUI))
     }
 
     private suspend fun handleError(
@@ -127,7 +131,6 @@ class SearchViewModel(
                         page = currentPage,
                         perPage = DEFAULT_PER_PAGE
                     ),
-                    filters != null
                 )
             )
             if (throwableError is CustomException.NetworkError) {
@@ -195,6 +198,7 @@ class SearchViewModel(
         perPage: Int = DEFAULT_PER_PAGE,
         isPagination: Boolean = false
     ) {
+        getFilters()
         search(
             QuerySearch(
                 text = text,
@@ -215,8 +219,8 @@ class SearchViewModel(
             if (!area.isNullOrBlank()) put("area", area)
             if (!industry.isNullOrBlank()) put("industry", industry)
             if (!salary.isNullOrBlank()) put("salary", salary)
-            isNeedToHideVacancyWithoutSalary?.let {
-                put("only_with_salary", it.toString())
+            if (isNeedToHideVacancyWithoutSalary == true) {
+                put("only_with_salary", isNeedToHideVacancyWithoutSalary.toString())
             }
         }
 
