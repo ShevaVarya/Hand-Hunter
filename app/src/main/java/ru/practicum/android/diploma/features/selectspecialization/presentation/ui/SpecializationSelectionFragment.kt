@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionBinding
@@ -54,6 +53,8 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter { _ ->
+            specializationAdapter?.selectedItemPosition
+            viewBinding.chooseButton.isVisible = true
         }
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
     }
@@ -71,10 +72,19 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     private fun initListeners() {
         setupToolbar()
         onTextChanged()
+        onChooseButtonClick()
     }
 
     private fun setupToolbar() {
         viewBinding.toolbar.setOnClickListener {
+            hideKeyBoard()
+            goBack()
+        }
+    }
+
+    private fun onChooseButtonClick() {
+        viewBinding.chooseButton.setOnClickListener {
+            viewModel.saveSpecialization()
             goBack()
         }
     }
@@ -117,7 +127,6 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     private fun goBack() {
-        viewModel.saveSpecialization()
         parentFragmentManager.popBackStack()
     }
 
@@ -132,6 +141,8 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             when (state) {
                 is IndustriesState.Content -> {
                     specializationRecyclerView.isVisible = true
+                    progressBar.isVisible = false
+                    specializationAdapter?.updateItems(state.industries)
                     chooseButton.isVisible = specializationAdapter?.selectedItemPosition != -1
                 }
                 is IndustriesState.Loading -> {

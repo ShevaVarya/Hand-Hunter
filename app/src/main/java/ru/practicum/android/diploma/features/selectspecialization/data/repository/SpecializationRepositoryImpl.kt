@@ -7,7 +7,7 @@ import ru.practicum.android.diploma.features.selectspecialization.domain.model.I
 
 class SpecializationRepositoryImpl(
     private val filterStorage: FilterStorage
-    ) : SpecializationRepository {
+) : SpecializationRepository {
 
     override fun setIndustry(industry: Industry) {
         filterStorage.setIndustry(industry.toFilterEntity())

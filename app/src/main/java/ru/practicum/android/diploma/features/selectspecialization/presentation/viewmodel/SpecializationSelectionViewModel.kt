@@ -8,13 +8,13 @@ import ru.practicum.android.diploma.features.selectspecialization.domain.model.I
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustriesState
 
 class SpecializationSelectionViewModel(
-    private val specializationInteractor: SpecializationInteractor) : ViewModel() {
+    private val specializationInteractor: SpecializationInteractor
+) : ViewModel() {
 
     private val industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
     fun getIndustriesState() = industriesState.asStateFlow()
 
-    fun getSpecialization(industry: String) { // пустышка
-        industriesState.value
+    fun getSpecialization(){
     }
 
     fun saveSpecialization() {
@@ -22,6 +22,7 @@ class SpecializationSelectionViewModel(
             Industry(
                 id = "",
                 name = ""
-        ))
+            )
+        )
     }
 }
