@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,6 +17,9 @@ import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.FilterUI
 import ru.practicum.android.diploma.features.filters.presentation.viewmodel.SearchFilterViewModel
+import ru.practicum.android.diploma.features.selectlocation.presentation.model.CountryUI
+import ru.practicum.android.diploma.features.selectlocation.presentation.model.RegionUI
+import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
@@ -24,6 +29,11 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getData()
+    }
+
     override fun initUi() {
         initializeViews()
     }
@@ -31,14 +41,14 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     override fun observeData() {
         viewModel.getIndustries()
 
-//        viewModel.currentFilter.observe(viewLifecycleOwner) { filter ->
-//            currentFilter = filter
-//            processFilterResult(filter)
-//            viewModel.setChosenCountry(filter.country)
-//            viewModel.setChosenRegion(filter.region)
-//            setupClearButton(filter.country, binding.placeOfWork) { viewModel.clearPlaceOfWork() }
-//            setupClearButton(filter.industry, binding.industry) { viewModel.setIndustry(null) }
-//        }
+        viewModel.stateFilterUI.collectWithLifecycle(this) { filterUI ->
+            viewModel.currentFilterUI = filterUI
+            processFilterResult(filterUI)
+            viewModel.setChosenCountry(filterUI?.country)
+            viewModel.setChosenRegion(filterUI?.region)
+            setupClearButton(filterUI?.country, viewBinding.placeOfWorkContainer) { viewModel.clearPlaceOfWork() }
+            setupClearButton(filterUI?.industry, viewBinding.industryContainer) { viewModel.setIndustry(null) }
+        }
     }
 
     private fun initializeViews() {
@@ -61,7 +71,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             acceptButton.setOnClickListener {
-                viewModel.saveFilter()
                 viewModel.retrySearchQueryWithFilterSearch()
                 findNavController().navigateUp()
             }
@@ -72,9 +81,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 salaryEnterClearIcon(s)
             }
 
-//        binding.withoutSalary.setOnClickListener {
-//            binding.withoutSalary.setOnClickListener { viewModel.setOnlyWithSalary(binding.withoutSalary.isChecked) }
-//        }
+            withoutSalary.setOnClickListener {
+                 viewModel.setOnlyWithSalary(withoutSalary.isChecked)
+            }
         }
     }
 
@@ -105,56 +114,58 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     // Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
-//    private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
-//        if (item != null) {
-//            til.setEndIconDrawable(R.drawable.close_24px)
-//            til.setEndIconOnClickListener {
-//                action.invoke()
-//                til.setEndIconOnClickListener(null)
-//            }
-//        } else {
-//            til.setEndIconDrawable(R.drawable.arrow_forward_24px)
-//            til.isEndIconVisible = false
-//            til.isEndIconVisible = true
-//        }
-//    }
+    private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
+        if (item != null) {
+            til.setEndIconDrawable(R.drawable.close_24px)
+            til.setEndIconOnClickListener {
+                action.invoke()
+                til.setEndIconOnClickListener(null)
+            }
+        } else {
+            til.setEndIconDrawable(R.drawable.arrow_forward_24px)
+            til.isEndIconVisible = false
+            til.isEndIconVisible = true
+        }
+    }
 
     // Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
-//    private fun processFilterResult(filter: Filter) {
-//        setButtonVisibility(filter)
-//        if (!filter.isDefault) {
-//            processArea(filter.country, filter.region)
-//            binding.industryEnter.setText(filter.industry?.name ?: "")
-//            binding.withoutSalary.isChecked = filter.onlyWithSalary
-//            val newSalary = filter.salary
-//            if (newSalary != oldSalary) {
-//                binding.salaryEnter.setText(newSalary.toString())
-//            }
-//        } else {
-//            binding.placeOfWorkEnter.text = null
-//            binding.industryEnter.text = null
-//            binding.withoutSalary.isChecked = false
-//            binding.salaryEnter.text = null
-//        }
-//        setCheckedIcon(filter.onlyWithSalary)
-//    }
+    private fun processFilterResult(filter: FilterUI?) {
+        with(viewBinding) {
+            setButtonVisibility(filter)
+            if (filter?.isDefault == false) {
+                processArea(filter.country, filter.region)
+                industryEditText.setText(filter.industry?.name ?: "")
+                withoutSalary.isChecked = filter.onlyWithSalary
+                val newSalary = filter.salary
+                if (newSalary != viewModel.oldSalary) {
+                    salaryEditText.setText(newSalary.toString())
+                }
+            } else {
+                placeOfWorkEditText.text = null
+                industryEditText.text = null
+                withoutSalary.isChecked = false
+                salaryEditText.text = null
+            }
+        }
+        setCheckedIcon(filter?.onlyWithSalary ?: false)
+    }
 
 //    Метод для сохранения страны и региона в "Место работы"
-//    private fun processArea(country: CountryUI?, region: RegionUI?) {
-//        var result = ""
-//        if (country != null) {
-//            result += country.name
-//        }
-//        if (region != null) {
-//            result += ", ${region.name}"
-//        }
-//        binding.placeOfWorkEnter.setText(result)
-//    }
+    private fun processArea(country: CountryUI?, region: RegionUI?) {
+        var result = ""
+        if (country != null) {
+            result += country.name
+        }
+        if (region != null) {
+            result += ", ${region.name}"
+        }
+        viewBinding.placeOfWorkEditText.setText(result)
+    }
 
     // Метод отвечающий за отображение кнопок "Применить" "Сбросить"
-    private fun setButtonVisibility(filterUI: FilterUI) {
-//        binding.resetButton.isVisible = !filter.isDefault
-//        binding.acceptButton.isVisible = filter != viewModel.latestSearchFilter
+    private fun setButtonVisibility(filterUI: FilterUI?): Unit = with(viewBinding) {
+        resetButton.isVisible = if (filterUI?.isDefault == true) false else true
+        acceptButton.isVisible = filterUI != viewModel.latestSearchFilterUI
     }
 
     // Метод отвечающий за check box
