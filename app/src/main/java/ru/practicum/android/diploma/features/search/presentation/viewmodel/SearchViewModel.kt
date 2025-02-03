@@ -13,6 +13,8 @@ import ru.practicum.android.diploma.features.common.presentation.ResourceProvide
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
+import ru.practicum.android.diploma.features.search.domain.model.QuerySearch.Companion.DEFAULT_PAGE
+import ru.practicum.android.diploma.features.search.domain.model.QuerySearch.Companion.DEFAULT_PER_PAGE
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
@@ -123,7 +125,7 @@ class SearchViewModel(
                         found = totalFoundVacancies,
                         pages = totalPages,
                         page = currentPage,
-                        perPage = ITEMS_PER_PAGE
+                        perPage = DEFAULT_PER_PAGE
                     )
                 )
             )
@@ -158,7 +160,6 @@ class SearchViewModel(
                     performSearch(
                         text = lastSearchQuery,
                         page = currentPage + 1,
-                        perPage = ITEMS_PER_PAGE,
                         isPagination = true
                     )
                 }.onFailure { handleNextPageError(it) }
@@ -189,8 +190,8 @@ class SearchViewModel(
 
     fun performSearch(
         text: String?,
-        page: Int = 0,
-        perPage: Int = 20,
+        page: Int = DEFAULT_PAGE,
+        perPage: Int = DEFAULT_PER_PAGE,
         params: Map<String, String> = mapOf(),
         isPagination: Boolean = false
     ) {
@@ -211,6 +212,5 @@ class SearchViewModel(
 
     companion object {
         private const val MAX_ITEMS = 100
-        private const val ITEMS_PER_PAGE = 20
     }
 }
