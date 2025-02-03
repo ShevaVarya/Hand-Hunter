@@ -3,9 +3,12 @@ package ru.practicum.android.diploma.features.selectspecialization.presentation.
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import ru.practicum.android.diploma.features.selectspecialization.domain.api.SpecializationInteractor
+import ru.practicum.android.diploma.features.selectspecialization.domain.model.Industry
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustriesState
 
-class SpecializationSelectionViewModel : ViewModel() {
+class SpecializationSelectionViewModel(
+    private val specializationInteractor: SpecializationInteractor) : ViewModel() {
 
     private val industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
     fun getIndustriesState() = industriesState.asStateFlow()
@@ -14,7 +17,11 @@ class SpecializationSelectionViewModel : ViewModel() {
         industriesState.value
     }
 
-    fun saveSpecialization(){
-
+    fun saveSpecialization() {
+        specializationInteractor.setIndustry(
+            Industry(
+                id = "",
+                name = ""
+        ))
     }
 }
