@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
+import ru.practicum.android.diploma.features.common.domain.filter.model.FilterMainData
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
@@ -42,8 +43,13 @@ class SearchViewModel(
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
+    private var filters: FilterMainData? = null
 
-    fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
+    init {
+        filters = getFilters()
+    }
+
+    private fun search(querySearch: QuerySearch, isPagination: Boolean) {
         val queryText = querySearch.text?.trim()
         val isStateError = when (searchStateFlow.value) {
             is SearchState.ServerError, SearchState.NetworkError -> true
@@ -73,6 +79,10 @@ class SearchViewModel(
                     isLoading = false
                 }
         }
+    }
+
+    private fun getFilters(): FilterMainData {
+        return interactor.getFilters()
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
@@ -127,6 +137,7 @@ class SearchViewModel(
                     searchStateFlow.emit(SearchState.NetworkError)
                     networkErrorStateFlow.value = true
                 }
+
                 is CustomException.EmptyError -> searchStateFlow.emit(SearchState.EmptyError)
                 is CustomException.ServerError -> searchStateFlow.emit(SearchState.ServerError)
                 is CancellationException -> throw throwableError
@@ -134,6 +145,7 @@ class SearchViewModel(
             }
         }
     }
+
     @Suppress("LabeledExpression")
     fun loadNextPage() {
         if (!isLoading && currentPage < totalPages) {
@@ -143,12 +155,10 @@ class SearchViewModel(
                 searchStateFlow.emit(SearchState.Pagination)
 
                 runCatching {
-                    search(
-                        QuerySearch(
-                            text = lastSearchQuery,
-                            page = currentPage + 1,
-                            perPage = ITEMS_PER_PAGE
-                        ),
+                    performSearch(
+                        text = lastSearchQuery,
+                        page = currentPage + 1,
+                        perPage = ITEMS_PER_PAGE,
                         isPagination = true
                     )
                 }.onFailure { handleNextPageError(it) }
@@ -175,6 +185,28 @@ class SearchViewModel(
         currentPage = 0
         totalPages = Int.MAX_VALUE
         loadedVacancies.clear()
+    }
+
+    fun performSearch(
+        text: String?,
+        page: Int = 0,
+        perPage: Int = 20,
+        params: Map<String, String> = mapOf(),
+        isPagination: Boolean = false
+    ) {
+        search(
+            QuerySearch(
+                text = text,
+                page = page,
+                perPage = perPage,
+                params = params
+            ), isPagination
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        filters = null
     }
 
     companion object {
