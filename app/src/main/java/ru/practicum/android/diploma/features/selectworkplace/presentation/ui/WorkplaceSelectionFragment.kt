@@ -38,11 +38,11 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
         }
 
         viewBinding.countryEditText.setOnClickListener {
-            startLocationSelectionFragment(true, null)
+            startLocationSelectionFragment(true)
         }
 
         viewBinding.regionEditText.setOnClickListener {
-            startLocationSelectionFragment(false, null)
+            startLocationSelectionFragment(false)
         }
 
         setProhibitionRegionEditText()
@@ -132,7 +132,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                     viewModel.deleteCountryData()
                     countryEditText.text?.clear()
                 } else {
-                    startLocationSelectionFragment(true, null)
+                    startLocationSelectionFragment(true)
                 }
             }
         }
@@ -145,7 +145,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                     viewModel.deleteRegionData()
                     regionEditText.text?.clear()
                 } else {
-                    startLocationSelectionFragment(false, null)
+                    startLocationSelectionFragment(false)
                 }
             }
         }
@@ -196,12 +196,12 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
         }
     }
 
-    private fun startLocationSelectionFragment(isCountry: Boolean, countryId: String?) {
+    private fun startLocationSelectionFragment(isCountry: Boolean) {
         findNavController().navigate(
             R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
             LocationSelectionFragment.createArgs(
                 isCountry,
-                countryId
+                null
             )
         )
     }
