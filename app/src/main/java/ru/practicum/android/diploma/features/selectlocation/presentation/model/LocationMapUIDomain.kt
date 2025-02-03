@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.features.selectlocation.presentation.model
 
+import ru.practicum.android.diploma.features.common.domain.filter.model.FilterCountry
+import ru.practicum.android.diploma.features.common.domain.filter.model.FilterRegion
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Country
 import ru.practicum.android.diploma.features.selectlocation.domain.model.Region
 
@@ -10,8 +12,8 @@ fun Country.toUI(): CountryUI {
     )
 }
 
-fun CountryUI.fromUI(): Country {
-    return Country(
+fun CountryUI.fromUI(): FilterCountry {
+    return FilterCountry(
         id = id,
         name = name
     )
@@ -25,8 +27,8 @@ fun Region.toUI(): RegionUI {
     )
 }
 
-fun RegionUI.fromUI(): Region {
-    return Region(
+fun RegionUI.fromUI(): FilterRegion {
+    return FilterRegion(
         id = id,
         parentId = parentId,
         name = name
