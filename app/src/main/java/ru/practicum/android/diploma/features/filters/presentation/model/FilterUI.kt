@@ -1,9 +1,5 @@
 package ru.practicum.android.diploma.features.filters.presentation.model
 
-import ru.practicum.android.diploma.features.selectlocation.presentation.model.CountryUI
-import ru.practicum.android.diploma.features.selectlocation.presentation.model.RegionUI
-import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
-
 /**
  * @param country `Nullable` Хранит экземпляр класса `CountryUI` с информацией о стране
  * @param region `Nullable` Хранит экземпляр класса `RegionUI` с информацией о регионе
@@ -14,9 +10,9 @@ import ru.practicum.android.diploma.features.selectspecialization.presentation.m
  */
 
 data class FilterUI(
-    val country: CountryUI? = null,
-    val region: RegionUI? = null,
-    val industry: IndustryUI? = null,
+    val country: String? = null,
+    val region: String? = null,
+    val industry: String? = null,
     val salary: Int? = null,
     val onlyWithSalary: Boolean = false
 ) {
