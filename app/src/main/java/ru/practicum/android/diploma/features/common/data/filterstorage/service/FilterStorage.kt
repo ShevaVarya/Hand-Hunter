@@ -16,6 +16,9 @@ interface FilterStorage {
 
     fun getFilterMainData(): FilterMainDataEntity
     fun getFullLocationData(): FullLocationDataEntity
+
+    fun deleteCountryData()
+    fun deleteRegionData()
 }
 
 class FilterStorageImpl(
@@ -71,6 +74,21 @@ class FilterStorageImpl(
             country = getCountryFromPrefs(),
             region = getRegionFromPrefs(),
         )
+    }
+
+    override fun deleteCountryData() {
+        sharedPrefs.edit()
+            .remove(COUNTRY_NAME)
+            .remove(COUNTRY_ID)
+            .apply()
+    }
+
+    override fun deleteRegionData() {
+        sharedPrefs.edit()
+            .remove(REGION_NAME)
+            .remove(REGION_ID)
+            .remove(REGION_PARENT_ID)
+            .apply()
     }
 
     private fun getCountryFromPrefs() = FilterCountryEntity(

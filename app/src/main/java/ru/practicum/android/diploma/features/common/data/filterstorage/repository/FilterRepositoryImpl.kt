@@ -40,4 +40,12 @@ class FilterRepositoryImpl(
     override fun getFullLocationData(): FullLocationData {
         return filterStorage.getFullLocationData().toDomain()
     }
+
+    override fun deleteCountryData() {
+        filterStorage.deleteCountryData()
+    }
+
+    override fun deleteRegionData() {
+        filterStorage.deleteRegionData()
+    }
 }

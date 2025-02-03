@@ -1,11 +1,15 @@
 package ru.practicum.android.diploma.features.selectworkplace.presentation.ui
 
+import android.content.res.ColorStateList
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,6 +28,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
     }
 
     override fun initUi() {
+
         viewBinding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -32,25 +37,19 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             findNavController().navigateUp()
         }
 
-        viewBinding.countryTextInput.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
-                LocationSelectionFragment.createArgs(
-                    true,
-                    null
-                )
-            )
+        viewBinding.countryEditText.setOnClickListener {
+            startLocationSelectionFragment(true, null)
         }
 
         viewBinding.regionEditText.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
-                LocationSelectionFragment.createArgs(
-                    false,
-                    null
-                )
-            )
+            startLocationSelectionFragment(false, null)
         }
+
+        setProhibitionRegionEditText()
+        setProhibitionCountryEditText()
+        clearCountry()
+        clearRegion()
+        viewModel.isWorkPlaceShowNeeded()
     }
 
     override fun observeData() {
@@ -67,12 +66,9 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                 }
 
                 when (workplaceLocationState) {
-                    WorkplaceLocationState.Error -> Unit
                     WorkplaceLocationState.Loading -> showProgressBar()
-                    is WorkplaceLocationState.Success -> {
-                        val location = workplaceLocationState.location
-                        showSuccess(location.country.name, location.city.name)
-                    }
+                    WorkplaceLocationState.Init -> showInit()
+                    is WorkplaceLocationState.Content -> showSuccess()
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
@@ -82,16 +78,132 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
         viewBinding.progressBar.isVisible = true
     }
 
-    private fun showSuccess(country: String, city: String) {
+    private fun showInit() {
         with(viewBinding) {
-            countryEditText.setText(country)
-            regionEditText.setText(city)
             countryEditText.isVisible = true
             regionEditText.isVisible = true
             countryTextInput.isEndIconVisible = true
             regionTextInput.isEndIconVisible = true
-            chooseButton.isVisible = (countryEditText.text.isNullOrEmpty() || regionEditText.text.isNullOrEmpty()).not()
         }
+    }
+
+    private fun showSuccess() {
+        val location = viewModel.getLocation()
+        val country = location.country
+        val city = location.city
+        with(viewBinding) {
+            countryEditText.setText(country)
+            regionEditText.setText(city)
+
+            renderEditTextColor(countryTextInput, country)
+            renderEditTextColor(regionTextInput, city)
+
+            countryEditText.isVisible = true
+            regionEditText.isVisible = true
+            countryTextInput.isEndIconVisible = true
+            regionTextInput.isEndIconVisible = true
+
+            switchForwardClearIconCountry(country.isEmpty())
+            switchForwardClearIconRegion(city.isEmpty())
+
+            chooseButton.isVisible =
+                (country.isNotEmpty() || city.isNotEmpty())
+        }
+    }
+
+    private fun setProhibitionRegionEditText() {
+        viewBinding.regionEditText.keyListener = null
+        viewBinding.regionEditText.isFocusable = false
+        viewBinding.regionEditText.isFocusableInTouchMode = false
+        viewBinding.regionEditText.isCursorVisible = false
+    }
+
+    private fun setProhibitionCountryEditText() {
+        viewBinding.countryEditText.keyListener = null
+        viewBinding.countryEditText.isFocusable = false
+        viewBinding.countryEditText.isFocusableInTouchMode = false
+        viewBinding.countryEditText.isCursorVisible = false
+    }
+
+    private fun clearCountry() {
+        with(viewBinding) {
+            countryTextInput.setEndIconOnClickListener {
+                if (countryTextInput.editText?.text.isNullOrEmpty().not()) {
+                    viewModel.deleteCountryData()
+                    countryEditText.text?.clear()
+                } else {
+                    startLocationSelectionFragment(true, null)
+                }
+            }
+        }
+    }
+
+    private fun clearRegion() {
+        with(viewBinding) {
+            regionTextInput.setEndIconOnClickListener {
+                if (regionTextInput.editText?.text.isNullOrEmpty().not()) {
+                    viewModel.deleteRegionData()
+                    regionEditText.text?.clear()
+                } else {
+                    startLocationSelectionFragment(false, null)
+                }
+            }
+        }
+    }
+
+    private fun switchForwardClearIconCountry(isTextEmpty: Boolean) {
+        with(viewBinding) {
+            val image = if (isTextEmpty.not()) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.close_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.arrow_forward_24px
+                )
+            }
+            countryTextInput.endIconDrawable = image
+        }
+    }
+
+    private fun switchForwardClearIconRegion(isTextEmpty: Boolean) {
+        with(viewBinding) {
+            val image = if (isTextEmpty.not()) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.close_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.arrow_forward_24px
+                )
+            }
+            regionTextInput.endIconDrawable = image
+        }
+    }
+
+    private fun renderEditTextColor(view: TextInputLayout, text: CharSequence?) {
+        val typedValue = TypedValue()
+        if (!text.isNullOrEmpty()) {
+            requireContext().theme.resolveAttribute(R.attr.mainEditTextColor, typedValue, true)
+            view.defaultHintTextColor = ColorStateList.valueOf(typedValue.data)
+        } else {
+            requireContext().theme.resolveAttribute(R.attr.hintEditTextColor, typedValue, true)
+            view.defaultHintTextColor = ColorStateList.valueOf(typedValue.data)
+        }
+    }
+
+    private fun startLocationSelectionFragment(isCountry: Boolean, countryId: String?) {
+        findNavController().navigate(
+            R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
+            LocationSelectionFragment.createArgs(
+                isCountry,
+                countryId
+            )
+        )
     }
 
 }
