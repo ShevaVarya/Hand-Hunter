@@ -16,17 +16,7 @@ fun AreaEntity.toDomain(): Region {
     return Region(
         id = id,
         parentId = parentId ?: "",
-        name = name
+        name = name,
+        areas = areas?.map { it.toDomain() } ?: listOf()
     )
-}
-
-fun mapRegionsToDomain(list: List<AreaEntity>, newList: MutableList<Region>): List<Region> {
-    list.forEach {
-        if (it.areas.isNullOrEmpty()) {
-            newList.add(it.toDomain())
-        } else {
-            mapRegionsToDomain(it.areas, newList)
-        }
-    }
-    return newList
 }
