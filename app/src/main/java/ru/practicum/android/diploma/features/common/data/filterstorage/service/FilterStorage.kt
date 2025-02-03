@@ -25,18 +25,6 @@ class FilterStorageImpl(
     private val sharedPrefs: SharedPreferences
 ) : FilterStorage {
 
-    companion object {
-        private const val COUNTRY_NAME = "country_name"
-        private const val COUNTRY_ID = "country_id"
-        private const val REGION_NAME = "region_name"
-        private const val REGION_ID = "region_id"
-        private const val REGION_PARENT_ID = "region_parent_id"
-        private const val INDUSTRY_NAME = "industry_name"
-        private const val INDUSTRY_ID = "industry_id "
-        private const val SALARY = "salary"
-        private const val SHOW_WITHOUT_SALARY_FLAG = "showWithoutSalary"
-    }
-
     override fun setCountry(value: FilterCountryEntity) {
         sharedPrefs.edit()
             .putString(COUNTRY_NAME, value.name)
@@ -121,4 +109,16 @@ class FilterStorageImpl(
         id = sharedPrefs.getString(INDUSTRY_ID, "") ?: "",
         name = sharedPrefs.getString(INDUSTRY_NAME, "") ?: ""
     )
+
+    companion object {
+        private const val COUNTRY_NAME = "country_name"
+        private const val COUNTRY_ID = "country_id"
+        private const val REGION_NAME = "region_name"
+        private const val REGION_ID = "region_id"
+        private const val REGION_PARENT_ID = "region_parent_id"
+        private const val INDUSTRY_NAME = "industry_name"
+        private const val INDUSTRY_ID = "industry_id "
+        private const val SALARY = "salary"
+        private const val SHOW_WITHOUT_SALARY_FLAG = "showWithoutSalary"
+    }
 }
