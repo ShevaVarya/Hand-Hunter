@@ -108,6 +108,8 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             }
 
             specializationEditText.setOnTouchListener { _, event ->
+                var handled = false
+
                 if (event.action == MotionEvent.ACTION_UP) {
                     val drawableEnd = ContextCompat.getDrawable(
                         requireContext(),
@@ -115,14 +117,17 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
                     )
 
                     val drawableWidth = drawableEnd?.intrinsicWidth ?: 0
-                    val touchAreaStart = specializationEditText.width - specializationEditText.paddingEnd - drawableWidth
+                    val touchAreaStart = specializationEditText.width -
+                        specializationEditText.paddingEnd -
+                        drawableWidth
+
                     if (event.rawX >= touchAreaStart) {
                         specializationEditText.text?.clear()
                         hideKeyBoard()
-                        return@setOnTouchListener true
+                        handled = true
                     }
                 }
-                false
+                handled
             }
         }
     }
