@@ -193,7 +193,6 @@ class SearchViewModel(
         text: String?,
         page: Int = DEFAULT_PAGE,
         perPage: Int = DEFAULT_PER_PAGE,
-        params: Map<String, String> = mapOf(),
         isPagination: Boolean = false
     ) {
         search(
@@ -201,22 +200,24 @@ class SearchViewModel(
                 text = text,
                 page = page,
                 perPage = perPage,
-                params = params
+                params = mapFiltersToMap()
             ), isPagination
         )
     }
 
-    fun mapFiltersToMap(): Map<String, String> {
+    private fun mapFiltersToMap(): Map<String, String> {
         val area = filters?.region?.id ?: filters?.country?.id
-        val industry = filters?.industry?.id
+        val industry = (filters?.industry?.id)
         val salary = filters?.salary
         val isNeedToHideVacancyWithoutSalary = filters?.isNeedToHideVacancyWithoutSalary
 
         val params = mutableMapOf<String, String>().apply {
-            area?.let { put("area", it) }
-            industry?.let { put("industry", it) }
-            salary?.let { put("salary", it) }
-            isNeedToHideVacancyWithoutSalary?.let { put("only_with_salary", it.toString()) }
+            if (!area.isNullOrBlank()) put("area", area)
+            if (!industry.isNullOrBlank()) put("industry", industry)
+            if (!salary.isNullOrBlank()) put("salary", salary)
+            isNeedToHideVacancyWithoutSalary?.let {
+                put("only_with_salary", it.toString())
+            }
         }
 
         return params
