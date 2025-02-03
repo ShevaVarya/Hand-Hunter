@@ -51,7 +51,7 @@ class SearchViewModel(
         filters = getFilters()
     }
 
-    private fun search(querySearch: QuerySearch, isPagination: Boolean) {
+    private fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
         val queryText = querySearch.text?.trim()
         val isStateError = when (searchStateFlow.value) {
             is SearchState.ServerError, SearchState.NetworkError -> true
@@ -204,6 +204,22 @@ class SearchViewModel(
                 params = params
             ), isPagination
         )
+    }
+
+    fun mapFiltersToMap(): Map<String, String> {
+        val area = filters?.region?.id ?: filters?.country?.id
+        val industry = filters?.industry?.id
+        val salary = filters?.salary
+        val isNeedToHideVacancyWithoutSalary = filters?.isNeedToHideVacancyWithoutSalary
+
+        val params = mutableMapOf<String, String>().apply {
+            area?.let { put("area", it) }
+            industry?.let { put("industry", it) }
+            salary?.let { put("salary", it) }
+            isNeedToHideVacancyWithoutSalary?.let { put("only_with_salary", it.toString()) }
+        }
+
+        return params
     }
 
     override fun onCleared() {
