@@ -74,7 +74,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
                 when (searchState) {
                     SearchState.Loading -> showProgressBar()
-                    is SearchState.Content -> showVacancies(searchState.vacancies)
+                    is SearchState.Content -> showVacancies(searchState.vacancies, searchState.isSearchFilters)
                     SearchState.Init -> showInit()
                     SearchState.EmptyError -> showEmptyError()
                     SearchState.NetworkError -> showNetworkError()
@@ -114,12 +114,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewBinding.progressBar.isVisible = true
     }
 
-    private fun showVacancies(vacancies: VacanciesSearchUI) {
+    private fun showVacancies(vacancies: VacanciesSearchUI, isSearchWithFilters: Boolean) {
         vacancyAdapter?.submitList(vacancies.items)
         with(viewBinding) {
             messageTextView.text = getTotalVacanciesText(vacancies)
             contentRecyclerView.isVisible = true
             messageTextView.isVisible = true
+
+            if (isSearchWithFilters)
+                filter.setImageResource(R.drawable.filter_on_24px)
         }
     }
 

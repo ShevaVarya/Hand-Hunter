@@ -109,7 +109,7 @@ class SearchViewModel(
             perPage = vacancies.perPage
         )
 
-        searchStateFlow.emit(SearchState.Content(vacanciesUI))
+        searchStateFlow.emit(SearchState.Content(vacanciesUI, filters != null))
     }
 
     private suspend fun handleError(
@@ -126,7 +126,8 @@ class SearchViewModel(
                         pages = totalPages,
                         page = currentPage,
                         perPage = DEFAULT_PER_PAGE
-                    )
+                    ),
+                    filters != null
                 )
             )
             if (throwableError is CustomException.NetworkError) {
