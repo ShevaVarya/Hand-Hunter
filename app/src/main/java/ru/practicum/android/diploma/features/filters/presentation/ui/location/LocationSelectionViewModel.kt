@@ -28,10 +28,10 @@ class LocationSelectionViewModel(
     val state = _state.asStateFlow()
 
     init {
-        getData()
         if (isCountry.not()) {
             countryId = locationInteractor.getCountryId()
         }
+        getData()
     }
 
     fun search(text: String) {
@@ -120,7 +120,7 @@ class LocationSelectionViewModel(
         return if (text.isEmpty()) {
             regionList
         } else {
-            regionList.filter { it.name.contains(text) }
+            regionList.filter { it.name.contains(text, ignoreCase = true) }
         }
     }
 }

@@ -101,7 +101,7 @@ class NetworkClientImpl(
     override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<AreaEntity>> {
         return runCatching {
             if (networkChecker.isInternetAvailable()) {
-                hhApi.getAllAreasByIdList(countryId, params)
+                hhApi.getAllAreasByIdList(countryId, params).areas ?: throw CustomException.NetworkError
             } else {
                 throw CustomException.NetworkError
             }

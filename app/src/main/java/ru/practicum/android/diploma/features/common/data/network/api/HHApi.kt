@@ -109,7 +109,7 @@ interface HHApi {
     suspend fun getAllAreasByIdList(
         @Path("countryId") countryId: String,
         @QueryMap params: Map<String, String>
-    ): List<AreaEntity>
+    ): AreaEntity
 
     /**
      * Запрос, возвращающий двухуровневый справочник всех отраслей(список отраслей, содержащих в себе список подотраслей).
