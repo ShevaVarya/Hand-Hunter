@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
-import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
+import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch.Companion.DEFAULT_PAGE

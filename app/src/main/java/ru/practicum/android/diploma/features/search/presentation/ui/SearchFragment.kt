@@ -255,7 +255,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-
     private fun clearSearchString() {
         with(viewBinding) {
             searchTextInput.setEndIconOnClickListener {
