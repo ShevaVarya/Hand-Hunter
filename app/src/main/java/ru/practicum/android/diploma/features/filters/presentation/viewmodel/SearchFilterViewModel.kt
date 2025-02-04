@@ -15,7 +15,7 @@ class SearchFilterViewModel(
     val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
 
     var baseFilterUI = FilterUI()
-    var latestSearchFilterUI: FilterUI? = FilterUI()
+    private var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: Int? = null
     var currentFilterUI: FilterUI? = _stateFlowFilterUI.value
 
@@ -36,7 +36,7 @@ class SearchFilterViewModel(
         filterInteractor.saveWithoutSalary(check = onlyWithSalary)
     }
 
-    fun setSalary(salary: Int?) {
+    private fun setSalary(salary: Int?) {
         filterInteractor.saveSalary(salary = salary.toString())
         _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = salary)
     }
