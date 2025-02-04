@@ -5,16 +5,16 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.favourite.domain.interactor.FavouriteVacanciesInteractorImpl
-import ru.practicum.android.diploma.features.filters.domain.api.FilterInteractor
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInteractor
 import ru.practicum.android.diploma.features.filters.domain.interactor.FilterInteractorImpl
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractorImpl
-import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationInteractor
-import ru.practicum.android.diploma.features.selectlocation.domain.interactor.LocationInteractorImpl
-import ru.practicum.android.diploma.features.selectworkplace.domain.api.SelectWorkplaceInteractor
-import ru.practicum.android.diploma.features.selectworkplace.domain.interactor.SelectWorkplaceInteractorImpl
-import ru.practicum.android.diploma.features.selectspecialization.domain.api.SpecializationInteractor
-import ru.practicum.android.diploma.features.selectspecialization.domain.interactor.SpecializationInteractorImpl
+import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
+import ru.practicum.android.diploma.features.filters.domain.interactor.LocationInteractorImpl
+import ru.practicum.android.diploma.features.filters.domain.api.workplace.SelectWorkplaceInteractor
+import ru.practicum.android.diploma.features.filters.domain.interactor.SelectWorkplaceInteractorImpl
+import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
+import ru.practicum.android.diploma.features.filters.domain.interactor.SpecializationInteractorImpl
 import ru.practicum.android.diploma.features.vacancy.domain.api.VacancyDetailsInteractor
 import ru.practicum.android.diploma.features.vacancy.domain.interactor.VacancyDetailsInteractorImpl
 
