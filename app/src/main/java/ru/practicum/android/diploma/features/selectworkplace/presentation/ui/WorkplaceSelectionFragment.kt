@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.features.selectworkplace.presentation.ui
 
-import android.content.res.ColorStateList
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -70,6 +68,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             .onEach { workplaceLocationState ->
                 with(viewBinding) {
                     chooseButton.isVisible = false
+                    progressBar.isVisible = false
                     countryEditText.isVisible = false
                     regionEditText.isVisible = false
                     countryTextInput.isEndIconVisible = false
@@ -163,10 +162,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
     private fun startLocationSelectionFragment(isCountry: Boolean) {
         findNavController().navigate(
             R.id.action_workplaceSelectionFragment_to_locationSelectionFragment,
-            LocationSelectionFragment.createArgs(
-                isCountry,
-                null
-            )
+            LocationSelectionFragment.createArgs(isCountry)
         )
     }
 
