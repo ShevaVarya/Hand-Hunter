@@ -134,7 +134,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             if (editText.text.isNullOrEmpty().not()) {
                 deleteAction()
                 editText.text?.clear()
-                } else {
+            } else {
                 startSelection(isCountry)
             }
         }
