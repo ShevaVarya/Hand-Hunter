@@ -18,12 +18,14 @@ class LocationInteractorImpl(
 
     override suspend fun getAllAreasList(params: Map<String, String>): Result<List<Region>> {
         return locationRepository.getAllAreasList(params).map { list ->
-            list.filter { it.parentId.isNotEmpty() }
+            getSortedFilteredRegionsList(list, mutableListOf())
         }
     }
 
     override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<Region>> {
-        return locationRepository.getAllAreasByIdList(countryId, params)
+        return locationRepository.getAllAreasByIdList(countryId, params).map { list ->
+            getSortedFilteredRegionsList(list, mutableListOf())
+        }
     }
 
     override fun setCountry(country: FilterCountry) {
@@ -36,5 +38,16 @@ class LocationInteractorImpl(
 
     override fun getCountryId(): String {
         return filterRepository.getCountryId()
+    }
+
+    private fun getSortedFilteredRegionsList(list: List<Region>, newList: MutableList<Region>): List<Region> {
+        list.forEach {
+            if (it.areas.isEmpty()) {
+                newList.add(it)
+            } else {
+                getSortedFilteredRegionsList(it.areas, newList)
+            }
+        }
+        return newList.sortedBy { it.name }
     }
 }

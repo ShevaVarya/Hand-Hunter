@@ -107,6 +107,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
 
     private fun showNoRegionError() {
         with(viewBinding) {
+            viewBinding.searchEditText.isVisible = true
             errorContainer.isVisible = true
             messageErrorTextView.setText(R.string.location_no_region_error)
             errorImageView.setImageResource(R.drawable.bad_search)

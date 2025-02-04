@@ -2,9 +2,11 @@ package ru.practicum.android.diploma.features.selectlocation.presentation.viewmo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationInteractor
 import ru.practicum.android.diploma.features.selectlocation.presentation.model.CountryUI
@@ -20,6 +22,7 @@ class LocationSelectionViewModel(
     private val locationInteractor: LocationInteractor
 ) : ViewModel() {
     private var countryId: String = ""
+    private var regionList: List<RegionUI> = listOf()
 
     private var _state = MutableStateFlow<LocationSelectionState>(LocationSelectionState.Loading)
     val state = _state.asStateFlow()
@@ -32,7 +35,20 @@ class LocationSelectionViewModel(
     }
 
     fun search(text: String) {
-        val a = 0
+        _state.value = LocationSelectionState.Loading
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val filteredList = filterListByText(text.trim())
+            withContext(Dispatchers.Main) {
+                if (filteredList.isEmpty()) {
+                    _state.value = LocationSelectionState.NoRegionError
+                } else {
+                    _state.value = LocationSelectionState.ContentRegion(
+                        filteredList
+                    )
+                }
+            }
+        }
     }
 
     fun saveRegion(region: Regionable) {
@@ -80,8 +96,8 @@ class LocationSelectionViewModel(
 
             result
                 .onSuccess { list ->
-                    val filteredList = list.filter { it.parentId.isNotEmpty() }
-                    _state.value = LocationSelectionState.ContentRegion(filteredList.map { it.toUI() })
+                    regionList = list.filter { it.parentId.isNotEmpty() }.map { it.toUI() }
+                    _state.value = LocationSelectionState.ContentRegion(regionList)
                 }
                 .onFailure {
                     handleError(it)
@@ -97,6 +113,14 @@ class LocationSelectionViewModel(
 
             is CancellationException -> throw error
             else -> Unit
+        }
+    }
+
+    private fun filterListByText(text: String): List<RegionUI> {
+        return if (text.isEmpty()) {
+            regionList
+        } else {
+            regionList.filter { it.name.contains(text) }
         }
     }
 }
