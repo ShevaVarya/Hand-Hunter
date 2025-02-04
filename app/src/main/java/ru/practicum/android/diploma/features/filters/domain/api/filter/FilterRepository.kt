@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.filters.domain.api
+package ru.practicum.android.diploma.features.filters.domain.api.filter
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.Industry

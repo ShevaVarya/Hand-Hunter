@@ -4,7 +4,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.practicum.android.diploma.features.filters.data.repository.FilterRepositoryImpl
-import ru.practicum.android.diploma.features.filters.domain.api.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
 import ru.practicum.android.diploma.features.favourite.data.repository.FavouriteVacanciesRepositoryImpl
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesRepository
 import ru.practicum.android.diploma.features.search.data.repository.VacanciesSearchRepositoryImpl

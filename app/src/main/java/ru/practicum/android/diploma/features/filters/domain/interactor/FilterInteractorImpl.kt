@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.features.filters.domain.interactor
 
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
-import ru.practicum.android.diploma.features.filters.domain.api.FilterRepository
-import ru.practicum.android.diploma.features.filters.domain.api.FilterInteractor
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInteractor
 
 class FilterInteractorImpl(
     private val repository: FilterRepository

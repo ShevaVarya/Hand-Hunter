@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.features.filters.domain.interactor
 
-import ru.practicum.android.diploma.features.filters.domain.api.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationRepository
 import ru.practicum.android.diploma.features.filters.domain.model.toFilterIndustry

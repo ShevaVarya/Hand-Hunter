@@ -8,7 +8,7 @@ import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
-import ru.practicum.android.diploma.features.filters.domain.api.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
 
 class FilterRepositoryImpl(
     private val filterStorage: FilterStorage
