@@ -7,11 +7,12 @@ import ru.practicum.android.diploma.databinding.ItemSpecializationBinding
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
 
 class SpecializationSelectionAdapter(
-    private val onItemClick: (IndustryUI) -> Unit
+    private val onItemClick: (IndustryUI, Int) -> Unit,
+    private val onSelectionChanged: (Boolean) -> Unit
 ) : RecyclerView.Adapter<SpecializationSelectionViewHolder>() {
 
     private val items: MutableList<IndustryUI> = mutableListOf()
-    var selectedItemPosition = -1
+    private var selectedItemPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecializationSelectionViewHolder {
         val binding = ItemSpecializationBinding.inflate(
@@ -26,15 +27,7 @@ class SpecializationSelectionAdapter(
         val item = items[position]
         holder.bind(item, position == selectedItemPosition)
         holder.itemView.setOnClickListener {
-            onItemClick(item)
-            val previousSelectedItemPosition = selectedItemPosition
-            selectedItemPosition = if (position == selectedItemPosition) {
-                -1
-            } else {
-                position
-            }
-            notifyItemChanged(previousSelectedItemPosition)
-            notifyItemChanged(selectedItemPosition)
+            onItemClick(item, position)
         }
     }
 
@@ -46,4 +39,18 @@ class SpecializationSelectionAdapter(
         selectedItemPosition = -1
         notifyDataSetChanged()
     }
+
+    fun updateSelectedItemPosition(position: Int) {
+        val previousSelectedItemPosition = selectedItemPosition
+        selectedItemPosition = if (position == selectedItemPosition) {
+            -1
+        } else {
+            position
+        }
+        notifyItemChanged(previousSelectedItemPosition)
+        notifyItemChanged(selectedItemPosition)
+
+        onSelectionChanged(selectedItemPosition != -1)
+    }
 }
+

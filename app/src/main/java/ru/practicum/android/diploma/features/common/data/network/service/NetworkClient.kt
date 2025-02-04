@@ -4,6 +4,7 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.area.CountryEntity
+import ru.practicum.android.diploma.features.common.data.network.dto.industry.IndustryEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.VacanciesEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.vacancy.details.DetailsVacancyEntity
 import ru.practicum.android.diploma.features.common.domain.CustomException
@@ -13,6 +14,7 @@ import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException
 
 interface NetworkClient {
+
     suspend fun getVacanciesList(
         querySearch: QuerySearch
     ): Result<VacanciesEntity>
@@ -29,6 +31,8 @@ interface NetworkClient {
         countryId: String,
         params: Map<String, String>
     ): Result<List<AreaEntity>>
+
+    suspend fun getIndustriesList(params: Map<String, String>): Result<List<IndustryEntity>>
 }
 
 class NetworkClientImpl(
@@ -101,6 +105,18 @@ class NetworkClientImpl(
             } else {
                 throw CustomException.NetworkError
             }
+        }
+    }
+
+    override suspend fun getIndustriesList(params: Map<String, String>): Result<List<IndustryEntity>> {
+        return runCatching {
+            if (networkChecker.isInternetAvailable()) {
+                hhApi.getAllIndustriesList(params)
+            } else {
+                throw CustomException.NetworkError
+            }
+        }.recoverCatching { error ->
+            resolveError(error)
         }
     }
 
