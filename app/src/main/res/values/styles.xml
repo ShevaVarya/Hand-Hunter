@@ -198,8 +198,7 @@
     </style>
 
     <style name="workPlaceEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:textColorHint">?attr/mainTextColor</item>
-        <item name="hintTextColor">?attr/secondTextColor</item>
+        <item name="hintTextColor">?attr/hintEditTextColor</item>
         <item name="endIconTint">?attr/mainIconColor</item>
         <item name="hintTextAppearance">@style/workPlaceEditTextForHintStyle</item>
         <item name="boxStrokeWidthFocused">0dp</item>
@@ -207,8 +206,7 @@
     </style>
 
     <style name="workPlaceEditTextForHintStyle" parent="textStyleRegular12">
-        <item name="android:textColorHint">?attr/secondTextColor</item>
-        <item name="hintTextColor">?attr/mainTextColor</item>
+        <item name="hintTextColor">?attr/hintEditTextColor</item>
     </style>
 
     <style name="workPlaceButtonChooseStyle" parent="textStyleMedium16">

@@ -15,4 +15,6 @@ interface FilterRepository {
     fun getFilterMainData(): FilterMainData
     fun getFullLocationData(): FullLocationData
     fun getCountryId(): String
+    fun deleteCountryData()
+    fun deleteRegionData()
 }

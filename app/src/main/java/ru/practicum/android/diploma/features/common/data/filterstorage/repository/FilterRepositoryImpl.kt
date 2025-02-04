@@ -44,4 +44,12 @@ class FilterRepositoryImpl(
     override fun getCountryId(): String {
         return filterStorage.getCountryId()
     }
+
+    override fun deleteCountryData() {
+        filterStorage.deleteCountryData()
+    }
+
+    override fun deleteRegionData() {
+        filterStorage.deleteRegionData()
+    }
 }
