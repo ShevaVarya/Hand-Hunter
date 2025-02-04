@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.features.filters.domain.api
 
-import ru.practicum.android.diploma.features.common.domain.filter.model.FilterMainData
+import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 
 interface FilterInteractor {
     fun saveSalary(salary: String)

@@ -1,22 +1,22 @@
 package ru.practicum.android.diploma.features.common.presentation.models
 
-import ru.practicum.android.diploma.features.common.domain.filter.model.FilterCountry
-import ru.practicum.android.diploma.features.common.domain.filter.model.FilterIndustry
-import ru.practicum.android.diploma.features.common.domain.filter.model.FilterMainData
-import ru.practicum.android.diploma.features.common.domain.filter.model.FilterRegion
-import ru.practicum.android.diploma.features.filters.presentation.model.FilterUI
-import ru.practicum.android.diploma.features.selectlocation.presentation.model.CountryUI
-import ru.practicum.android.diploma.features.selectlocation.presentation.model.RegionUI
-import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
+import ru.practicum.android.diploma.features.filters.domain.model.Country
+import ru.practicum.android.diploma.features.filters.domain.model.FilterIndustry
+import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
+import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
 
-fun CountryUI.toDomain(): FilterCountry {
-    return FilterCountry(
+fun CountryUI.toDomain(): Country {
+    return Country(
         id = id,
         name = name,
     )
 }
 
-fun FilterCountry.toUI(): CountryUI {
+fun Country.toUI(): CountryUI {
     return CountryUI(
         id = id,
         name = name,

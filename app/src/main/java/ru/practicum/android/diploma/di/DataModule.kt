@@ -15,8 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.features.common.data.database.AppDatabase
 import ru.practicum.android.diploma.features.common.data.database.FavouritesDao
-import ru.practicum.android.diploma.features.common.data.filterstorage.service.FilterStorage
-import ru.practicum.android.diploma.features.common.data.filterstorage.service.FilterStorageImpl
+import ru.practicum.android.diploma.features.filters.data.service.FilterStorage
+import ru.practicum.android.diploma.features.filters.data.service.FilterStorageImpl
 import ru.practicum.android.diploma.features.common.data.network.api.HHApi
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClient
 import ru.practicum.android.diploma.features.common.data.network.service.NetworkClientImpl

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/mainBackgroundColor"
     android:orientation="vertical"
-    tools:context=".features.selectspecialization.presentation.ui.SpecializationSelectionFragment">
+    tools:context=".features.filters.presentation.ui.specialization.SpecializationSelectionFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_border_guideline"
