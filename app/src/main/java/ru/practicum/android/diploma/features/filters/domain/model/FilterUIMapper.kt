@@ -1,13 +1,9 @@
-package ru.practicum.android.diploma.features.common.presentation.models
+package ru.practicum.android.diploma.features.filters.domain.model
 
-import ru.practicum.android.diploma.features.filters.domain.model.Country
-import ru.practicum.android.diploma.features.filters.domain.model.Industry
-import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
-import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
 
 fun CountryUI.toDomain(): Country {
     return Country(
