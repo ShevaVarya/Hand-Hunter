@@ -37,11 +37,11 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     override fun observeData() {
-        viewModel.stateFilterUI.collectWithLifecycle(this) { filterUI ->
+        viewModel.stateFlowFilterUI.collectWithLifecycle(this) { filterUI ->
             viewModel.currentFilterUI = filterUI
             processFilterResult(filterUI)
-            setupClearButton(filterUI?.country, viewBinding.placeOfWorkContainer) { viewModel.clearPlaceOfWork() }
-            setupClearButton(filterUI?.industry, viewBinding.industryContainer) { viewModel.clearIndustry() }
+            setupClearButton(filterUI?.country, viewBinding.placeOfWorkContainer) { viewModel.deletePlaceOfWork() }
+            setupClearButton(filterUI?.industry, viewBinding.industryContainer) { viewModel.deleteIndustry() }
         }
     }
 
@@ -96,6 +96,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 salaryFrameContainer.endIconMode = END_ICON_CLEAR_TEXT
                 salaryFrameContainer.setEndIconDrawable(R.drawable.close_24px)
                 salaryFrameContainer.setEndIconOnClickListener {
+                    viewModel.deleteSalary()
                     salaryEditText.text?.clear()
                     salaryEditText.clearFocus()
                     hideKeyBoard()
@@ -166,6 +167,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
             } else {
                 withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_off_24px)
+                viewModel.deleteShowWithoutSalary()
             }
         }
     }
