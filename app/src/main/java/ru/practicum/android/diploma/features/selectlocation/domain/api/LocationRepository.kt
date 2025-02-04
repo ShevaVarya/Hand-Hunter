@@ -10,6 +10,4 @@ interface LocationRepository {
         countryId: String,
         params: Map<String, String>
     ): Result<List<Region>>
-    fun setCountry(country: Country)
-    fun setRegion(region: Region)
 }

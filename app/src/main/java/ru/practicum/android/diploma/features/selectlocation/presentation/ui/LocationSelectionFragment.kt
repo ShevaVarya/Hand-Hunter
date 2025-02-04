@@ -107,6 +107,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
 
     private fun showNoRegionError() {
         with(viewBinding) {
+            viewBinding.searchEditText.isVisible = true
             errorContainer.isVisible = true
             messageErrorTextView.setText(R.string.location_no_region_error)
             errorImageView.setImageResource(R.drawable.bad_search)
@@ -236,13 +237,10 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val IS_COUNTRY = "is_country"
         private const val COUNTRY_ID = "country_id"
-        const val REQUEST_KEY = "request_key"
-        const val RESULT_KEY = "region_id"
 
-        fun createArgs(isCountry: Boolean, countryId: String?): Bundle {
+        fun createArgs(isCountry: Boolean): Bundle {
             return androidx.core.os.bundleOf(
-                IS_COUNTRY to isCountry,
-                COUNTRY_ID to countryId
+                IS_COUNTRY to isCountry
             )
         }
     }
