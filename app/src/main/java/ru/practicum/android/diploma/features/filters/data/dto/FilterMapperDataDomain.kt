@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.features.filters.data.dto
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
-import ru.practicum.android.diploma.features.filters.domain.model.FilterIndustry
+import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
@@ -38,7 +38,7 @@ fun FilterRegion.toEntity(): FilterRegionEntity {
     )
 }
 
-fun FilterIndustry.toEntity(): FilterIndustryEntity {
+fun Industry.toEntity(): FilterIndustryEntity {
     return FilterIndustryEntity(
         id = id,
         name = name
@@ -60,8 +60,8 @@ private fun FilterRegionEntity.toDomain(): FilterRegion {
     )
 }
 
-private fun FilterIndustryEntity.toDomain(): FilterIndustry {
-    return FilterIndustry(
+private fun FilterIndustryEntity.toDomain(): Industry {
+    return Industry(
         id = id,
         name = name
     )

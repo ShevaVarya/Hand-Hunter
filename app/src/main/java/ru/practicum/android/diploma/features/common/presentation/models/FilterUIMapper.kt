@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.features.common.presentation.models
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
-import ru.practicum.android.diploma.features.filters.domain.model.FilterIndustry
+import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
@@ -23,14 +23,14 @@ fun Country.toUI(): CountryUI {
     )
 }
 
-fun IndustryUI.toDomain(): FilterIndustry {
-    return FilterIndustry(
+fun IndustryUI.toDomain(): Industry {
+    return Industry(
         id = id,
         name = name,
     )
 }
 
-fun FilterIndustry.toUI(): IndustryUI {
+fun Industry.toUI(): IndustryUI {
     return IndustryUI(
         id = id,
         name = name,

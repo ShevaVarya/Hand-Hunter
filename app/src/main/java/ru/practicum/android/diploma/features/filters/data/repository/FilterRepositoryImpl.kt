@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.features.filters.data.dto.toDomain
 import ru.practicum.android.diploma.features.filters.data.dto.toEntity
 import ru.practicum.android.diploma.features.filters.data.service.FilterStorage
 import ru.practicum.android.diploma.features.filters.domain.model.Country
-import ru.practicum.android.diploma.features.filters.domain.model.FilterIndustry
+import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
@@ -21,7 +21,7 @@ class FilterRepositoryImpl(
         filterStorage.setRegion(value.toEntity())
     }
 
-    override fun setIndustry(value: FilterIndustry) {
+    override fun setIndustry(value: Industry) {
         filterStorage.setIndustry(value.toEntity())
     }
 

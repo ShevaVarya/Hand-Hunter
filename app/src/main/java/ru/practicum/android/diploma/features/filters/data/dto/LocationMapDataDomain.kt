@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.filters.data.dto.location
+package ru.practicum.android.diploma.features.filters.data.dto
 
 import ru.practicum.android.diploma.features.common.data.network.dto.area.AreaEntity
 import ru.practicum.android.diploma.features.common.data.network.dto.area.CountryEntity
