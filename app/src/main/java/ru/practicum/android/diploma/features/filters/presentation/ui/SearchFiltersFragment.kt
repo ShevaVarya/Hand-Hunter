@@ -149,7 +149,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         viewBinding.placeOfWorkEditText.setText(result)
     }
 
-
     private fun setButtonVisibility(filterUI: FilterUI?): Unit = with(viewBinding) {
         resetButton.isVisible = filterUI?.isDefault != true
         acceptButton.isVisible = filterUI != viewModel.baseFilterUI
