@@ -4,7 +4,6 @@ import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRep
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationRepository
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
-import ru.practicum.android.diploma.features.filters.domain.model.toFilterIndustry
 
 class SpecializationInteractorImpl(
     private val specializationRepository: SpecializationRepository,
@@ -12,7 +11,7 @@ class SpecializationInteractorImpl(
 ) : SpecializationInteractor {
 
     override fun setIndustry(industry: Industry) {
-        filterRepository.setIndustry(industry.toFilterIndustry())
+        filterRepository.setIndustry(industry)
     }
 
     override suspend fun getIndustriesList(params: Map<String, String>): Result<List<Industry>> {
