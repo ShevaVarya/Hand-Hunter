@@ -65,7 +65,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             acceptButton.setOnClickListener {
-                viewModel.retrySearchQueryWithFilterSearch()
                 findNavController().navigateUp()
             }
 
@@ -108,7 +107,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         }
     }
 
-    // Метод для отображения кнопки "очищения" у полей "Место работы" "Отрасль"
     private fun <T> setupClearButton(item: T?, til: TextInputLayout, action: () -> Unit) {
         if (item != null) {
             til.setEndIconDrawable(R.drawable.close_24px)
@@ -123,7 +121,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         }
     }
 
-    // Метод для заполнения полей, иначе если значение по умолчанию - то поля очищаются
     private fun processFilterResult(filter: FilterUI?) {
         with(viewBinding) {
             setButtonVisibility(filter)
@@ -145,7 +142,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         setCheckedIcon(filter?.onlyWithSalary ?: false)
     }
 
-//    Метод для сохранения страны и региона в "Место работы"
     private fun processArea(country: String?, region: String?) {
         var result = ""
         if (country != null) result += country
@@ -153,14 +149,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         viewBinding.placeOfWorkEditText.setText(result)
     }
 
-    // Метод отвечающий за отображение кнопок "Применить" "Сбросить"
+
     private fun setButtonVisibility(filterUI: FilterUI?): Unit = with(viewBinding) {
-        resetButton.isVisible = if (filterUI?.isDefault == true) false else true
+        resetButton.isVisible = filterUI?.isDefault != true
         acceptButton.isVisible = filterUI != viewModel.baseFilterUI
-        viewModel.baseFilterUI = filterUI ?: FilterUI()
     }
 
-    // Метод отвечающий за check box
     fun setCheckedIcon(isChecked: Boolean) {
         with(viewBinding) {
             if (isChecked) {

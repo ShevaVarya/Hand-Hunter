@@ -52,10 +52,6 @@ class SearchFilterViewModel(
         _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(industry = null)
     }
 
-    fun retrySearchQueryWithFilterSearch() {
-        // Метод повторяющий поисковый запрос
-    }
-
     fun deleteSalary() {
         filterInteractor.deleteSalary()
     }
