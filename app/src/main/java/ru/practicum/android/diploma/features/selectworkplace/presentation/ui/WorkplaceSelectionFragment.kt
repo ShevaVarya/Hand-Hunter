@@ -28,11 +28,6 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
         return FragmentWorkplaceSelectionBinding.inflate(layoutInflater)
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.getWorkplace()
-    }
-
     override fun initUi() {
         viewBinding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
