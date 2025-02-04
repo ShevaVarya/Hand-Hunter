@@ -9,12 +9,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
-import ru.practicum.android.diploma.features.filters.presentation.model.state.LocationSelectionState
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
+import ru.practicum.android.diploma.features.filters.domain.model.Country
+import ru.practicum.android.diploma.features.filters.domain.model.Region
 import ru.practicum.android.diploma.features.filters.presentation.model.api.Regionable
+import ru.practicum.android.diploma.features.filters.presentation.model.state.LocationSelectionState
 import ru.practicum.android.diploma.features.filters.presentation.model.toDomain
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
 import kotlin.coroutines.cancellation.CancellationException
 
 class LocationSelectionViewModel(
@@ -23,6 +25,7 @@ class LocationSelectionViewModel(
 ) : ViewModel() {
     private var countryId: String = ""
     private var regionList: List<RegionUI> = listOf()
+    private var originalAreasList: List<Region> = listOf()
 
     private var _state = MutableStateFlow<LocationSelectionState>(LocationSelectionState.Loading)
     val state = _state.asStateFlow()
@@ -60,8 +63,8 @@ class LocationSelectionViewModel(
             locationInteractor.setRegion(
                 (region as RegionUI).toDomain()
             )
+            saveRegionCountry(region)
         }
-
     }
 
     private fun getData() {
@@ -69,6 +72,7 @@ class LocationSelectionViewModel(
             getCountryList()
         } else {
             getRegionList()
+            getOriginalAreasList()
         }
     }
 
@@ -82,6 +86,21 @@ class LocationSelectionViewModel(
                     handleError(it)
                 }
         }
+    }
+
+    private fun saveRegionCountry(item: RegionUI) {
+        val country = originalAreasList.firstOrNull { isParentFind(it, item.id) }?.toUI()
+        if (country != null) {
+            locationInteractor.setCountry(Country(id = country.id, name = country.name))
+        }
+    }
+
+    private fun isParentFind(region: Region, cityId: String): Boolean {
+        if (cityId == region.id) {
+            return true
+        }
+
+        return region.areas.any { isParentFind(it, cityId) }
     }
 
     private fun getRegionList() {
@@ -102,6 +121,16 @@ class LocationSelectionViewModel(
                 .onFailure {
                     handleError(it)
                 }
+        }
+    }
+
+    private fun getOriginalAreasList() {
+        viewModelScope.launch {
+            val params: Map<String, String> = mapOf()
+            val result = locationInteractor.getOriginalAreasList(params)
+            result
+                .onSuccess { originalAreasList = result.getOrNull() ?: listOf() }
+                .onFailure { handleError(it) }
         }
     }
 

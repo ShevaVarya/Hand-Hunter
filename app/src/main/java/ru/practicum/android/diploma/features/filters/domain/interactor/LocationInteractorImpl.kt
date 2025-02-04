@@ -27,6 +27,10 @@ class LocationInteractorImpl(
         }
     }
 
+    override suspend fun getOriginalAreasList(params: Map<String, String>): Result<List<Region>> {
+        return locationRepository.getAllAreasList(params)
+    }
+
     override fun setCountry(country: Country) {
         filterRepository.setCountry(country)
     }

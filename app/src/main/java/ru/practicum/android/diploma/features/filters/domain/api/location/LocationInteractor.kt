@@ -11,6 +11,7 @@ interface LocationInteractor {
         countryId: String,
         params: Map<String, String>
     ): Result<List<Region>>
+    suspend fun getOriginalAreasList(params: Map<String, String>): Result<List<Region>>
 
     fun setCountry(country: Country)
     fun setRegion(region: FilterRegion)
