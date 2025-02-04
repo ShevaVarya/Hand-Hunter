@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.features.search.domain.interactor
 
-import ru.practicum.android.diploma.features.common.domain.filter.model.FilterMainData
-import ru.practicum.android.diploma.features.common.domain.filter.repositoryapi.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.search.domain.api.VacanciesSearchRepository
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
