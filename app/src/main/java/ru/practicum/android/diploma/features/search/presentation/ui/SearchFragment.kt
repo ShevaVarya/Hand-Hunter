@@ -25,11 +25,11 @@ import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
+import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
 @Suppress("LargeClass")
@@ -38,7 +38,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private var vacancyAdapter: VacancyAdapter? = null
 
     private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
-    private var onSearchDebounce: ((QuerySearch) -> Unit)? = null
+    private var onSearchDebounce: ((String) -> Unit)? = null
     private val viewModel by viewModel<SearchViewModel>()
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
@@ -100,6 +100,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.isSearchWithFilters().collectWithLifecycle(this) {
+            if (it) {
+                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+            }
+        }
     }
 
     private fun showToast(message: String) {
@@ -181,7 +187,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             viewLifecycleOwner.lifecycleScope,
             true
         ) {
-            viewModel.search(it)
+            viewModel.performSearch(it)
         }
     }
 
@@ -273,12 +279,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         with(viewBinding) {
             searchTextInput.isHintEnabled = false
             searchEditText.doOnTextChanged { text, _, _, _ ->
-                val querySearch = QuerySearch(text = text.toString().trim())
                 if (text.isNullOrEmpty()) {
                     viewModel.onClearedSearch()
                 }
                 switchSearchClearIcon(text.isNullOrEmpty())
-                onSearchDebounce?.invoke(querySearch)
+                onSearchDebounce?.invoke(text.toString().trim())
             }
         }
     }
@@ -297,8 +302,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val queryText = viewBinding.searchEditText.text.toString().trim()
                 if (queryText.isNotEmpty()) {
-                    val querySearch = QuerySearch(text = queryText)
-                    viewModel.search(querySearch)
+                    viewModel.performSearch(queryText)
                     hideKeyBoard()
                 }
                 true
