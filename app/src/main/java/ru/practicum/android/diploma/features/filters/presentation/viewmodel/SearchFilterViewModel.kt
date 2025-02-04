@@ -3,60 +3,66 @@ package ru.practicum.android.diploma.features.filters.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import ru.practicum.android.diploma.features.common.presentation.models.toUI
+import ru.practicum.android.diploma.features.filters.domain.api.FilterInteractor
 import ru.practicum.android.diploma.features.filters.presentation.model.FilterUI
 
-class SearchFilterViewModel : ViewModel() {
+class SearchFilterViewModel(
+    private val filterInteractor: FilterInteractor
+) : ViewModel() {
 
-    private val _stateFilterUI = MutableStateFlow<FilterUI>(FilterUI())
-    val stateFilterUI: StateFlow<FilterUI> = _stateFilterUI
+    private val _stateFlowFilterUI = MutableStateFlow<FilterUI?>(FilterUI())
+    val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
 
-    val latestSearchFilterUI = FilterUI()
-    private var oldSalary: Int? = null
-    var currentFilterUI = FilterUI()
+    var baseFilterUI = FilterUI()
+    private var latestSearchFilterUI: FilterUI? = FilterUI()
+    var oldSalary: Int? = null
+    var currentFilterUI: FilterUI? = _stateFlowFilterUI.value
 
-    fun getIndustries() {
-        // Метод возвращающий "Отрасль"
+    fun getData() {
+        val loadedData = filterInteractor.loadFilter().toUI()
+        latestSearchFilterUI = FilterUI(
+            country = loadedData.country?.let { it.ifEmpty { null } },
+            region = loadedData.region?.let { it.ifEmpty { null } },
+            industry = loadedData.industry?.let { it.ifEmpty { null } },
+            salary = filterInteractor.loadFilter().toUI().salary,
+            onlyWithSalary = filterInteractor.loadFilter().toUI().onlyWithSalary
+        )
+        _stateFlowFilterUI.value = latestSearchFilterUI
     }
 
-    // Метод заменяющий отрасль
-//    fun setIndustry(industry: IndustryUI?) {
-//
-//    }
-
-    // Метод для фильтрации "не показывать без зарплаты"
-//    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-//
-//    }
-
-    // Метод заменяющий страну
-//    fun setChosenCountry(country: CountryUI?) {
-//
-//    }
-
-    // Метод заменяющий регион
-//    fun setChosenRegion(region: RegionUI?) {
-//
-//    }
-
-    fun setSalary(salary: Int?) {
-        // Метод заменяющий сумму ожидаемой зарплаты
+    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
+        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(onlyWithSalary = onlyWithSalary)
+        filterInteractor.saveWithoutSalary(check = onlyWithSalary)
     }
 
-    // Метод очищающий граф "Место работы"
-//    fun clearPlaceOfWork() {
-//
-//    }
-
-    fun saveFilter() {
-        // Метод сохраняющий состояние "фильтра"
+    private fun setSalary(salary: Int?) {
+        filterInteractor.saveSalary(salary = salary.toString())
+        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = salary)
     }
 
-    fun retrySearchQueryWithFilterSearch() {
-        // Метод повторяющий поисковый запрос
+    fun deletePlaceOfWork() {
+        filterInteractor.deleteCountryData()
+        filterInteractor.deleteRegionData()
+        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(country = null, region = null)
+    }
+
+    fun deleteIndustry() {
+        filterInteractor.deleteIndustry()
+        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(industry = null)
+    }
+
+    fun deleteSalary() {
+        filterInteractor.deleteSalary()
+    }
+
+    fun deleteShowWithoutSalary() {
+        filterInteractor.deleteShowWithoutSalaryFlag()
     }
 
     fun clearFilter() {
-        // Метод сбрасывающий настройки фильтра
+        filterInteractor.deleteFilter()
+        _stateFlowFilterUI.value = FilterUI()
     }
 
     fun salaryEnterTextChanged(text: CharSequence?) {

@@ -10,12 +10,12 @@ package ru.practicum.android.diploma.features.filters.presentation.model
  */
 
 data class FilterUI(
-    // val country: CountryUI? = null,
-    // val region: RegionUI? = null,
-    // val industry: IndustryUI? = null,
+    val country: String? = null,
+    val region: String? = null,
+    val industry: String? = null,
     val salary: Int? = null,
     val onlyWithSalary: Boolean = false
 ) {
-//    val isDefault: Boolean
-//        get() = country == null && region == null && industry == null && !onlyWithSalary && salary == null
+    val isDefault: Boolean
+        get() = country == null && region == null && industry == null && onlyWithSalary == false && salary == null
 }

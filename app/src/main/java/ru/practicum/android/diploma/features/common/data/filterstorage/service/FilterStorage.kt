@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.common.data.filterstorage.service
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterCountryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterIndustryEntity
 import ru.practicum.android.diploma.features.common.data.filterstorage.dto.FilterMainDataEntity
@@ -14,6 +15,10 @@ interface FilterStorage {
     fun setSalary(value: String)
     fun setIsNeedToHideVacancyWithoutSalary(value: Boolean)
 
+    fun deleteFilterMainData()
+    fun deleteIndustry()
+    fun deleteSalary()
+    fun deleteShowWithoutSalaryFlag()
     fun getFilterMainData(): FilterMainDataEntity
     fun getFullLocationData(): FullLocationDataEntity
     fun getCountryId(): String
@@ -68,6 +73,39 @@ class FilterStorageImpl(
             salary = sharedPrefs.getString(SALARY, "") ?: "",
             isNeedToHideVacancyWithoutSalary = sharedPrefs.getBoolean(SHOW_WITHOUT_SALARY_FLAG, false)
         )
+    }
+
+    override fun deleteFilterMainData() {
+        sharedPrefs.edit {
+            remove(COUNTRY_ID)
+            remove(COUNTRY_NAME)
+            remove(REGION_ID)
+            remove(REGION_NAME)
+            remove(REGION_PARENT_ID)
+            remove(INDUSTRY_NAME)
+            remove(INDUSTRY_ID)
+            remove(SALARY)
+            remove(SHOW_WITHOUT_SALARY_FLAG)
+        }
+    }
+
+    override fun deleteIndustry() {
+        sharedPrefs.edit {
+            remove(INDUSTRY_ID)
+            remove(INDUSTRY_NAME)
+        }
+    }
+
+    override fun deleteSalary() {
+        sharedPrefs.edit {
+            remove(SALARY)
+        }
+    }
+
+    override fun deleteShowWithoutSalaryFlag() {
+        sharedPrefs.edit {
+            remove(SHOW_WITHOUT_SALARY_FLAG)
+        }
     }
 
     override fun getFullLocationData(): FullLocationDataEntity {
