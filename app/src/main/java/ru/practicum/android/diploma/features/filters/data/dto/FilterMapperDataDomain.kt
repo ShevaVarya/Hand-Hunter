@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.features.filters.domain.model.FullLocationDa
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 
-//методы из SharedPref в domain
+// методы из SharedPref в domain
 fun FilterMainDataEntity.toDomain(): FilterMainData {
     return FilterMainData(
         country = country.toDomain(),
@@ -50,7 +50,7 @@ private fun FilterIndustryEntity.toDomain(): Industry {
     )
 }
 
-//методы из сети в domain
+// методы из сети в domain
 fun CountryEntity.toDomain(): Country {
     return Country(
         id = id,
@@ -74,7 +74,7 @@ fun IndustryEntity.toDomain(): Industry {
     )
 }
 
-//методы из domain в SharedPref
+// методы из domain в SharedPref
 fun Country.toEntity(): FilterCountryEntity {
     return FilterCountryEntity(
         id = id,
