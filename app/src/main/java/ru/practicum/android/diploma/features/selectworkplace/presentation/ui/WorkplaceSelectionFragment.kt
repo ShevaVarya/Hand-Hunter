@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
@@ -44,10 +45,22 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             startLocationSelectionFragment(false)
         }
 
-        setProhibitionRegionEditText()
-        setProhibitionCountryEditText()
-        clearCountry()
-        clearRegion()
+        setProhibitionEditText(viewBinding.countryEditText)
+        setProhibitionEditText(viewBinding.regionEditText)
+        clearField(
+            viewBinding.countryTextInput,
+            viewBinding.countryEditText,
+            { viewModel.deleteCountryData() },
+            { startLocationSelectionFragment(it) },
+            true
+        )
+        clearField(
+            viewBinding.regionTextInput,
+            viewBinding.regionEditText,
+            { viewModel.deleteRegionData() },
+            { startLocationSelectionFragment(it) },
+            false
+        )
         viewModel.isWorkPlaceShowNeeded()
     }
 
@@ -57,7 +70,6 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             .onEach { workplaceLocationState ->
                 with(viewBinding) {
                     chooseButton.isVisible = false
-                    progressBar.isVisible = false
                     countryEditText.isVisible = false
                     regionEditText.isVisible = false
                     countryTextInput.isEndIconVisible = false
@@ -65,16 +77,11 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
                 }
 
                 when (workplaceLocationState) {
-                    WorkplaceLocationState.Loading -> showProgressBar()
                     WorkplaceLocationState.Init -> showInit()
                     is WorkplaceLocationState.Content -> showSuccess()
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun showProgressBar() {
-        viewBinding.progressBar.isVisible = true
     }
 
     private fun showInit() {
@@ -102,85 +109,44 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             countryTextInput.isEndIconVisible = true
             regionTextInput.isEndIconVisible = true
 
-            switchForwardClearIconCountry(country.isEmpty())
-            switchForwardClearIconRegion(city.isEmpty())
+            switchForwardClearIcon(viewBinding.countryTextInput, country.isEmpty())
+            switchForwardClearIcon(viewBinding.regionTextInput, city.isEmpty())
 
             chooseButton.isVisible = country.isNotEmpty() || city.isNotEmpty()
         }
     }
 
-    private fun setProhibitionRegionEditText() {
-        viewBinding.regionEditText.keyListener = null
-        viewBinding.regionEditText.isFocusable = false
-        viewBinding.regionEditText.isFocusableInTouchMode = false
-        viewBinding.regionEditText.isCursorVisible = false
+    private fun setProhibitionEditText(editText: EditText) {
+        editText.keyListener = null
+        editText.isFocusable = false
+        editText.isFocusableInTouchMode = false
+        editText.isCursorVisible = false
     }
 
-    private fun setProhibitionCountryEditText() {
-        viewBinding.countryEditText.keyListener = null
-        viewBinding.countryEditText.isFocusable = false
-        viewBinding.countryEditText.isFocusableInTouchMode = false
-        viewBinding.countryEditText.isCursorVisible = false
-    }
-
-    private fun clearCountry() {
-        with(viewBinding) {
-            countryTextInput.setEndIconOnClickListener {
-                if (countryTextInput.editText?.text.isNullOrEmpty().not()) {
-                    viewModel.deleteCountryData()
-                    countryEditText.text?.clear()
+    private fun clearField(
+        textInputLayout: TextInputLayout,
+        editText: EditText,
+        deleteAction: () -> Unit,
+        startSelection: (Boolean) -> Unit,
+        isCountry: Boolean
+    ) {
+        textInputLayout.setEndIconOnClickListener {
+            if (editText.text.isNullOrEmpty().not()) {
+                deleteAction()
+                editText.text?.clear()
                 } else {
-                    startLocationSelectionFragment(true)
-                }
+                startSelection(isCountry)
             }
         }
     }
 
-    private fun clearRegion() {
-        with(viewBinding) {
-            regionTextInput.setEndIconOnClickListener {
-                if (regionTextInput.editText?.text.isNullOrEmpty().not()) {
-                    viewModel.deleteRegionData()
-                    regionEditText.text?.clear()
-                } else {
-                    startLocationSelectionFragment(false)
-                }
-            }
+    private fun switchForwardClearIcon(textInputLayout: TextInputLayout, isTextEmpty: Boolean) {
+        val image = if (isTextEmpty.not()) {
+            ContextCompat.getDrawable(requireContext(), R.drawable.close_24px)
+        } else {
+            ContextCompat.getDrawable(requireContext(), R.drawable.arrow_forward_24px)
         }
-    }
-
-    private fun switchForwardClearIconCountry(isTextEmpty: Boolean) {
-        with(viewBinding) {
-            val image = if (isTextEmpty.not()) {
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.close_24px
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.arrow_forward_24px
-                )
-            }
-            countryTextInput.endIconDrawable = image
-        }
-    }
-
-    private fun switchForwardClearIconRegion(isTextEmpty: Boolean) {
-        with(viewBinding) {
-            val image = if (isTextEmpty.not()) {
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.close_24px
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.arrow_forward_24px
-                )
-            }
-            regionTextInput.endIconDrawable = image
-        }
+        textInputLayout.endIconDrawable = image
     }
 
     private fun renderEditTextColor(view: TextInputLayout, text: CharSequence?) {
