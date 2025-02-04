@@ -29,7 +29,6 @@ import ru.practicum.android.diploma.features.search.presentation.model.SearchSta
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
-import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
 @Suppress("LargeClass")
@@ -100,12 +99,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
-
-        viewModel.isSearchWithFilters().collectWithLifecycle(this) {
-            if (it) {
-                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
-            }
-        }
     }
 
     private fun showToast(message: String) {
@@ -249,9 +242,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun onResultListen() {
-        parentFragmentManager.setFragmentResultListener("fragment_closed", this) { _, _ ->
+        parentFragmentManager.setFragmentResultListener(REQUEST_KEY, this) { _, _ ->
             viewModel.getFilters()
             viewModel.repeatSearchWithFilters()
+            if (viewModel.isSearchWithFilters) {
+                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+            }
         }
     }
 
@@ -324,5 +320,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         private const val EMPTY_TEXT = ""
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 100L
+        private const val REQUEST_KEY = "fragment_closed"
     }
 }
