@@ -7,8 +7,8 @@ interface FilterInteractor {
     fun saveWithoutSalary(check: Boolean)
     fun loadFilter(): FilterMainData
     fun deleteFilter()
-    fun deleteCountry()
-    fun deleteRegion()
+    fun deleteCountryData()
+    fun deleteRegionData()
     fun deleteIndustry()
     fun deleteSalary()
     fun deleteShowWithoutSalaryFlag()

@@ -16,8 +16,6 @@ interface FilterStorage {
     fun setIsNeedToHideVacancyWithoutSalary(value: Boolean)
 
     fun deleteFilterMainData()
-    fun deleteCountry()
-    fun deleteRegion()
     fun deleteIndustry()
     fun deleteSalary()
     fun deleteShowWithoutSalaryFlag()
@@ -88,21 +86,6 @@ class FilterStorageImpl(
             remove(INDUSTRY_ID)
             remove(SALARY)
             remove(SHOW_WITHOUT_SALARY_FLAG)
-        }
-    }
-
-    override fun deleteCountry() {
-        sharedPrefs.edit {
-            remove(COUNTRY_ID)
-            remove(COUNTRY_NAME)
-        }
-    }
-
-    override fun deleteRegion() {
-        sharedPrefs.edit{
-            remove(REGION_ID)
-            remove(REGION_NAME)
-            remove(REGION_PARENT_ID)
         }
     }
 

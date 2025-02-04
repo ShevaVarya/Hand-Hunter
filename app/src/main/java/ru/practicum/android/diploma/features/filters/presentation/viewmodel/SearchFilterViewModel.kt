@@ -42,8 +42,8 @@ class SearchFilterViewModel(
     }
 
     fun deletePlaceOfWork() {
-        filterInteractor.deleteCountry()
-        filterInteractor.deleteRegion()
+        filterInteractor.deleteCountryData()
+        filterInteractor.deleteRegionData()
         _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(country = null, region = null)
     }
 

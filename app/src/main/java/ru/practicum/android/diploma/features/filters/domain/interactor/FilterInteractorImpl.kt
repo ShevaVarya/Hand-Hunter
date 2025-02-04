@@ -23,12 +23,12 @@ class FilterInteractorImpl(
         repository.deleteFilterMainData()
     }
 
-    override fun deleteCountry() {
-        repository.deleteCountry()
+    override fun deleteCountryData() {
+        repository.deleteCountryData()
     }
 
-    override fun deleteRegion() {
-        repository.deleteRegion()
+    override fun deleteRegionData() {
+        repository.deleteRegionData()
     }
 
     override fun deleteIndustry() {
