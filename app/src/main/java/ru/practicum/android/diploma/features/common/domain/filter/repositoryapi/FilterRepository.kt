@@ -21,4 +21,6 @@ interface FilterRepository {
     fun deleteSalary()
     fun deleteShowWithoutSalaryFlag()
     fun getCountryId(): String
+    fun deleteCountryData()
+    fun deleteRegionData()
 }
