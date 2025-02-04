@@ -15,7 +15,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustriesState
-import ru.practicum.android.diploma.features.selectspecialization.presentation.model.IndustryUI
 import ru.practicum.android.diploma.features.selectspecialization.presentation.ui.adapter.SpecializationSelectionAdapter
 import ru.practicum.android.diploma.features.selectspecialization.presentation.viewmodel.SpecializationSelectionViewModel
 import ru.practicum.android.diploma.utils.collectWithLifecycle
@@ -26,8 +25,6 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     private var specializationAdapter: SpecializationSelectionAdapter? = null
     private var onSearchDebounce: ((String) -> Unit)? = null
     private val viewModel by viewModel<SpecializationSelectionViewModel>()
-
-    private var selectedIndustry: IndustryUI? = null
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -47,6 +44,11 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         viewModel.getIndustriesState().collectWithLifecycle(this) { state ->
             renderState(state)
         }
+        viewModel.selectedIndustry.observe(viewLifecycleOwner) { industryUI ->
+            industryUI?.let {
+                updateChooseButtonVisibility(true)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -57,7 +59,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter(
             onItemClick = { industryUI, position ->
-                selectedIndustry = industryUI
+                viewModel.selectedIndustry.value = industryUI
                 specializationAdapter?.updateSelectedItemPosition(position)
             },
             onSelectionChanged = { isSelected ->
@@ -84,7 +86,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     private fun initChooseButtonListener() {
         viewBinding.chooseButton.setOnClickListener {
-            selectedIndustry?.let { industry ->
+            viewModel.selectedIndustry.value?.let { industry ->
                 viewModel.selectAndSaveIndustry(industry)
                 goBack()
             }

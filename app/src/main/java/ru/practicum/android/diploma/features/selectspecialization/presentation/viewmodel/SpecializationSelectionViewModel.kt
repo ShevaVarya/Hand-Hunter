@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.features.selectspecialization.presentation.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ class SpecializationSelectionViewModel(
 
     private var fullIndustriesList: List<IndustryUI> = emptyList()
 
+    val selectedIndustry = MutableLiveData<IndustryUI?>(null)
 
     private val industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
     fun getIndustriesState() = industriesState.asStateFlow()

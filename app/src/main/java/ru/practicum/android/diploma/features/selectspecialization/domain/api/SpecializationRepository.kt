@@ -6,5 +6,4 @@ interface SpecializationRepository {
 
     suspend fun getIndustriesList(params: Map<String, String>): Result<List<Industry>>
 
-    fun setIndustry(industry: Industry)
 }
