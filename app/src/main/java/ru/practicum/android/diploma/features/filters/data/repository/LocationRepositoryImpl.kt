@@ -6,7 +6,6 @@ import ru.practicum.android.diploma.features.filters.domain.api.location.Locatio
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 
-
 class LocationRepositoryImpl(
     private val networkClient: NetworkClient
 ) : LocationRepository {

@@ -7,7 +7,6 @@ import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 
-
 class LocationInteractorImpl(
     private val locationRepository: LocationRepository,
     private val filterRepository: FilterRepository

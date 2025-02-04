@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.features.filters.domain.interactor
 import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationRepository
-import ru.practicum.android.diploma.features.filters.domain.model.toFilterIndustry
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
+import ru.practicum.android.diploma.features.filters.domain.model.toFilterIndustry
 
 class SpecializationInteractorImpl(
     private val specializationRepository: SpecializationRepository,
