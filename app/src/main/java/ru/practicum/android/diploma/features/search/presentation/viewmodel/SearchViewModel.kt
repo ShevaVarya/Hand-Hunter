@@ -8,10 +8,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
+import ru.practicum.android.diploma.features.common.domain.filter.model.FilterMainData
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
+import ru.practicum.android.diploma.features.search.domain.model.QuerySearch.Companion.DEFAULT_PAGE
+import ru.practicum.android.diploma.features.search.domain.model.QuerySearch.Companion.DEFAULT_PER_PAGE
 import ru.practicum.android.diploma.features.search.domain.model.Vacancies
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
@@ -31,10 +34,12 @@ class SearchViewModel(
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
     private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
     val networkErrorStateFlow = MutableStateFlow(false)
+    private val isSearchWithFilters = MutableStateFlow(false)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
     fun getNetworkErrorStateFlow() = networkErrorStateFlow.asStateFlow()
+    fun isSearchWithFilters() = isSearchWithFilters.asStateFlow()
 
     private var currentPage = 0
     private var totalPages = 0
@@ -42,8 +47,13 @@ class SearchViewModel(
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
+    private var filters: FilterMainData? = null
 
-    fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
+    init {
+        getFilters()
+    }
+
+    private fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
         val queryText = querySearch.text?.trim()
         val isStateError = when (searchStateFlow.value) {
             is SearchState.ServerError, SearchState.NetworkError -> true
@@ -73,6 +83,11 @@ class SearchViewModel(
                     isLoading = false
                 }
         }
+    }
+
+    private fun getFilters() {
+        filters = interactor.getFilters()
+        isSearchWithFilters.value = filters != null
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
@@ -113,8 +128,8 @@ class SearchViewModel(
                         found = totalFoundVacancies,
                         pages = totalPages,
                         page = currentPage,
-                        perPage = ITEMS_PER_PAGE
-                    )
+                        perPage = DEFAULT_PER_PAGE
+                    ),
                 )
             )
             if (throwableError is CustomException.NetworkError) {
@@ -145,12 +160,9 @@ class SearchViewModel(
                 searchStateFlow.emit(SearchState.Pagination)
 
                 runCatching {
-                    search(
-                        QuerySearch(
-                            text = lastSearchQuery,
-                            page = currentPage + 1,
-                            perPage = ITEMS_PER_PAGE
-                        ),
+                    performSearch(
+                        text = lastSearchQuery,
+                        page = currentPage + 1,
                         isPagination = true
                     )
                 }.onFailure { handleNextPageError(it) }
@@ -174,13 +186,57 @@ class SearchViewModel(
             searchStateFlow.emit(SearchState.Init)
         }
         lastSearchQuery = null
-        currentPage = 0
+        currentPage = DEFAULT_PAGE
         totalPages = Int.MAX_VALUE
         loadedVacancies.clear()
     }
 
+    fun performSearch(
+        text: String?,
+        page: Int = DEFAULT_PAGE,
+        perPage: Int = DEFAULT_PER_PAGE,
+        isPagination: Boolean = false
+    ) {
+        getFilters()
+        search(
+            QuerySearch(
+                text = text,
+                page = page,
+                perPage = perPage,
+                params = mapFiltersToMap()
+            ),
+            isPagination
+        )
+    }
+
+    private fun mapFiltersToMap(): Map<String, String> {
+        val area = when {
+            !filters?.region?.id.isNullOrBlank() -> filters?.region?.id
+            !filters?.country?.id.isNullOrBlank() -> filters?.country?.id
+            else -> null
+        }
+        val industry = filters?.industry?.id
+        val salary = filters?.salary
+        val isNeedToHideVacancyWithoutSalary = filters?.isNeedToHideVacancyWithoutSalary
+
+        val params = mutableMapOf<String, String>().apply {
+            if (!area.isNullOrBlank()) put("area", area)
+            if (!industry.isNullOrBlank()) put("industry", industry)
+            if (!salary.isNullOrBlank()) put("salary", salary)
+            if (isNeedToHideVacancyWithoutSalary == true) {
+                put("only_with_salary", isNeedToHideVacancyWithoutSalary.toString())
+            }
+        }
+
+        return params
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        filters = null
+    }
+
     companion object {
         private const val MAX_ITEMS = 100
-        private const val ITEMS_PER_PAGE = 20
     }
 }
