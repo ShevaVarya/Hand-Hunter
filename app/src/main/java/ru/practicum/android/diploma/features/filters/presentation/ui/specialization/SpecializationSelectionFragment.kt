@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionBinding
@@ -60,12 +61,26 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             onItemClick = { industryUI, position ->
                 viewModel.selectedIndustry.value = industryUI
                 specializationAdapter?.updateSelectedItemPosition(position)
+                hideKeyBoard()
+                viewBinding.specializationEditText.clearFocus()
             },
             onSelectionChanged = { isSelected ->
                 updateChooseButtonVisibility(isSelected)
             }
         )
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
+
+        viewBinding.specializationRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                hideKeyBoard()
+                viewBinding.specializationEditText.clearFocus()
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
     }
 
     private fun initSearchDebounce() {
@@ -124,7 +139,6 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
                     if (event.rawX >= touchAreaStart) {
                         specializationEditText.text?.clear()
-                        hideKeyBoard()
                         handled = true
                     }
                 }
