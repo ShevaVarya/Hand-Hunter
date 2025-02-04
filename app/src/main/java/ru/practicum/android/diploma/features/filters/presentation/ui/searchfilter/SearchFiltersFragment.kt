@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.bundle.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -153,7 +154,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         acceptButton.isVisible = filterUI != viewModel.baseFilterUI
     }
 
-    fun setCheckedIcon(isChecked: Boolean) {
+    private fun setCheckedIcon(isChecked: Boolean) {
         with(viewBinding) {
             if (isChecked) {
                 withoutSalary.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
@@ -162,5 +163,10 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 viewModel.deleteShowWithoutSalary()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        parentFragmentManager.setFragmentResult("fragment_closed", bundleOf())
     }
 }

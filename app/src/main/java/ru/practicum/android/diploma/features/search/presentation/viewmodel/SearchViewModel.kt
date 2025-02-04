@@ -48,6 +48,7 @@ class SearchViewModel(
     var isLoading = false
     private var lastSearchQuery: String? = null
     private var filters: FilterMainData? = null
+    private var shouldRepeatSearch: Boolean? = null
 
     init {
         getFilters()
@@ -61,9 +62,11 @@ class SearchViewModel(
         }
         val isQueryEmpty = queryText.isNullOrEmpty()
         val isSameQuery = queryText == lastSearchQuery
-        val shouldSkipSearch = isSameQuery && !isPagination && !isStateError
+        val shouldSkipSearch = (isSameQuery && !isPagination && !isStateError)
 
-        if (isQueryEmpty || shouldSkipSearch) return
+        if (shouldRepeatSearch != true) {
+            if (isQueryEmpty || shouldSkipSearch) return
+        }
         if (isLoading) return
 
         lastSearchQuery = queryText
@@ -85,7 +88,7 @@ class SearchViewModel(
         }
     }
 
-    private fun getFilters() {
+    fun getFilters() {
         filters = interactor.getFilters()
         isSearchWithFilters.value = filters != null
     }
@@ -197,7 +200,6 @@ class SearchViewModel(
         perPage: Int = DEFAULT_PER_PAGE,
         isPagination: Boolean = false
     ) {
-        getFilters()
         search(
             QuerySearch(
                 text = text,
@@ -207,6 +209,11 @@ class SearchViewModel(
             ),
             isPagination
         )
+    }
+
+    fun repeatSearchWithFilters() {
+        shouldRepeatSearch = true
+        performSearch(lastSearchQuery)
     }
 
     private fun mapFiltersToMap(): Map<String, String> {

@@ -245,7 +245,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         onTextChanged()
         setupEnterKeyListener()
         clearSearchString()
+        onResultListen()
     }
+
+    private fun onResultListen() {
+        parentFragmentManager.setFragmentResultListener("fragment_closed", this) { _, _ ->
+            viewModel.getFilters()
+            viewModel.repeatSearchWithFilters()
+        }
+    }
+
 
     private fun clearSearchString() {
         with(viewBinding) {
