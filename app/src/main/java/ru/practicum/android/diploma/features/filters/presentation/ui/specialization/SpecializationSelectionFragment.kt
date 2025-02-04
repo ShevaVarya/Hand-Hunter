@@ -77,9 +77,13 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
                 return false
             }
 
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+                TODO("Not yet implemented")
+            }
 
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+                TODO("Not yet implemented")
+            }
         })
     }
 
