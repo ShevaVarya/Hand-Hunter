@@ -46,7 +46,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private fun initializeViews() {
         with(viewBinding) {
-
             placeOfWorkEditText.setOnClickListener {
                 findNavController().navigate(R.id.action_searchFiltersFragment_to_workplaceSelectionFragment)
             }

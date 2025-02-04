@@ -8,6 +8,7 @@ import ru.practicum.android.diploma.features.filters.data.dto.FilterMainDataEnti
 import ru.practicum.android.diploma.features.filters.data.dto.FilterRegionEntity
 import ru.practicum.android.diploma.features.filters.data.dto.FullLocationDataEntity
 
+@Suppress("TooManyFunctions")
 interface FilterStorage {
     fun setCountry(value: FilterCountryEntity)
     fun setRegion(value: FilterRegionEntity)

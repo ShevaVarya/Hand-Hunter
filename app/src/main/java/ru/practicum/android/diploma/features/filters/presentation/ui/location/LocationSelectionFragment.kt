@@ -18,10 +18,10 @@ import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentLocationSelectionBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
-import ru.practicum.android.diploma.features.filters.presentation.model.state.LocationSelectionState
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
 import ru.practicum.android.diploma.features.filters.presentation.model.api.Regionable
+import ru.practicum.android.diploma.features.filters.presentation.model.state.LocationSelectionState
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
 import ru.practicum.android.diploma.features.filters.presentation.ui.location.recycler.LocationAdapter
 import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
