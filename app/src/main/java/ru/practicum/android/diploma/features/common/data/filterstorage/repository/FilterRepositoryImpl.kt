@@ -48,4 +48,24 @@ class FilterRepositoryImpl(
     override fun deleteFilterMainData() {
         filterStorage.deleteFilterMainData()
     }
+
+    override fun deleteCountry() {
+        filterStorage.deleteCountry()
+    }
+
+    override fun deleteRegion() {
+        filterStorage.deleteRegion()
+    }
+
+    override fun deleteIndustry() {
+        filterStorage.deleteIndustry()
+    }
+
+    override fun deleteSalary() {
+        filterStorage.deleteSalary()
+    }
+
+    override fun deleteShowWithoutSalaryFlag() {
+        filterStorage.deleteShowWithoutSalaryFlag()
+    }
 }
