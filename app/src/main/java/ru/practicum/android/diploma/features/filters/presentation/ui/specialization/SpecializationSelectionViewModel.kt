@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.presentation.model.state.IndustriesState
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
-import ru.practicum.android.diploma.features.filters.presentation.model.fromUI
+import ru.practicum.android.diploma.features.filters.presentation.model.toDomain
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 
 class SpecializationSelectionViewModel(
@@ -40,7 +40,7 @@ class SpecializationSelectionViewModel(
 
     fun selectAndSaveIndustry(industry: IndustryUI) {
         viewModelScope.launch {
-            specializationInteractor.setIndustry(industry.fromUI())
+            specializationInteractor.setIndustry(industry.toDomain())
         }
     }
 

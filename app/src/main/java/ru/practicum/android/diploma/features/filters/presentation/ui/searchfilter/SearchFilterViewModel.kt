@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilt
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import ru.practicum.android.diploma.features.filters.domain.model.toUI
 import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInteractor
+import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 
 class SearchFilterViewModel(

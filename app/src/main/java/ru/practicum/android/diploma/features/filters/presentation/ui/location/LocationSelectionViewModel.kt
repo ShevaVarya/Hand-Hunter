@@ -13,7 +13,7 @@ import ru.practicum.android.diploma.features.filters.presentation.model.ui.Count
 import ru.practicum.android.diploma.features.filters.presentation.model.state.LocationSelectionState
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
 import ru.practicum.android.diploma.features.filters.presentation.model.api.Regionable
-import ru.practicum.android.diploma.features.filters.presentation.model.fromUI
+import ru.practicum.android.diploma.features.filters.presentation.model.toDomain
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -54,11 +54,11 @@ class LocationSelectionViewModel(
     fun saveRegion(region: Regionable) {
         if (isCountry) {
             locationInteractor.setCountry(
-                (region as CountryUI).fromUI()
+                (region as CountryUI).toDomain()
             )
         } else {
             locationInteractor.setRegion(
-                (region as RegionUI).fromUI()
+                (region as RegionUI).toDomain()
             )
         }
 
