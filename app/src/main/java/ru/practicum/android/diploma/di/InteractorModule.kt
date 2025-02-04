@@ -5,8 +5,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.practicum.android.diploma.features.favourite.domain.api.FavouriteVacanciesInteractor
 import ru.practicum.android.diploma.features.favourite.domain.interactor.FavouriteVacanciesInteractorImpl
-import ru.practicum.android.diploma.features.filters.domain.api.SharedPrefInteractor
-import ru.practicum.android.diploma.features.filters.domain.interactor.SharedPrefInteractorImpl
+import ru.practicum.android.diploma.features.filters.domain.api.FilterInteractor
+import ru.practicum.android.diploma.features.filters.domain.interactor.FilterInteractorImpl
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractorImpl
 import ru.practicum.android.diploma.features.selectlocation.domain.api.LocationInteractor
@@ -19,6 +19,6 @@ val interactorModule = module {
     singleOf(::VacancyDetailsInteractorImpl).bind<VacancyDetailsInteractor>()
     singleOf(::VacanciesSearchInteractorImpl) bind VacanciesSearchInteractor::class
     singleOf(::FavouriteVacanciesInteractorImpl) bind FavouriteVacanciesInteractor::class
-    singleOf(::SharedPrefInteractorImpl) bind SharedPrefInteractor::class
+    singleOf(::FilterInteractorImpl) bind FilterInteractor::class
     singleOf(::LocationInteractorImpl) bind LocationInteractor::class
 }
