@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -32,6 +33,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getData()
+        viewModel.updateFilter()
+    }
 
     override fun onStart() {
         super.onStart()
@@ -163,9 +170,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     private fun setButtonVisibility(filterUI: FilterUI?) {
-        val isVisible = filterUI != FilterUI()
+        val isVisible = filterUI != viewModel.currentSearchFilterUI
         with(viewBinding) {
-            resetButton.isVisible = isVisible
+            resetButton.isVisible = filterUI?.isDefault != true
             acceptButton.isVisible = isVisible
         }
     }

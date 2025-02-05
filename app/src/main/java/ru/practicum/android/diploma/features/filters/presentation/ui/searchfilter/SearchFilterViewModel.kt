@@ -1,8 +1,10 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInteractor
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
@@ -14,6 +16,7 @@ class SearchFilterViewModel(
     private val _stateFlowFilterUI = MutableStateFlow<FilterUI?>(FilterUI())
     val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
 
+    var currentSearchFilterUI: FilterUI? = FilterUI()
     private var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: String? = null
         private set
@@ -29,6 +32,12 @@ class SearchFilterViewModel(
             onlyWithSalary = loadedData.onlyWithSalary
         )
         _stateFlowFilterUI.value = latestSearchFilterUI
+    }
+
+    fun updateFilter() {
+        viewModelScope.launch {
+            currentSearchFilterUI = stateFlowFilterUI.value
+        }
     }
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
