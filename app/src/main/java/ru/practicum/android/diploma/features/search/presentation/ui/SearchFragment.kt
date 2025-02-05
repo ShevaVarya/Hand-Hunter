@@ -29,7 +29,6 @@ import ru.practicum.android.diploma.features.search.presentation.model.SearchSta
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
-import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
 @Suppress("LargeClass")
@@ -58,6 +57,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewBinding.filter.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_searchFiltersFragment)
         }
+        setFilterIcon()
     }
 
     override fun observeData() {
@@ -100,12 +100,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
-
-        viewModel.isSearchWithFilters().collectWithLifecycle(this) {
-            if (it) {
-                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
-            }
-        }
     }
 
     private fun showToast(message: String) {
@@ -245,6 +239,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         onTextChanged()
         setupEnterKeyListener()
         clearSearchString()
+        onResultListen()
+    }
+
+    private fun onResultListen() {
+        parentFragmentManager.setFragmentResultListener(REQUEST_KEY, this) { _, _ ->
+            viewModel.getFilters()
+            viewModel.performSearch(viewBinding.searchEditText.text.toString().trim())
+            setFilterIcon()
+        }
+    }
+
+    private fun setFilterIcon() {
+        if (viewModel.isSearchWithFilters) {
+            viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+        } else {
+            viewBinding.filter.setImageResource(R.drawable.filter_off_24px)
+        }
     }
 
     private fun clearSearchString() {
@@ -316,5 +327,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         private const val EMPTY_TEXT = ""
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 100L
+        private const val REQUEST_KEY = "fragment_closed"
     }
 }
