@@ -13,7 +13,7 @@ data class FilterUI(
     val country: String? = null,
     val region: String? = null,
     val industry: String? = null,
-    val salary: Int? = null,
+    val salary: String? = null,
     val onlyWithSalary: Boolean = false
 ) {
     val isDefault: Boolean

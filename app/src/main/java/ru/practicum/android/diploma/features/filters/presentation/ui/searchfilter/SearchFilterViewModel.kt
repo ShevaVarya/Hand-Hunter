@@ -16,7 +16,7 @@ class SearchFilterViewModel(
 
     var baseFilterUI = FilterUI()
     private var latestSearchFilterUI: FilterUI? = FilterUI()
-    var oldSalary: Int? = null
+    var oldSalary: String? = null
     var currentFilterUI: FilterUI? = _stateFlowFilterUI.value
 
     fun getData() {
@@ -25,8 +25,8 @@ class SearchFilterViewModel(
             country = loadedData.country?.let { it.ifEmpty { null } },
             region = loadedData.region?.let { it.ifEmpty { null } },
             industry = loadedData.industry?.let { it.ifEmpty { null } },
-            salary = filterInteractor.loadFilter().toUI().salary,
-            onlyWithSalary = filterInteractor.loadFilter().toUI().onlyWithSalary
+            salary = loadedData.salary,
+            onlyWithSalary = loadedData.onlyWithSalary
         )
         _stateFlowFilterUI.value = latestSearchFilterUI
     }
@@ -36,7 +36,7 @@ class SearchFilterViewModel(
         filterInteractor.saveWithoutSalary(check = onlyWithSalary)
     }
 
-    private fun setSalary(salary: Int?) {
+    private fun setSalary(salary: String?) {
         filterInteractor.saveSalary(salary = salary.toString())
         _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = salary)
     }
@@ -66,7 +66,7 @@ class SearchFilterViewModel(
     }
 
     fun salaryEnterTextChanged(text: CharSequence?) {
-        val newSalary = text.toString().toIntOrNull()
+        val newSalary = text.toString()
         if (oldSalary != newSalary) {
             oldSalary = newSalary
             setSalary(newSalary)

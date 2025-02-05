@@ -1,22 +1,27 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
-import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
@@ -36,12 +41,17 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     override fun observeData() {
-        viewModel.stateFlowFilterUI.collectWithLifecycle(this) { filterUI ->
+        viewModel.stateFlowFilterUI
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach { filterUI ->
+                Log.d("MyLog", "filterUI: $filterUI")
             viewModel.currentFilterUI = filterUI
             processFilterResult(filterUI)
             setupClearButton(filterUI?.country, viewBinding.placeOfWorkContainer) { viewModel.deletePlaceOfWork() }
             setupClearButton(filterUI?.industry, viewBinding.industryContainer) { viewModel.deleteIndustry() }
-        }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initializeViews() {

@@ -49,10 +49,6 @@ class SearchViewModel(
     private var lastSearchQuery: String? = null
     private var filters: FilterMainData? = null
 
-    init {
-        getFilters()
-    }
-
     private fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
         val queryText = querySearch.text?.trim()
         val isStateError = when (searchStateFlow.value) {
@@ -85,7 +81,7 @@ class SearchViewModel(
         }
     }
 
-    private fun getFilters() {
+    fun getFilters() {
         filters = interactor.getFilters()
         isSearchWithFilters.value = filters != null
     }
@@ -197,7 +193,6 @@ class SearchViewModel(
         perPage: Int = DEFAULT_PER_PAGE,
         isPagination: Boolean = false
     ) {
-        getFilters()
         search(
             QuerySearch(
                 text = text,
