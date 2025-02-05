@@ -34,10 +34,12 @@ class SearchViewModel(
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
     private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
     val networkErrorStateFlow = MutableStateFlow(false)
+    private val isSearchWithFilters = MutableStateFlow(false)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
     fun getNetworkErrorStateFlow() = networkErrorStateFlow.asStateFlow()
+    fun isSearchWithFilters() = isSearchWithFilters.asStateFlow()
 
     private var currentPage = 0
     private var totalPages = 0
@@ -47,11 +49,6 @@ class SearchViewModel(
     private var lastSearchQuery: String? = null
     private var lastSearchQuerySearch: QuerySearch? = null
     private var filters: FilterMainData? = null
-    var isSearchWithFilters = false
-
-    init {
-        getFilters()
-    }
 
     private fun search(querySearch: QuerySearch, isPagination: Boolean = false) {
         val queryText = querySearch.text?.trim()
@@ -88,7 +85,7 @@ class SearchViewModel(
 
     fun getFilters() {
         filters = interactor.getFilters()
-        isSearchWithFilters = filters != null
+        isSearchWithFilters.value = filters != null
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {

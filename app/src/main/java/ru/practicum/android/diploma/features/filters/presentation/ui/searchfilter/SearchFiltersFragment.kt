@@ -4,20 +4,23 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.bundle.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
-import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
@@ -40,18 +43,21 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     override fun observeData() {
-        viewModel.stateFlowFilterUI.collectWithLifecycle(this) { filterUI ->
-            viewModel.currentFilterUI = filterUI
+        viewModel.stateFlowFilterUI
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach { filterUI ->
             processFilterResult(filterUI)
-            setupClearButton(
-                filterUI?.country,
-                viewBinding.placeOfWorkContainer
-            ) { viewModel.deletePlaceOfWork() }
-            setupClearButton(
-                filterUI?.industry,
-                viewBinding.industryContainer
-            ) { viewModel.deleteIndustry() }
-        }
+                setupClearButton(
+                    filterUI?.country,
+                    viewBinding.placeOfWorkContainer
+                ) { viewModel.deletePlaceOfWork() }
+                setupClearButton(
+                    filterUI?.industry,
+                    viewBinding.industryContainer
+                ) { viewModel.deleteIndustry() }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initializeViews() {
@@ -77,7 +83,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             salaryEditText.doOnTextChanged { s, _, _, _ ->
-                setButtonVisibility(viewModel.currentFilterUI)
                 viewModel.salaryEnterTextChanged(s)
                 salaryEnterClearIcon(s)
             }
@@ -136,9 +141,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 processArea(filter.country, filter.region)
                 industryEditText.setText(filter.industry ?: "")
                 withoutSalary.isChecked = filter.onlyWithSalary
-                val newSalary = filter.salary
+                val newSalary = filter.salary.orEmpty()
                 if (newSalary != viewModel.oldSalary) {
-                    salaryEditText.setText(newSalary.toString())
+                    salaryEditText.setText(newSalary)
                 }
             } else {
                 placeOfWorkEditText.text = null
@@ -157,9 +162,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         viewBinding.placeOfWorkEditText.setText(result)
     }
 
-    private fun setButtonVisibility(filterUI: FilterUI?): Unit = with(viewBinding) {
-        resetButton.isVisible = filterUI?.isDefault != true
-        acceptButton.isVisible = filterUI != viewModel.baseFilterUI
+    private fun setButtonVisibility(filterUI: FilterUI?) {
+        val isVisible = filterUI != FilterUI()
+        with(viewBinding) {
+            resetButton.isVisible = isVisible
+            acceptButton.isVisible = isVisible
+        }
     }
 
     private fun setCheckedIcon(isChecked: Boolean) {
@@ -173,14 +181,5 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 viewModel.deleteShowWithoutSalary()
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf())
-    }
-
-    companion object {
-        private const val REQUEST_KEY = "fragment_closed"
     }
 }

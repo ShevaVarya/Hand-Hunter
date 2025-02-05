@@ -50,6 +50,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun initUi() {
+        viewModel.getFilters()
         initSearchDebounce()
         initClickDebounce()
         initAdapters()
@@ -57,7 +58,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewBinding.filter.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_searchFiltersFragment)
         }
-        setFilterIcon()
     }
 
     override fun observeData() {
@@ -98,6 +98,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                         showToast(getString(R.string.bad_connection))
                     }
                 }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.isSearchWithFilters()
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach { hasFilters ->
+                switchFilterIcon(hasFilters)
+
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -239,23 +248,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         onTextChanged()
         setupEnterKeyListener()
         clearSearchString()
-        onResultListen()
-    }
-
-    private fun onResultListen() {
-        parentFragmentManager.setFragmentResultListener(REQUEST_KEY, this) { _, _ ->
-            viewModel.getFilters()
-            viewModel.performSearch(viewBinding.searchEditText.text.toString().trim())
-            setFilterIcon()
-        }
-    }
-
-    private fun setFilterIcon() {
-        if (viewModel.isSearchWithFilters) {
-            viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
-        } else {
-            viewBinding.filter.setImageResource(R.drawable.filter_off_24px)
-        }
     }
 
     private fun clearSearchString() {
@@ -283,6 +275,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 )
             }
             searchTextInput.endIconDrawable = image
+        }
+    }
+
+    private fun switchFilterIcon(hasFilters: Boolean) {
+        with(viewBinding) {
+            val image = if (hasFilters) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.filter_on_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.filter_off_24px
+                )
+            }
+            filter.setImageDrawable(image)
         }
     }
 
@@ -327,6 +336,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         private const val EMPTY_TEXT = ""
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 100L
-        private const val REQUEST_KEY = "fragment_closed"
     }
 }
