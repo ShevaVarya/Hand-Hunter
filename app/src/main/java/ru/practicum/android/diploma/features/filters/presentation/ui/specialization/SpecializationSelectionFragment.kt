@@ -66,6 +66,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             }
         )
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
+        viewBinding.specializationRecyclerView.itemAnimator = null
     }
 
     private fun initSearchDebounce() {
@@ -181,9 +182,11 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
                     progressBar.isVisible = false
                     specializationAdapter?.updateItems(state.industries)
                 }
+
                 is IndustriesState.Loading -> {
                     progressBar.isVisible = true
                 }
+
                 is IndustriesState.Error -> {
                     errorsTextView.isVisible = true
                     errorsImageView.isVisible = true
