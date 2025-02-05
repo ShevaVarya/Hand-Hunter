@@ -45,8 +45,8 @@ class SearchViewModel(
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
+    private var lastSearchQuerySearch: QuerySearch? = null
     private var filters: FilterMainData? = null
-    private var shouldRepeatSearch: Boolean = false
     var isSearchWithFilters = false
 
     init {
@@ -60,15 +60,18 @@ class SearchViewModel(
             else -> false
         }
         val isQueryEmpty = queryText.isNullOrEmpty()
-        val isSameQuery = queryText == lastSearchQuery
-        val shouldSkipSearch = isSameQuery && !isPagination && !isStateError
+        //val isSameQuery = queryText == lastSearchQuery
+        val isSameQuerySearch = querySearch == lastSearchQuerySearch
+       // val shouldSkipSearch = isSameQuery && !isPagination && !isStateError
+        val shouldSkipSearch = isSameQuerySearch && !isPagination && !isStateError
 
-        if ((isQueryEmpty || shouldSkipSearch) && !shouldRepeatSearch) return
+        //if ((isQueryEmpty || shouldSkipSearch) && !shouldRepeatSearch) return
+        if (isQueryEmpty || shouldSkipSearch) return
         if (isLoading) return
 
-        lastSearchQuery = queryText
+        //lastSearchQuery = queryText
+        lastSearchQuerySearch = querySearch
         isLoading = true
-        shouldRepeatSearch = false
 
         viewModelScope.launch {
             if (!isPagination) searchStateFlow.emit(SearchState.Loading)
@@ -207,11 +210,6 @@ class SearchViewModel(
             ),
             isPagination
         )
-    }
-
-    fun repeatSearchWithFilters() {
-        shouldRepeatSearch = true
-        performSearch(lastSearchQuery)
     }
 
     private fun mapFiltersToMap(): Map<String, String> {

@@ -57,6 +57,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewBinding.filter.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_searchFiltersFragment)
         }
+        setFilterIcon()
     }
 
     override fun observeData() {
@@ -244,10 +245,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private fun onResultListen() {
         parentFragmentManager.setFragmentResultListener(REQUEST_KEY, this) { _, _ ->
             viewModel.getFilters()
-            viewModel.repeatSearchWithFilters()
-            if (viewModel.isSearchWithFilters) {
-                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
-            }
+            viewModel.performSearch(viewBinding.searchEditText.text.toString().trim())
+            setFilterIcon()
+        }
+    }
+
+    private fun setFilterIcon() {
+        if (viewModel.isSearchWithFilters) {
+            viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+        } else {
+            viewBinding.filter.setImageResource(R.drawable.filter_off_24px)
         }
     }
 
