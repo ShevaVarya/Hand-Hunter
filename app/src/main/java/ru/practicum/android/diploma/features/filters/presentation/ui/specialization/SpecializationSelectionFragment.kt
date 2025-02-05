@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionBinding
@@ -56,6 +55,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         specializationAdapter = null
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter(
             onItemClick = { industryUI, position ->
@@ -70,21 +70,11 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         )
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
 
-        viewBinding.specializationRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                hideKeyBoard()
-                viewBinding.specializationEditText.clearFocus()
-                return false
-            }
-
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-                TODO("Not yet implemented")
-            }
-        })
+        viewBinding.specializationRecyclerView.setOnTouchListener { _, _ ->
+            hideKeyBoard()
+            viewBinding.specializationEditText.clearFocus()
+            false
+        }
     }
 
     private fun initSearchDebounce() {
