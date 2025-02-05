@@ -79,7 +79,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
     }
 
     private fun showContent(isCountry: Boolean, list: List<Regionable>) {
-        with(viewBinding){
+        with(viewBinding) {
             locationAdapter?.submitList(list)
             contentRecyclerView.isVisible = true
             toolbar.title = getString(
@@ -115,6 +115,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         }
     }
 
+    @Suppress("EmptyFunctionBlock")
     private fun initAdapter() {
         locationAdapter = LocationAdapter(
             onClick = { region ->
