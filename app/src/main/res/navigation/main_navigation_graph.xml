@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFiltersFragment"
-        android:name="ru.practicum.android.diploma.features.filters.presentation.ui.SearchFiltersFragment"
+        android:name="ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter.SearchFiltersFragment"
         android:label="fragment_search_filters"
         tools:layout="@layout/fragment_search_filters">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/workplaceSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.selectworkplace.presentation.ui.WorkplaceSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.filters.presentation.ui.workplace.WorkplaceSelectionFragment"
         android:label="fragment_workplace_selection"
         tools:layout="@layout/fragment_workplace_selection">
         <action
@@ -60,19 +60,23 @@
     </fragment>
     <fragment
         android:id="@+id/locationSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.selectlocation.presentation.ui.LocationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.filters.presentation.ui.location.LocationSelectionFragment"
         android:label="fragment_location_selection"
-        tools:layout="@layout/fragment_location_selection" />
+        tools:layout="@layout/fragment_location_selection">
+        <argument
+            android:name="isCountry"
+            app:argType="boolean" />
+    </fragment>
     <fragment
         android:id="@+id/specializationSelectionFragment"
-        android:name="ru.practicum.android.diploma.features.selectspecialization.presentation.ui.SpecializationSelectionFragment"
+        android:name="ru.practicum.android.diploma.features.filters.presentation.ui.specialization.SpecializationSelectionFragment"
         android:label="fragment_specialization_selection"
         tools:layout="@layout/fragment_specialization_selection" />
     <fragment
         android:id="@+id/vacancyInfoFragment"
         android:name="ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment"
         android:label="fragment_vacancy_info"
-        tools:layout="@layout/fragment_vacancy_info" >
+        tools:layout="@layout/fragment_vacancy_info">
         <argument
             android:name="wasOpenedFromSearch"
             app:argType="boolean" />
@@ -84,14 +88,14 @@
         android:id="@+id/favouriteVacanciesFragment"
         android:name="ru.practicum.android.diploma.features.favourite.presentation.ui.FavouriteVacanciesFragment"
         android:label="fragment_favourite_vacancies"
-        tools:layout="@layout/fragment_favourite_vacancies" >
+        tools:layout="@layout/fragment_favourite_vacancies">
         <action
             android:id="@+id/action_favouriteVacanciesFragment_to_vacancyInfoFragment"
             app:destination="@id/vacancyInfoFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/teamInfoFragment"

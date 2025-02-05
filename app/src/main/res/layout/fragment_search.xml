@@ -42,19 +42,26 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/search_edit_text"
-        style="@style/editTextSearchStyle"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_text_input"
+        style="@style/textInputSearchStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autofillHints="@string/search"
-        android:drawableEnd="@drawable/search_24px"
-        android:singleLine="true"
-        android:imeOptions="actionDone"
+        android:hint="@string/search_hint"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/search_24px"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:ignore="LabelFor" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_edit_text"
+            style="@style/editTextSearchStyleForTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="@string/search" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -66,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
+        app:layout_constraintTop_toTopOf="@+id/search_text_input" />
 
     <TextView
         android:id="@+id/message_text_view"
@@ -76,7 +83,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/search_text_input"
         tools:text="Найдено 286 вакансий" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -86,10 +93,10 @@
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
         app:layout_constraintTop_toBottomOf="@+id/message_text_view"
-        app:layout_constraintBottom_toTopOf="@id/bottomProgressBar"
         tools:itemCount="7"
         tools:listitem="@layout/item_search" />
 
@@ -117,7 +124,7 @@
         app:layout_constraintBottom_toTopOf="@+id/errors_text_view"
         app:layout_constraintEnd_toStartOf="@id/right_border_guideline"
         app:layout_constraintStart_toEndOf="@id/left_border_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/search_text_input"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView

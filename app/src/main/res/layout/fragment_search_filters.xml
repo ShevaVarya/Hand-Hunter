@@ -1,17 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="?attr/mainBackgroundColor"
     android:orientation="vertical"
-    tools:context=".features.filters.presentation.ui.SearchFiltersFragment">
+    tools:context=".features.filters.presentation.ui.searchfilter.SearchFiltersFragment">
 
-    <TextView
-        android:id="@+id/test_text"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:gravity="center_vertical"
+        android:textAllCaps="false"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrow_back_24px"
+        app:title="@string/vacancy_search_filters_title"
+        app:titleTextAppearance="@style/toolbarTextStyle" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/place_of_work_container"
+        style="@style/filterTextAction"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/margin_4x"
+        android:gravity="center_vertical"
+        android:hint="@string/vacancy_search_filters_place_of_work"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/place_of_work_edit_text"
+            style="@style/filterEditTextAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/industry_container"
+        style="@style/filterTextAction"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:hint="@string/vacancy_search_filters_industry"
+        app:layout_constraintTop_toBottomOf="@+id/place_of_work_container">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/industry_edit_text"
+            style="@style/filterEditTextAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/salary_frame_container"
+        style="@style/CustomOutlineBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/name_search_filters_fragment" />
+        android:layout_marginStart="@dimen/margin_4x"
+        android:layout_marginTop="@dimen/margin_6x"
+        android:layout_marginEnd="@dimen/margin_4x"
+        android:background="@drawable/bg_salary_frame"
+        android:hint="@string/vacancy_search_filters_salary_expected"
+        android:paddingTop="@dimen/margin_2x"
+        app:hintTextAppearance="@style/textStyleRegular12"
+        app:layout_constraintBottom_toTopOf="@id/without_salary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/industry_container">
 
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/salary_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vacancy_search_filters_enter_salary"
+            android:inputType="number"
+            android:maxLength="8"
+            android:paddingTop="@dimen/margin_2x"
+            android:paddingBottom="@dimen/margin_2x"
+            android:textAppearance="@style/textStyleRegular16"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/custom_edit_text_cursor"
+            android:textSelectHandle="@drawable/custom_handle"
+            android:textSelectHandleLeft="@drawable/custom_handle"
+            android:textSelectHandleRight="@drawable/custom_handle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/without_salary"
+        style="@style/withoutSalary"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/margin_6x"
+        android:checkable="true"
+        android:text="@string/vacancy_search_filters_without_salary"
+        app:icon="@drawable/check_box_off_24px"
+        app:iconTint="@color/blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/salary_frame_container"
+        app:toggleCheckedStateOnClick="true" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/accept_button"
+        style="@style/acceptButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="@dimen/margin_4x"
+        android:layout_marginBottom="@dimen/margin_2x"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/vacancy_search_filters_accept"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/reset_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reset_button"
+        style="@style/resetButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="@dimen/margin_4x"
+        android:layout_marginBottom="@dimen/margin_6x"
+        android:text="@string/vacancy_search_filters_reset"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

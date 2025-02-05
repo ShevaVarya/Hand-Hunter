@@ -13,7 +13,7 @@
     <string name="filter_button">Фильтр поиска</string>
     <string name="search">Поиск</string>
     <string name="search_hint">Введите запрос</string>
-    <string name="search_icon">Иконка поиска</string>
+    <string name="search_clear_icon">Иконка поиска/очистки</string>
     <string name="logo">Логотип</string>
     <string name="empty_search">Изображение без поиска</string>
     <string name="bad_internet">Нет интернета</string>
@@ -61,6 +61,30 @@
     <string name="vacancy_info_gross_info_false">после вычета налогов</string>
     <string name="vacancy_info_save_to_database_error">Не удалось добавить вакансию в избранное</string>
     <string name="vacancy_info_delete_from_database_error">Не удалось удалить вакансию из избранного</string>
+    <string name="choose_industry">Выбор отрасли</string>
+    <string name="enter_an_industry">Введите отрасль</string>
+    <string name="could_not_get_the_list">Не удалось получить список</string>
+
+    <string name="location_country_toolbar_title">Выбор страны</string>
+    <string name="location_region_toolbar_title">Выбор региона</string>
+    <string name="location_hint">Введите регион</string>
+    <string name="location_stub" translatable="false">Country</string>
+    <string name="location_no_region_error">Такого региона нет</string>
+    <string name="location_server_error">Не удалось получить список</string>
+
+    <string name="choosing_place_of_work_toolbar">Выбор места работы</string>
+    <string name="country_hint">Страна</string>
+    <string name="region_hint">Регион</string>
+    <string name="choose_button_text">Выбрать</string>
+
+    <string name="vacancy_search_filters_title">Настройка фильтрации</string>
+    <string name="vacancy_search_filters_place_of_work">Место работы</string>
+    <string name="vacancy_search_filters_industry">Отрасль</string>
+    <string name="vacancy_search_filters_salary_expected">Ожидаемая зарплата</string>
+    <string name="vacancy_search_filters_enter_salary">Введите сумму</string>
+    <string name="vacancy_search_filters_without_salary">Не показывать без зарплаты</string>
+    <string name="vacancy_search_filters_accept">Применить</string>
+    <string name="vacancy_search_filters_reset">Сбросить</string>
 
     <plurals name="vacancies_count">
         <item quantity="one">Найдено %d вакансия</item>

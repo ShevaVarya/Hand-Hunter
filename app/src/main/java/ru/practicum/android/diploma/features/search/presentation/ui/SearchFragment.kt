@@ -25,19 +25,20 @@ import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
 import ru.practicum.android.diploma.features.common.presentation.recycler.VacancyAdapter
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.presentation.model.SearchState
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
+import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
-import ru.practicum.android.diploma.utils.isRightDrawableClicked
 
 @Suppress("LargeClass")
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
+
     private var vacancyAdapter: VacancyAdapter? = null
+
     private var onVacancyClickDebounce: ((VacancySearchUI) -> Unit?)? = null
-    private var onSearchDebounce: ((QuerySearch) -> Unit)? = null
+    private var onSearchDebounce: ((String) -> Unit)? = null
     private val viewModel by viewModel<SearchViewModel>()
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
@@ -54,6 +55,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         initClickDebounce()
         initAdapters()
         initListeners()
+        viewBinding.filter.setOnClickListener {
+            findNavController().navigate(R.id.action_searchFragment_to_searchFiltersFragment)
+        }
     }
 
     override fun observeData() {
@@ -96,6 +100,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.isSearchWithFilters().collectWithLifecycle(this) {
+            if (it) {
+                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+            }
+        }
     }
 
     private fun showToast(message: String) {
@@ -177,7 +187,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             viewLifecycleOwner.lifecycleScope,
             true
         ) {
-            viewModel.search(it)
+            viewModel.performSearch(it)
         }
     }
 
@@ -232,45 +242,48 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun initListeners() {
-        setupSearchEditTextTouchListener()
         onTextChanged()
         setupEnterKeyListener()
+        clearSearchString()
     }
 
-    private fun setupSearchEditTextTouchListener() {
-        with(viewBinding.searchEditText) {
-            setOnTouchListener { _, event ->
-                if (isRightDrawableClicked(event)) {
-                    viewModel.onClearedSearch()
-                    performClick()
-                    true
-                } else {
-                    false
-                }
+    private fun clearSearchString() {
+        with(viewBinding) {
+            searchTextInput.setEndIconOnClickListener {
+                viewModel.onClearedSearch()
+                searchEditText.text?.clear()
+                searchEditText.clearFocus()
+                hideKeyBoard()
             }
+        }
+    }
+
+    private fun switchSearchClearIcon(isEditTextEmpty: Boolean) {
+        with(viewBinding) {
+            val image = if (isEditTextEmpty.not()) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.close_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.search_24px
+                )
+            }
+            searchTextInput.endIconDrawable = image
         }
     }
 
     private fun onTextChanged() {
         with(viewBinding) {
+            searchTextInput.isHintEnabled = false
             searchEditText.doOnTextChanged { text, _, _, _ ->
-                val isNotEmpty = text.isNullOrEmpty().not()
-                val querySearch = QuerySearch(text = text.toString().trim())
-                if (!isNotEmpty) {
+                if (text.isNullOrEmpty()) {
                     viewModel.onClearedSearch()
                 }
-                val drawableEnd = if (isNotEmpty) {
-                    ContextCompat.getDrawable(requireContext(), R.drawable.close_24px)
-                } else {
-                    ContextCompat.getDrawable(requireContext(), R.drawable.search_24px)
-                }
-                searchEditText.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    null,
-                    drawableEnd,
-                    null
-                )
-                onSearchDebounce?.invoke(querySearch)
+                switchSearchClearIcon(text.isNullOrEmpty())
+                onSearchDebounce?.invoke(text.toString().trim())
             }
         }
     }
@@ -289,8 +302,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val queryText = viewBinding.searchEditText.text.toString().trim()
                 if (queryText.isNotEmpty()) {
-                    val querySearch = QuerySearch(text = queryText)
-                    viewModel.search(querySearch)
+                    viewModel.performSearch(queryText)
                     hideKeyBoard()
                 }
                 true

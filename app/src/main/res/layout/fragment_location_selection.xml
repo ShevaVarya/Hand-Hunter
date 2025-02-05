@@ -1,17 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="?attr/mainBackgroundColor"
     android:orientation="vertical"
-    tools:context=".features.selectlocation.presentation.ui.LocationSelectionFragment">
+    tools:context=".features.filters.presentation.ui.location.LocationSelectionFragment">
 
-    <TextView
-        android:id="@+id/test_text"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/name_fragment_location_selection" />
+        app:navigationIcon="@drawable/arrow_back_24px"
+        app:title="@string/location_country_toolbar_title"
+        app:titleTextAppearance="@style/toolbarTextStyle" />
+
+    <FrameLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/blue" />
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/search_edit_text"
+        style="@style/editTextSearchStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_4x"
+        android:autofillHints="@string/search"
+        android:hint="@string/location_hint"
+        android:drawableEnd="@drawable/search_24px"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        tools:ignore="LabelFor" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/content_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_2x"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:itemCount="9"
+        tools:listitem="@layout/item_location_selection" />
+
+    <LinearLayout
+        android:id="@+id/error_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/error_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4x"
+            android:contentDescription="@string/content_description_error_message"
+            android:src="@drawable/bad_search" />
+
+        <TextView
+            android:id="@+id/message_error_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4x"
+            android:layout_marginTop="@dimen/margin_4x"
+            android:gravity="center"
+            android:textAppearance="@style/textStyleMedium22"
+            android:textColor="?attr/mainTextColor"
+            tools:text="Такого региона нет" />
+
+    </LinearLayout>
 
 </LinearLayout>
