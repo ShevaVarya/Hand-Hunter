@@ -61,7 +61,6 @@ class LocationInteractorImpl(
         newList: MutableList<Region>
     ): List<Region> {
         list.forEach {
-
             if (it.areas.isEmpty()) {
                 newList.add(it)
             } else {
