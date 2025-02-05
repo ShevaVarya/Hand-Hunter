@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.workplace.SelectWorkplaceInteractor
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 
 class WorkplaceSelectionViewModel(
     private val interactor: SelectWorkplaceInteractor,
