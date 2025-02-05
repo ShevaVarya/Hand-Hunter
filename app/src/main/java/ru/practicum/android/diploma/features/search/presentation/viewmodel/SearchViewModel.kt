@@ -46,7 +46,7 @@ class SearchViewModel(
     var isLoading = false
     private var lastSearchQuery: String? = null
     private var filters: FilterMainData? = null
-    private var shouldRepeatSearch: Boolean? = null
+    private var shouldRepeatSearch: Boolean = false
     var isSearchWithFilters = false
 
     init {
@@ -63,13 +63,12 @@ class SearchViewModel(
         val isSameQuery = queryText == lastSearchQuery
         val shouldSkipSearch = isSameQuery && !isPagination && !isStateError
 
-        if (isQueryEmpty) return
-        if (shouldRepeatSearch != true && shouldSkipSearch) return
-
+        if ((isQueryEmpty || shouldSkipSearch) && !shouldRepeatSearch) return
         if (isLoading) return
 
         lastSearchQuery = queryText
         isLoading = true
+        shouldRepeatSearch = false
 
         viewModelScope.launch {
             if (!isPagination) searchStateFlow.emit(SearchState.Loading)
