@@ -38,8 +38,6 @@ class LocationSelectionViewModel(
     }
 
     fun search(text: String) {
-        _state.value = LocationSelectionState.Loading
-
         viewModelScope.launch(Dispatchers.IO) {
             val filteredList = filterListByText(text.trim())
             withContext(Dispatchers.Main) {
