@@ -60,16 +60,13 @@ class SearchViewModel(
             else -> false
         }
         val isQueryEmpty = queryText.isNullOrEmpty()
-        //val isSameQuery = queryText == lastSearchQuery
         val isSameQuerySearch = querySearch == lastSearchQuerySearch
-       // val shouldSkipSearch = isSameQuery && !isPagination && !isStateError
         val shouldSkipSearch = isSameQuerySearch && !isPagination && !isStateError
 
-        //if ((isQueryEmpty || shouldSkipSearch) && !shouldRepeatSearch) return
         if (isQueryEmpty || shouldSkipSearch) return
         if (isLoading) return
 
-        //lastSearchQuery = queryText
+        lastSearchQuery = queryText
         lastSearchQuerySearch = querySearch
         isLoading = true
 
