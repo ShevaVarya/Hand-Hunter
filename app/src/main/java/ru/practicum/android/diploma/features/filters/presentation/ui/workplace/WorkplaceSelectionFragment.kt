@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
@@ -23,7 +24,10 @@ import ru.practicum.android.diploma.features.filters.presentation.ui.location.Lo
 class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBinding>() {
 
     private val viewModel by viewModel<WorkplaceSelectionViewModel>()
-    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentWorkplaceSelectionBinding {
+    override fun createViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWorkplaceSelectionBinding {
         return FragmentWorkplaceSelectionBinding.inflate(layoutInflater)
     }
 
@@ -62,6 +66,10 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             false
         )
         viewModel.isWorkPlaceShowNeeded()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
+        }
     }
 
     override fun observeData() {
