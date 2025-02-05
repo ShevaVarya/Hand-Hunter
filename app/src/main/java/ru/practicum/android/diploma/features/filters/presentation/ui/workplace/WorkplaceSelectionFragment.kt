@@ -17,8 +17,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentWorkplaceSelectionBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.filters.presentation.ui.location.LocationSelectionFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
+import ru.practicum.android.diploma.features.filters.presentation.ui.location.LocationSelectionFragment
 
 class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBinding>() {
 

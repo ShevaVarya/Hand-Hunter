@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.features.filters.domain.api.workplace.Select
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 
 class WorkplaceSelectionViewModel(
     private val interactor: SelectWorkplaceInteractor,

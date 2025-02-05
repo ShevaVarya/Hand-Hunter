@@ -86,8 +86,8 @@ class LocationSelectionViewModel(
     }
 
     private fun saveRegionCountry(item: RegionUI) {
-        val country = originalAreasList.firstOrNull { isParentFind(it, item.id) }?.toUI()
-        country?.let { locationInteractor.setCountry(Country(id = country.id, name = country.name)) }
+        val country = originalAreasList.firstOrNull { isParentFind(it, item.id) }?.toUI() ?: return
+        locationInteractor.setCountry(Country(id = country.id, name = country.name))
     }
 
     private fun isParentFind(region: Region, cityId: String): Boolean {

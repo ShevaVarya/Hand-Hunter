@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.common.domain.CustomException
-import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.common.presentation.ResourceProvider
 import ru.practicum.android.diploma.features.common.presentation.models.VacancySearchUI
+import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.search.domain.interactor.VacanciesSearchInteractor
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch
 import ru.practicum.android.diploma.features.search.domain.model.QuerySearch.Companion.DEFAULT_PAGE
@@ -34,12 +34,10 @@ class SearchViewModel(
     private val searchStateFlow = MutableStateFlow<SearchState>(SearchState.Init)
     private val toastEventFlow = MutableSharedFlow<ToastEvent>(replay = 0)
     val networkErrorStateFlow = MutableStateFlow(false)
-    private val isSearchWithFilters = MutableStateFlow(false)
 
     fun getSearchStateFlow() = searchStateFlow.asStateFlow()
     fun getToastEventFlow() = toastEventFlow.asSharedFlow()
     fun getNetworkErrorStateFlow() = networkErrorStateFlow.asStateFlow()
-    fun isSearchWithFilters() = isSearchWithFilters.asStateFlow()
 
     private var currentPage = 0
     private var totalPages = 0
@@ -47,7 +45,9 @@ class SearchViewModel(
     private val loadedVacancies = mutableListOf<VacancySearchUI>()
     var isLoading = false
     private var lastSearchQuery: String? = null
+    private var lastSearchQuerySearch: QuerySearch? = null
     private var filters: FilterMainData? = null
+    var isSearchWithFilters = false
 
     init {
         getFilters()
@@ -60,13 +60,14 @@ class SearchViewModel(
             else -> false
         }
         val isQueryEmpty = queryText.isNullOrEmpty()
-        val isSameQuery = queryText == lastSearchQuery
-        val shouldSkipSearch = isSameQuery && !isPagination && !isStateError
+        val isSameQuerySearch = querySearch == lastSearchQuerySearch
+        val shouldSkipSearch = isSameQuerySearch && !isPagination && !isStateError
 
         if (isQueryEmpty || shouldSkipSearch) return
         if (isLoading) return
 
         lastSearchQuery = queryText
+        lastSearchQuerySearch = querySearch
         isLoading = true
 
         viewModelScope.launch {
@@ -85,9 +86,9 @@ class SearchViewModel(
         }
     }
 
-    private fun getFilters() {
+    fun getFilters() {
         filters = interactor.getFilters()
-        isSearchWithFilters.value = filters != null
+        isSearchWithFilters = filters != null
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {
@@ -197,7 +198,6 @@ class SearchViewModel(
         perPage: Int = DEFAULT_PER_PAGE,
         isPagination: Boolean = false
     ) {
-        getFilters()
         search(
             QuerySearch(
                 text = text,

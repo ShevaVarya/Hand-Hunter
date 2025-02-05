@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.presentation.model.state.IndustriesState
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
 import ru.practicum.android.diploma.features.filters.presentation.model.toDomain
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
 
 class SpecializationSelectionViewModel(
     private val specializationInteractor: SpecializationInteractor
