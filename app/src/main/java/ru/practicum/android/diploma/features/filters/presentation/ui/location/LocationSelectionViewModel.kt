@@ -46,9 +46,7 @@ class LocationSelectionViewModel(
                 if (filteredList.isEmpty()) {
                     _state.value = LocationSelectionState.NoRegionError
                 } else {
-                    _state.value = LocationSelectionState.ContentRegion(
-                        filteredList
-                    )
+                    _state.value = LocationSelectionState.ContentRegion(filteredList)
                 }
             }
         }

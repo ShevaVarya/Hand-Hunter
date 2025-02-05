@@ -5,7 +5,6 @@ import ru.practicum.android.diploma.features.filters.domain.api.workplace.Select
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
-import ru.practicum.android.diploma.features.filters.domain.model.Region
 
 class SelectWorkplaceInteractorImpl(
     private val filterRepository: FilterRepository
