@@ -16,4 +16,5 @@ interface LocationInteractor {
     fun setCountry(country: Country)
     fun setRegion(region: FilterRegion)
     fun getCountryId(): String
+    fun deleteRegionWhenChangeCountry()
 }

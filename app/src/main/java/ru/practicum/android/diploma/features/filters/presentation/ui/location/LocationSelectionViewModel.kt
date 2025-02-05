@@ -56,13 +56,10 @@ class LocationSelectionViewModel(
 
     fun saveRegion(region: Regionable) {
         if (isCountry) {
-            locationInteractor.setCountry(
-                (region as CountryUI).toDomain()
-            )
+            locationInteractor.setCountry((region as CountryUI).toDomain())
+            locationInteractor.deleteRegionWhenChangeCountry()
         } else {
-            locationInteractor.setRegion(
-                (region as RegionUI).toDomain()
-            )
+            locationInteractor.setRegion((region as RegionUI).toDomain())
             saveRegionCountry(region)
         }
     }
@@ -90,9 +87,7 @@ class LocationSelectionViewModel(
 
     private fun saveRegionCountry(item: RegionUI) {
         val country = originalAreasList.firstOrNull { isParentFind(it, item.id) }?.toUI()
-        if (country != null) {
-            locationInteractor.setCountry(Country(id = country.id, name = country.name))
-        }
+        country?.let { locationInteractor.setCountry(Country(id = country.id, name = country.name)) }
     }
 
     private fun isParentFind(region: Region, cityId: String): Boolean {

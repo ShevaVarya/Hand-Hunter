@@ -43,6 +43,10 @@ class LocationInteractorImpl(
         return filterRepository.getCountryId()
     }
 
+    override fun deleteRegionWhenChangeCountry() {
+        filterRepository.deleteRegionData()
+    }
+
     private fun getSortedFilteredRegionsList(list: List<Region>, newList: MutableList<Region>): List<Region> {
         list.forEach {
             if (it.areas.isEmpty()) {

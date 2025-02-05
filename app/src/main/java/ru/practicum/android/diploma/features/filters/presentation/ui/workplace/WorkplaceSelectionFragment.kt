@@ -29,7 +29,8 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
 
     override fun initUi() {
         viewBinding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
         }
 
         viewBinding.chooseButton.setOnClickListener {
