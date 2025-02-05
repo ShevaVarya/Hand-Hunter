@@ -1,11 +1,9 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.bundle.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -23,7 +21,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
-import ru.practicum.android.diploma.utils.collectWithLifecycle
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
@@ -50,8 +47,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .distinctUntilChanged()
             .onEach { filterUI ->
-                Log.d("MyLog", "filterUI: $filterUI")
-            viewModel.currentFilterUI = filterUI
             processFilterResult(filterUI)
                 setupClearButton(
                     filterUI?.country,
@@ -88,7 +83,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             salaryEditText.doOnTextChanged { s, _, _, _ ->
-                setButtonVisibility(viewModel.currentFilterUI)
                 viewModel.salaryEnterTextChanged(s)
                 salaryEnterClearIcon(s)
             }
@@ -147,9 +141,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 processArea(filter.country, filter.region)
                 industryEditText.setText(filter.industry ?: "")
                 withoutSalary.isChecked = filter.onlyWithSalary
-                val newSalary = filter.salary
+                val newSalary = filter.salary.orEmpty()
                 if (newSalary != viewModel.oldSalary) {
-                    salaryEditText.setText(newSalary.toString())
+                    salaryEditText.setText(newSalary)
                 }
             } else {
                 placeOfWorkEditText.text = null
@@ -168,9 +162,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         viewBinding.placeOfWorkEditText.setText(result)
     }
 
-    private fun setButtonVisibility(filterUI: FilterUI?): Unit = with(viewBinding) {
-        resetButton.isVisible = filterUI?.isDefault != true
-        acceptButton.isVisible = filterUI != viewModel.baseFilterUI
+    private fun setButtonVisibility(filterUI: FilterUI?) {
+        val isVisible = filterUI != FilterUI()
+        with(viewBinding) {
+            resetButton.isVisible = isVisible
+            acceptButton.isVisible = isVisible
+        }
     }
 
     private fun setCheckedIcon(isChecked: Boolean) {
@@ -184,14 +181,5 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 viewModel.deleteShowWithoutSalary()
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf())
-    }
-
-    companion object {
-        private const val REQUEST_KEY = "fragment_closed"
     }
 }
