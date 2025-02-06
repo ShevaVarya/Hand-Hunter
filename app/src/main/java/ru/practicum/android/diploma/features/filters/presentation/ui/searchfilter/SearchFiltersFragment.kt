@@ -34,12 +34,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getData()
-        viewModel.updateFilter()
-    }
-
     override fun onStart() {
         super.onStart()
         viewModel.getData()

@@ -16,7 +16,13 @@ class SearchFilterViewModel(
     private val _stateFlowFilterUI = MutableStateFlow<FilterUI?>(FilterUI())
     val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
 
-    var currentSearchFilterUI: FilterUI? = FilterUI()
+    var currentSearchFilterUI: FilterUI? = FilterUI(
+            country = filterInteractor.loadFilter().toUI().country?.let { it.ifEmpty { null } },
+            region = filterInteractor.loadFilter().toUI().region?.let { it.ifEmpty { null } },
+            industry = filterInteractor.loadFilter().toUI().industry?.let { it.ifEmpty { null } },
+            salary = filterInteractor.loadFilter().toUI().salary?.let { it.ifEmpty { null } },
+            onlyWithSalary = filterInteractor.loadFilter().toUI().onlyWithSalary
+        )
         private set
     private var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: String? = null
@@ -33,12 +39,6 @@ class SearchFilterViewModel(
             onlyWithSalary = loadedData.onlyWithSalary
         )
         _stateFlowFilterUI.value = latestSearchFilterUI
-    }
-
-    fun updateFilter() {
-        viewModelScope.launch {
-            currentSearchFilterUI = _stateFlowFilterUI.value
-        }
     }
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
