@@ -6,24 +6,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInteractor
+import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
+import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
+import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 
 class SearchFilterViewModel(
-    private val filterInteractor: FilterInteractor
+    private val filterInteractor: FilterInteractor,
+    private val specializationInteractor: SpecializationInteractor,
+    private val locationInteractor: LocationInteractor,
 ) : ViewModel() {
 
     private val _stateFlowFilterUI = MutableStateFlow<FilterUI?>(FilterUI())
     val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
 
-    var currentSearchFilterUI: FilterUI? = FilterUI(
-            country = filterInteractor.loadFilter().toUI().country?.let { it.ifEmpty { null } },
-            region = filterInteractor.loadFilter().toUI().region?.let { it.ifEmpty { null } },
-            industry = filterInteractor.loadFilter().toUI().industry?.let { it.ifEmpty { null } },
-            salary = filterInteractor.loadFilter().toUI().salary?.let { it.ifEmpty { null } },
-            onlyWithSalary = filterInteractor.loadFilter().toUI().onlyWithSalary
-        )
-        private set
+    val currentSearchFilterUI: FilterMainData = filterInteractor.loadFilter()
     private var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: String? = null
         private set
@@ -51,6 +49,27 @@ class SearchFilterViewModel(
             filterInteractor.saveSalary(salary = salary)
             _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = salary)
         }
+    }
+
+    fun resetAllChanges() {
+        viewModelScope.launch {
+            locationInteractor.setCountry(currentSearchFilterUI.country)
+            locationInteractor.setRegion(currentSearchFilterUI.region)
+            specializationInteractor.setIndustry(currentSearchFilterUI.industry)
+            setSalary(currentSearchFilterUI.salary)
+            setOnlyWithSalary(currentSearchFilterUI.isNeedToHideVacancyWithoutSalary)
+        }
+    }
+
+    fun isVisibleAcceptButton(filterUI: FilterUI?): Boolean {
+        val changeFilterUI = FilterUI(
+            country = currentSearchFilterUI.toUI().country?.let { it.ifEmpty { null } },
+            region = currentSearchFilterUI.toUI().region?.let { it.ifEmpty { null } },
+            industry = currentSearchFilterUI.toUI().industry?.let { it.ifEmpty { null } },
+            salary = currentSearchFilterUI.toUI().salary?.let { it.ifEmpty { null } },
+            onlyWithSalary = currentSearchFilterUI.toUI().onlyWithSalary
+        )
+        return filterUI != changeFilterUI
     }
 
     fun deletePlaceOfWork() {

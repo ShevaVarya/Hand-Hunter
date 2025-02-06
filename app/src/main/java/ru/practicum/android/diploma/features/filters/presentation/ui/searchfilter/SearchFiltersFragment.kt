@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -72,6 +71,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             toolbar.setNavigationOnClickListener {
+                viewModel.resetAllChanges()
                 findNavController().navigateUp()
             }
 
@@ -164,10 +164,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     }
 
     private fun setButtonVisibility(filterUI: FilterUI?) {
-        val isVisible = filterUI != viewModel.currentSearchFilterUI
         with(viewBinding) {
             resetButton.isVisible = filterUI?.isDefault != true
-            acceptButton.isVisible = isVisible
+            acceptButton.isVisible = viewModel.isVisibleAcceptButton(filterUI)
         }
     }
 
