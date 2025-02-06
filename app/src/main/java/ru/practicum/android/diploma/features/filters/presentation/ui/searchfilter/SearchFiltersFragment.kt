@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -60,6 +61,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initializeViews() {
         with(viewBinding) {
             placeOfWorkEditText.setOnClickListener {
@@ -89,6 +91,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
             withoutSalary.setOnClickListener {
                 viewModel.setOnlyWithSalary(withoutSalary.isChecked)
+            }
+
+            viewBinding.root.setOnTouchListener { _, _ ->
+                hideKeyBoard()
+                salaryEditText.clearFocus()
+                false
             }
         }
     }
