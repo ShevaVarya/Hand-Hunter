@@ -104,6 +104,12 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                     return@setOnEditorActionListener false
                 }
             }
+
+            viewBinding.root.setOnTouchListener { _, _ ->
+                hideKeyBoard()
+                salaryEditText.clearFocus()
+                false
+            }
         }
     }
 
