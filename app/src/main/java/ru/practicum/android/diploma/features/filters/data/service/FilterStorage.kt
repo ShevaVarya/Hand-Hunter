@@ -74,8 +74,7 @@ class FilterStorageImpl(
         val isNeedToHideVacancyWithoutSalary = sharedPrefs.getBoolean(SHOW_WITHOUT_SALARY_FLAG, false)
 
         return if (
-            country == null &&
-            region == null &&
+            isCountryAndRegionNull(country, region) &&
             industry == null &&
             salary.isNullOrEmpty() &&
             isNeedToHideVacancyWithoutSalary.not()
@@ -89,7 +88,7 @@ class FilterStorageImpl(
     override fun getFullLocationData(): FullLocationDataEntity? {
         val country = getCountryFromPrefs()
         val region = getRegionFromPrefs()
-        return if (country == null && region == null) {
+        return if (isCountryAndRegionNull(country, region)) {
             null
         } else {
             FullLocationDataEntity(country, region)
@@ -170,7 +169,6 @@ class FilterStorageImpl(
         }
     }
 
-
     private fun getIndustryFromPrefs(): FilterIndustryEntity? {
         val id = sharedPrefs.getString(INDUSTRY_ID, null)
         val name = sharedPrefs.getString(INDUSTRY_NAME, null)
@@ -179,6 +177,10 @@ class FilterStorageImpl(
         } else {
             FilterIndustryEntity(id, name)
         }
+    }
+
+    private fun isCountryAndRegionNull(country: FilterCountryEntity?, region: FilterRegionEntity?): Boolean {
+        return country == null && region == null
     }
 
     companion object {
