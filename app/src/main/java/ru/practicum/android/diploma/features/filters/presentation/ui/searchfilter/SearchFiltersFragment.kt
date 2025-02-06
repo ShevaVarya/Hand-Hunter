@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -93,10 +94,14 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 viewModel.setOnlyWithSalary(withoutSalary.isChecked)
             }
 
-            viewBinding.root.setOnTouchListener { _, _ ->
-                hideKeyBoard()
-                salaryEditText.clearFocus()
-                false
+            salaryEditText.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    salaryEditText.clearFocus()
+                    hideKeyBoard()
+                    return@setOnEditorActionListener true
+                } else {
+                    return@setOnEditorActionListener false
+                }
             }
         }
     }
