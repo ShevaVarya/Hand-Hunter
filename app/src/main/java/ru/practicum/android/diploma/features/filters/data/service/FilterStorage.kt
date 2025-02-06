@@ -66,6 +66,7 @@ class FilterStorageImpl(
             .apply()
     }
 
+    @Suppress("ComplexCondition")
     override fun getFilterMainData(): FilterMainDataEntity? {
         val country = getCountryFromPrefs()
         val region = getRegionFromPrefs()
