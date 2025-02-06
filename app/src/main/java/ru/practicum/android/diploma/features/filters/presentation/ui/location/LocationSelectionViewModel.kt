@@ -44,9 +44,7 @@ class LocationSelectionViewModel(
                 if (filteredList.isEmpty()) {
                     _state.value = LocationSelectionState.NoRegionError
                 } else {
-                    _state.value = LocationSelectionState.ContentRegion(
-                        filteredList
-                    )
+                    _state.value = LocationSelectionState.ContentRegion(filteredList)
                 }
             }
         }
@@ -54,13 +52,10 @@ class LocationSelectionViewModel(
 
     fun saveRegion(region: Regionable) {
         if (isCountry) {
-            locationInteractor.setCountry(
-                (region as CountryUI).toDomain()
-            )
+            locationInteractor.setCountry((region as CountryUI).toDomain())
+            locationInteractor.deleteRegionWhenChangeCountry()
         } else {
-            locationInteractor.setRegion(
-                (region as RegionUI).toDomain()
-            )
+            locationInteractor.setRegion((region as RegionUI).toDomain())
             saveRegionCountry(region)
         }
     }

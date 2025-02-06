@@ -6,12 +6,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.workplace.SelectWorkplaceInteractor
-import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
+import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
+import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
 
 class WorkplaceSelectionViewModel(
     private val interactor: SelectWorkplaceInteractor,
 ) : ViewModel() {
+    private val acceptedData: FullLocationData = interactor.getFullLocationData()
 
     private val workplaceLocationState = MutableStateFlow<WorkplaceLocationState>(WorkplaceLocationState.Init)
     fun getWorkplaceLocationState() = workplaceLocationState.asStateFlow()
@@ -33,7 +35,7 @@ class WorkplaceSelectionViewModel(
     fun deleteCountryData() {
         viewModelScope.launch {
             interactor.deleteCountryData()
-            updateWorkplaceLocationState(getLocation())
+            deleteRegionData()
         }
     }
 
@@ -41,6 +43,13 @@ class WorkplaceSelectionViewModel(
         viewModelScope.launch {
             interactor.deleteRegionData()
             updateWorkplaceLocationState(getLocation())
+        }
+    }
+
+    fun resetAllChanges() {
+        viewModelScope.launch {
+            interactor.setRegion(acceptedData.region)
+            interactor.setCountry(acceptedData.country)
         }
     }
 
