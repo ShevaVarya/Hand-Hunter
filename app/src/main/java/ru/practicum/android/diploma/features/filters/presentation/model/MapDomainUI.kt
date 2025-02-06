@@ -67,7 +67,7 @@ fun FilterMainData.toUI(): FilterUI {
         country = country.toUI().name,
         region = region.toUI().name,
         industry = industry.toUI().name,
-        salary = salary.toIntOrNull(),
+        salary = salary,
         onlyWithSalary = isNeedToHideVacancyWithoutSalary,
     )
 }

@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.features.common.domain.CustomException
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.presentation.model.state.IndustriesState
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
 import ru.practicum.android.diploma.features.filters.presentation.model.toDomain
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
+import kotlin.coroutines.cancellation.CancellationException
 
 class SpecializationSelectionViewModel(
     private val specializationInteractor: SpecializationInteractor
@@ -34,7 +36,7 @@ class SpecializationSelectionViewModel(
                     fullIndustriesList = list.map { it.toUI() }
                     industriesState.value = IndustriesState.Content(fullIndustriesList)
                 }
-                .onFailure { industriesState.value = IndustriesState.Error }
+                .onFailure { handleError(it) }
         }
     }
 
@@ -52,6 +54,17 @@ class SpecializationSelectionViewModel(
         }
 
         industriesState.value = IndustriesState.Content(filteredList)
+    }
+
+    private fun handleError(error: Throwable) {
+        when (error) {
+            is CustomException.RequestError, CustomException.NetworkError, CustomException.ServerError -> {
+                industriesState.value = IndustriesState.Error
+            }
+
+            is CancellationException -> throw error
+            else -> Unit
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
@@ -17,19 +18,23 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentWorkplaceSelectionBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.filters.presentation.ui.location.LocationSelectionFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
+import ru.practicum.android.diploma.features.filters.presentation.ui.location.LocationSelectionFragment
 
 class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBinding>() {
 
     private val viewModel by viewModel<WorkplaceSelectionViewModel>()
-    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentWorkplaceSelectionBinding {
+    override fun createViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWorkplaceSelectionBinding {
         return FragmentWorkplaceSelectionBinding.inflate(layoutInflater)
     }
 
     override fun initUi() {
         viewBinding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
         }
 
         viewBinding.chooseButton.setOnClickListener {
@@ -61,6 +66,10 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             false
         )
         viewModel.isWorkPlaceShowNeeded()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
+        }
     }
 
     override fun observeData() {

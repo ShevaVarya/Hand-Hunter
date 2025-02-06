@@ -17,14 +17,27 @@ class LocationInteractorImpl(
 
     override suspend fun getAllAreasList(params: Map<String, String>): Result<List<Region>> {
         return locationRepository.getAllAreasList(params).map { list ->
-            getSortedFilteredRegionsList(list, mutableListOf())
+            getSortedFilteredRegionsList(
+                list.filter { it.id != OTHER_COUNTRIES_ID },
+                mutableListOf()
+            )
         }
     }
 
-    override suspend fun getAllAreasByIdList(countryId: String, params: Map<String, String>): Result<List<Region>> {
+    override suspend fun getAllAreasByIdList(
+        countryId: String,
+        params: Map<String, String>
+    ): Result<List<Region>> {
         return locationRepository.getAllAreasByIdList(countryId, params).map { list ->
-            getSortedFilteredRegionsList(list, mutableListOf())
+            getSortedFilteredRegionsList(
+                list,
+                mutableListOf()
+            )
         }
+    }
+
+    override suspend fun getOriginalAreasList(params: Map<String, String>): Result<List<Region>> {
+        return locationRepository.getAllAreasList(params)
     }
 
     override fun setCountry(country: Country) {
@@ -39,7 +52,14 @@ class LocationInteractorImpl(
         return filterRepository.getCountryId()
     }
 
-    private fun getSortedFilteredRegionsList(list: List<Region>, newList: MutableList<Region>): List<Region> {
+    override fun deleteRegionWhenChangeCountry() {
+        filterRepository.deleteRegionData()
+    }
+
+    private fun getSortedFilteredRegionsList(
+        list: List<Region>,
+        newList: MutableList<Region>
+    ): List<Region> {
         list.forEach {
             if (it.areas.isEmpty()) {
                 newList.add(it)
@@ -48,5 +68,9 @@ class LocationInteractorImpl(
             }
         }
         return newList.sortedBy { it.name }
+    }
+
+    companion object {
+        private const val OTHER_COUNTRIES_ID = "1001"
     }
 }

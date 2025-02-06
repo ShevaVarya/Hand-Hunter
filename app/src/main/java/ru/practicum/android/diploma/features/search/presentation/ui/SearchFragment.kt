@@ -29,7 +29,6 @@ import ru.practicum.android.diploma.features.search.presentation.model.SearchSta
 import ru.practicum.android.diploma.features.search.presentation.model.VacanciesSearchUI
 import ru.practicum.android.diploma.features.search.presentation.viewmodel.SearchViewModel
 import ru.practicum.android.diploma.features.vacancy.presentation.ui.VacancyInfoFragment
-import ru.practicum.android.diploma.utils.collectWithLifecycle
 import ru.practicum.android.diploma.utils.debounce
 
 @Suppress("LargeClass")
@@ -51,6 +50,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun initUi() {
+        viewModel.getFilters()
         initSearchDebounce()
         initClickDebounce()
         initAdapters()
@@ -101,11 +101,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.isSearchWithFilters().collectWithLifecycle(this) {
-            if (it) {
-                viewBinding.filter.setImageResource(R.drawable.filter_on_24px)
+        viewModel.isSearchWithFilters()
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .distinctUntilChanged()
+            .onEach { hasFilters ->
+                switchFilterIcon(hasFilters)
+
             }
-        }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun showToast(message: String) {
@@ -272,6 +275,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 )
             }
             searchTextInput.endIconDrawable = image
+        }
+    }
+
+    private fun switchFilterIcon(hasFilters: Boolean) {
+        with(viewBinding) {
+            val image = if (hasFilters) {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.filter_on_24px
+                )
+            } else {
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.filter_off_24px
+                )
+            }
+            filter.setImageDrawable(image)
         }
     }
 
