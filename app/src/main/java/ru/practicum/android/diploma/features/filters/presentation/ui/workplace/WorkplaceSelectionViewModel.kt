@@ -7,19 +7,19 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.workplace.SelectWorkplaceInteractor
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 
 class WorkplaceSelectionViewModel(
     private val interactor: SelectWorkplaceInteractor,
 ) : ViewModel() {
-    private val acceptedData: FullLocationData = interactor.getFullLocationData()
+    private val acceptedData: FullLocationData? = interactor.getFullLocationData()
 
     private val workplaceLocationState = MutableStateFlow<WorkplaceLocationState>(WorkplaceLocationState.Init)
     fun getWorkplaceLocationState() = workplaceLocationState.asStateFlow()
 
     fun isWorkPlaceShowNeeded() {
-        getLocation().takeIf { it.country.isNotBlank() || it.city.isNotBlank() }?.let {
+        getLocation().takeIf { it.country.isNullOrBlank().not() || it.city.isNullOrBlank().not() }?.let {
             updateWorkplaceLocationState(it)
         }
     }
@@ -27,8 +27,8 @@ class WorkplaceSelectionViewModel(
     fun getLocation(): WorkplaceLocationUI {
         val locationData = interactor.getFullLocationData()
         return WorkplaceLocationUI(
-            country = locationData.country.name,
-            city = locationData.region.name
+            country = locationData?.country?.name,
+            city = locationData?.region?.name
         )
     }
 
@@ -48,8 +48,19 @@ class WorkplaceSelectionViewModel(
 
     fun resetAllChanges() {
         viewModelScope.launch {
-            interactor.setRegion(acceptedData.region)
-            interactor.setCountry(acceptedData.country)
+            acceptedData?.let {
+                if (it.region != null) {
+                    interactor.setRegion(it.region)
+                } else {
+                    interactor.deleteRegionData()
+                }
+
+                if (it.country != null) {
+                    interactor.setCountry(it.country)
+                } else {
+                    interactor.deleteCountryData()
+                }
+            }
         }
     }
 

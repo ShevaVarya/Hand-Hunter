@@ -50,7 +50,7 @@ class SpecializationSelectionViewModel(
         val filteredList = if (text.isBlank()) {
             fullIndustriesList
         } else {
-            fullIndustriesList.filter { it.name.contains(text, ignoreCase = true) }
+            fullIndustriesList.filter { it.name!!.contains(text, ignoreCase = true) }
         }
 
         industriesState.value = IndustriesState.Content(filteredList)

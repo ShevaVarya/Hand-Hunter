@@ -117,10 +117,10 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             countryTextInput.isEndIconVisible = true
             regionTextInput.isEndIconVisible = true
 
-            switchForwardClearIcon(viewBinding.countryTextInput, country.isEmpty())
-            switchForwardClearIcon(viewBinding.regionTextInput, city.isEmpty())
+            switchForwardClearIcon(viewBinding.countryTextInput, country.isNullOrEmpty())
+            switchForwardClearIcon(viewBinding.regionTextInput, city.isNullOrEmpty())
 
-            chooseButton.isVisible = country.isNotEmpty() || city.isNotEmpty()
+            chooseButton.isVisible = country.isNullOrEmpty().not() || city.isNullOrEmpty().not()
         }
     }
 

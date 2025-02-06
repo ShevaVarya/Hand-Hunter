@@ -33,15 +33,15 @@ class FilterRepositoryImpl(
         filterStorage.setIsNeedToHideVacancyWithoutSalary(value)
     }
 
-    override fun getFilterMainData(): FilterMainData {
-        return filterStorage.getFilterMainData().toDomain()
+    override fun getFilterMainData(): FilterMainData? {
+        return filterStorage.getFilterMainData()?.toDomain()
     }
 
-    override fun getFullLocationData(): FullLocationData {
-        return filterStorage.getFullLocationData().toDomain()
+    override fun getFullLocationData(): FullLocationData? {
+        return filterStorage.getFullLocationData()?.toDomain()
     }
 
-    override fun getCountryId(): String {
+    override fun getCountryId(): String? {
         return filterStorage.getCountryId()
     }
 
