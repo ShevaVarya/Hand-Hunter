@@ -17,6 +17,7 @@ class SearchFilterViewModel(
     val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
 
     var currentSearchFilterUI: FilterUI? = FilterUI()
+        private set
     private var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: String? = null
         private set
@@ -36,7 +37,7 @@ class SearchFilterViewModel(
 
     fun updateFilter() {
         viewModelScope.launch {
-            currentSearchFilterUI = stateFlowFilterUI.value
+            currentSearchFilterUI = _stateFlowFilterUI.value
         }
     }
 
