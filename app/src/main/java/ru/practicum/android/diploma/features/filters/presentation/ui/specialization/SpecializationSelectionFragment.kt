@@ -55,11 +55,14 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         specializationAdapter = null
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter(
             onItemClick = { industryUI, position ->
                 viewModel.selectedIndustry.value = industryUI
                 specializationAdapter?.updateSelectedItemPosition(position)
+                hideKeyBoard()
+                viewBinding.specializationEditText.clearFocus()
             },
             onSelectionChanged = { isSelected ->
                 updateChooseButtonVisibility(isSelected)
@@ -67,6 +70,12 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         )
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
         viewBinding.specializationRecyclerView.itemAnimator = null
+
+        viewBinding.specializationRecyclerView.setOnTouchListener { _, _ ->
+            hideKeyBoard()
+            viewBinding.specializationEditText.clearFocus()
+            false
+        }
     }
 
     private fun initSearchDebounce() {
