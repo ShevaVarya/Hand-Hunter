@@ -36,9 +36,9 @@ class SearchFilterViewModel(
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
         latestSearchFilterUI = latestSearchFilterUI.copy(onlyWithSalary = onlyWithSalary)
         _stateFlowFilterUI.value = SearchFilterState.Content(
-                latestSearchFilterUI,
-                isVisibleAcceptButton()
-            )
+            latestSearchFilterUI,
+            isVisibleAcceptButton()
+        )
         filterInteractor.saveWithoutSalary(check = onlyWithSalary)
     }
 
