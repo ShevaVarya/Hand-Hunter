@@ -48,7 +48,7 @@ class LocationInteractorImpl(
         filterRepository.setRegion(region)
     }
 
-    override fun getCountryId(): String {
+    override fun getCountryId(): String? {
         return filterRepository.getCountryId()
     }
 

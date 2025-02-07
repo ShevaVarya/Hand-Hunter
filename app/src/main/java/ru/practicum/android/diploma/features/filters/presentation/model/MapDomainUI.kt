@@ -54,19 +54,11 @@ fun Region.toUI(): RegionUI {
     )
 }
 
-fun FilterRegion.toUI(): RegionUI {
-    return RegionUI(
-        id = id,
-        name = name,
-        parentId = parentId
-    )
-}
-
 fun FilterMainData.toUI(): FilterUI {
     return FilterUI(
-        country = country.toUI().name,
-        region = region.toUI().name,
-        industry = industry.toUI().name,
+        country = country?.name,
+        region = region?.name,
+        industry = industry?.name,
         salary = salary,
         onlyWithSalary = isNeedToHideVacancyWithoutSalary,
     )

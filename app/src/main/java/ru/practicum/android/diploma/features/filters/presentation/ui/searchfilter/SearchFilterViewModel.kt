@@ -19,15 +19,7 @@ class SearchFilterViewModel(
         private set
 
     fun getData() {
-        val loadedData = filterInteractor.loadFilter().toUI()
-
-        latestSearchFilterUI = FilterUI(
-            country = loadedData.country?.let { it.ifEmpty { null } },
-            region = loadedData.region?.let { it.ifEmpty { null } },
-            industry = loadedData.industry?.let { it.ifEmpty { null } },
-            salary = loadedData.salary?.let { it.ifEmpty { null } },
-            onlyWithSalary = loadedData.onlyWithSalary
-        )
+        latestSearchFilterUI = filterInteractor.loadFilter()?.toUI() ?: FilterUI()
         _stateFlowFilterUI.value = latestSearchFilterUI
     }
 

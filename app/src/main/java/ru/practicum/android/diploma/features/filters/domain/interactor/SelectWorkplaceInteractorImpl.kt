@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.features.filters.domain.model.FullLocationDa
 class SelectWorkplaceInteractorImpl(
     private val filterRepository: FilterRepository
 ) : SelectWorkplaceInteractor {
-    override fun getFullLocationData(): FullLocationData {
+    override fun getFullLocationData(): FullLocationData? {
         return filterRepository.getFullLocationData()
     }
 
