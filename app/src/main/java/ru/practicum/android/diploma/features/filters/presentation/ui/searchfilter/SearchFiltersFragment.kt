@@ -22,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
+import ru.practicum.android.diploma.features.filters.presentation.model.state.SearchFilterState
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
@@ -51,11 +52,11 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .onEach { filterUI ->
             processFilterResult(filterUI)
                 setupClearButton(
-                    filterUI?.country,
+                    filterUI,
                     viewBinding.placeOfWorkContainer
                 ) { viewModel.deletePlaceOfWork() }
                 setupClearButton(
-                    filterUI?.industry,
+                    filterUI,
                     viewBinding.industryContainer
                 ) { viewModel.deleteIndustry() }
             }
@@ -155,25 +156,51 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         }
     }
 
-    private fun processFilterResult(filter: FilterUI?) {
+//    private fun processFilterResult(filter: SearchFilterState) {
+//        with(viewBinding) {
+//            setButtonVisibility()
+//            if (filter.filterUI.isDefault == false) {
+//                processArea(filter.filterUI.country, filter.filterUI.region)
+//                industryEditText.setText(filter.filterUI.industry ?: "")
+//                withoutSalary.isChecked = filter.filterUI.onlyWithSalary
+//                val newSalary = filter.filterUI.salary.orEmpty()
+//                if (newSalary != viewModel.oldSalary) {
+//                    salaryEditText.setText(newSalary)
+//                }
+//            } else {
+//                placeOfWorkEditText.text = null
+//                industryEditText.text = null
+//                withoutSalary.isChecked = false
+//                salaryEditText.text = null
+//            }
+//        }
+//        setCheckedIcon(filter.filterUI.onlyWithSalary)
+//    }
+
+    private fun processFilterResult(state: SearchFilterState) {
         with(viewBinding) {
-            setButtonVisibility(filter)
-            if (filter?.isDefault == false) {
-                processArea(filter.country, filter.region)
-                industryEditText.setText(filter.industry ?: "")
-                withoutSalary.isChecked = filter.onlyWithSalary
-                val newSalary = filter.salary.orEmpty()
-                if (newSalary != viewModel.oldSalary) {
-                    salaryEditText.setText(newSalary)
+            when(state) {
+                is SearchFilterState.Filter -> {
+                    setButtonVisibility(state.filterUI)
+                    if (state.filterUI.isDefault == false) {
+                        processArea(state.filterUI.country, state.filterUI.region)
+                        industryEditText.setText(state.filterUI.industry ?: "")
+                        withoutSalary.isChecked = state.filterUI.onlyWithSalary
+                        val newSalary = state.filterUI.salary.orEmpty()
+                        if (newSalary != viewModel.oldSalary) {
+                            salaryEditText.setText(newSalary)
+                        }
+                    } else {
+                        placeOfWorkEditText.text = null
+                        industryEditText.text = null
+                        withoutSalary.isChecked = false
+                        salaryEditText.text = null
+                    }
+                    setCheckedIcon(state.filterUI.onlyWithSalary)
                 }
-            } else {
-                placeOfWorkEditText.text = null
-                industryEditText.text = null
-                withoutSalary.isChecked = false
-                salaryEditText.text = null
+                else -> {}
             }
         }
-        setCheckedIcon(filter?.onlyWithSalary ?: false)
     }
 
     private fun processArea(country: String?, region: String?) {
@@ -186,7 +213,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     private fun setButtonVisibility(filterUI: FilterUI?) {
         with(viewBinding) {
             resetButton.isVisible = filterUI?.isDefault != true
-            acceptButton.isVisible = viewModel.isVisibleAcceptButton(filterUI)
+            acceptButton.isVisible = SearchFilterState.isVisibleAcceptButton()
         }
     }
 

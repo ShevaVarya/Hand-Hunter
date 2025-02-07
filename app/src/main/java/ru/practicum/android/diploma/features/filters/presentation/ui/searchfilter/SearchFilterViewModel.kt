@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInt
 import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
+import ru.practicum.android.diploma.features.filters.presentation.model.state.SearchFilterState
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 
@@ -18,10 +19,10 @@ class SearchFilterViewModel(
     private val locationInteractor: LocationInteractor,
 ) : ViewModel() {
 
-    private val _stateFlowFilterUI = MutableStateFlow<FilterUI?>(FilterUI())
-    val stateFlowFilterUI: StateFlow<FilterUI?> = _stateFlowFilterUI
+    private val _stateFlowFilterUI = MutableStateFlow<SearchFilterState>(SearchFilterState.Init)
+    val stateFlowFilterUI: StateFlow<SearchFilterState> = _stateFlowFilterUI
 
-    val currentSearchFilterUI: FilterMainData = filterInteractor.loadFilter()
+    private val currentSearchFilterUI: FilterMainData = filterInteractor.loadFilter()
     private var latestSearchFilterUI: FilterUI? = FilterUI()
     var oldSalary: String? = null
         private set
@@ -36,18 +37,23 @@ class SearchFilterViewModel(
             salary = loadedData.salary?.let { it.ifEmpty { null } },
             onlyWithSalary = loadedData.onlyWithSalary
         )
-        _stateFlowFilterUI.value = latestSearchFilterUI
+        _stateFlowFilterUI.value = SearchFilterState.Filter()
     }
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(onlyWithSalary = onlyWithSalary)
+//        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(onlyWithSalary = onlyWithSalary)
+        _stateFlowFilterUI.value = SearchFilterState.Filter(latestSearchFilterUI
+            ?.copy(onlyWithSalary = onlyWithSalary) ?: FilterUI())
         filterInteractor.saveWithoutSalary(check = onlyWithSalary)
     }
 
     private fun setSalary(salary: String?) {
         if (!salary.isNullOrBlank()) {
             filterInteractor.saveSalary(salary = salary)
-            _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = salary)
+//            _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = salary)
+            _stateFlowFilterUI.value = SearchFilterState.Filter(latestSearchFilterUI
+                ?.copy(salary = salary) ?: FilterUI()
+            )
         }
     }
 
@@ -61,32 +67,32 @@ class SearchFilterViewModel(
         }
     }
 
-    fun isVisibleAcceptButton(filterUI: FilterUI?): Boolean {
-        val changeFilterUI = FilterUI(
-            country = currentSearchFilterUI.toUI().country?.let { it.ifEmpty { null } },
-            region = currentSearchFilterUI.toUI().region?.let { it.ifEmpty { null } },
-            industry = currentSearchFilterUI.toUI().industry?.let { it.ifEmpty { null } },
-            salary = currentSearchFilterUI.toUI().salary?.let { it.ifEmpty { null } },
-            onlyWithSalary = currentSearchFilterUI.toUI().onlyWithSalary
-        )
-        return filterUI != changeFilterUI
+    fun isVisibleAcceptButton(filterUI: FilterUI?) {
+        val changeFilterUI = SearchFilterState.Filter(currentSearchFilterUI.toUI())
+        SearchFilterState.isVisibleAcceptButton(changeFilterUI.filterUI != filterUI)
     }
 
     fun deletePlaceOfWork() {
         filterInteractor.deleteCountryData()
         filterInteractor.deleteRegionData()
-        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(country = null, region = null)
+//        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(country = null, region = null)
+        _stateFlowFilterUI.value = SearchFilterState.Filter(latestSearchFilterUI
+            ?.copy(country = null, region = null) ?: FilterUI())
     }
 
     fun deleteIndustry() {
         filterInteractor.deleteIndustry()
-        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(industry = null)
+//        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(industry = null)
+        _stateFlowFilterUI.value = SearchFilterState.Filter(latestSearchFilterUI
+            ?.copy(industry = null) ?: FilterUI())
     }
 
     fun deleteSalary() {
         filterInteractor.deleteSalary()
-        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = null)
-
+//        _stateFlowFilterUI.value = _stateFlowFilterUI.value?.copy(salary = null)
+        _stateFlowFilterUI.value = SearchFilterState.Filter(latestSearchFilterUI
+            ?.copy(salary = null) ?: FilterUI()
+        )
     }
 
     fun deleteShowWithoutSalary() {
@@ -95,7 +101,7 @@ class SearchFilterViewModel(
 
     fun clearFilter() {
         filterInteractor.deleteFilter()
-        _stateFlowFilterUI.value = FilterUI()
+        _stateFlowFilterUI.value = SearchFilterState.Filter(FilterUI())
     }
 
     fun salaryEnterTextChanged(text: CharSequence?) {
