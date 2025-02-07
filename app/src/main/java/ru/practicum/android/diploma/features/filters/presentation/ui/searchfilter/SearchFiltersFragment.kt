@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -79,6 +80,11 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 findNavController().navigateUp()
             }
 
+            requireActivity().onBackPressedDispatcher.addCallback(this@SearchFiltersFragment) {
+                viewModel.resetAllChanges()
+                findNavController().popBackStack()
+            }
+
             resetButton.setOnClickListener {
                 viewModel.clearFilter()
             }
@@ -94,6 +100,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
             withoutSalary.setOnClickListener {
                 viewModel.setOnlyWithSalary(withoutSalary.isChecked)
+//                setCheckedIcon(withoutSalary.isChecked)
             }
 
             @Suppress("LabeledExpression")
@@ -177,14 +184,14 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 //        setCheckedIcon(filter.filterUI.onlyWithSalary)
 //    }
 
-    private fun processFilterResult(state: SearchFilterState) {
+    private fun processFilterResult(state: SearchFilterState.Content) {
         with(viewBinding) {
-            setButtonVisibility(filter)
-            if (filter?.isDefault == false) {
-                processArea(filter.country, filter.region)
-                industryEditText.setText(filter.industry ?: "")
-                withoutSalary.isChecked = filter.onlyWithSalary
-                val newSalary = filter.salary
+            setButtonVisibility(state.isButtonsVisible)
+            if (state.data?.isDefault == false) {
+                processArea(state.data.country, state.data.region)
+                industryEditText.setText(state.data.industry ?: "")
+                withoutSalary.isChecked = state.data.onlyWithSalary
+                val newSalary = state.data.salary
                 if (newSalary != viewModel.oldSalary) {
                     salaryEditText.setText(newSalary)
                 }
@@ -193,28 +200,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 industryEditText.text = null
                 withoutSalary.isChecked = false
                 salaryEditText.text = null
-            when(state) {
-                is SearchFilterState.Filter -> {
-                    setButtonVisibility(state.filterUI)
-                    if (state.filterUI.isDefault == false) {
-                        processArea(state.filterUI.country, state.filterUI.region)
-                        industryEditText.setText(state.filterUI.industry ?: "")
-                        withoutSalary.isChecked = state.filterUI.onlyWithSalary
-                        val newSalary = state.filterUI.salary.orEmpty()
-                        if (newSalary != viewModel.oldSalary) {
-                            salaryEditText.setText(newSalary)
-                        }
-                    } else {
-                        placeOfWorkEditText.text = null
-                        industryEditText.text = null
-                        withoutSalary.isChecked = false
-                        salaryEditText.text = null
-                    }
-                    setCheckedIcon(state.filterUI.onlyWithSalary)
-                }
-                else -> {}
             }
         }
+        setCheckedIcon(state.data?.onlyWithSalary ?: false)
     }
 
     private fun processArea(country: String?, region: String?) {
@@ -224,10 +212,10 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         viewBinding.placeOfWorkEditText.setText(result)
     }
 
-    private fun setButtonVisibility(filterUI: FilterUI?) {
+    private fun setButtonVisibility(isVisible: Boolean) {
         with(viewBinding) {
-            resetButton.isVisible = filterUI?.isDefault != true
-            acceptButton.isVisible = SearchFilterState.isVisibleAcceptButton()
+            resetButton.isVisible = isVisible
+            acceptButton.isVisible = isVisible
         }
     }
 
