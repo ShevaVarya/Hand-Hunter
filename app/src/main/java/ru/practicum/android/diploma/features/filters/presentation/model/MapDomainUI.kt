@@ -55,19 +55,19 @@ fun Region.toUI(): RegionUI {
 }
 
 fun FilterMainData.toUI(): FilterUI {
-    var placeOfWork: String? = null
-    country?.let {
-        placeOfWork = country.name
-        if (region != null) placeOfWork += ", ${region.name}"
-    }
-    val result = FilterUI(
+    return FilterUI(
         country = country?.name,
         region = region?.name,
         industry = industry?.name,
         salary = salary,
         onlyWithSalary = isNeedToHideVacancyWithoutSalary,
     )
-    result.placeOfWork = placeOfWork
-    return result
 }
 
+fun getPlaceOfWork(country: String?, region: String?): String? {
+    return country?.let {
+        var placeOfWork = country
+        if (region != null) placeOfWork += ", $region"
+        placeOfWork
+    }
+}

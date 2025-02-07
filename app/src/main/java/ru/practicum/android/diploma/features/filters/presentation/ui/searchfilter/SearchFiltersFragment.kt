@@ -191,14 +191,15 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private fun setCheckedIcon(isChecked: Boolean) {
         with(viewBinding) {
-            if (isChecked) {
-                withoutSalary.icon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
-            } else {
-                withoutSalary.icon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.check_box_off_24px)
-                viewModel.deleteShowWithoutSalary()
-            }
+            withoutSalary.icon =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    if (isChecked) {
+                        R.drawable.check_box_on_24px
+                    } else {
+                        R.drawable.check_box_off_24px
+                    }
+                )
         }
     }
 }

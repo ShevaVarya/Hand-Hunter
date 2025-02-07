@@ -35,8 +35,7 @@ class SearchFilterViewModel(
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
         latestSearchFilterUI = latestSearchFilterUI.copy(onlyWithSalary = onlyWithSalary)
-        _stateFlowFilterUI.value =
-            SearchFilterState.Content(
+        _stateFlowFilterUI.value = SearchFilterState.Content(
                 latestSearchFilterUI,
                 isVisibleAcceptButton()
             )
@@ -99,12 +98,6 @@ class SearchFilterViewModel(
     fun deleteSalary() {
         filterInteractor.deleteSalary()
         latestSearchFilterUI = latestSearchFilterUI.copy(salary = null)
-        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
-    }
-
-    fun deleteShowWithoutSalary() {
-        filterInteractor.deleteShowWithoutSalaryFlag()
-        latestSearchFilterUI = latestSearchFilterUI.copy(onlyWithSalary = false)
         _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
