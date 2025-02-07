@@ -8,7 +8,7 @@ package ru.practicum.android.diploma.features.filters.presentation.model.ui
  * @param onlyWithSalary  Хранит флаг, указывающий на необходимость игнорирования вакансий без указания зарплаты
  * @property isDefault  Хранит флаг, указывающий на то, являются ли значения фильтра значениями по умолчанию
  */
-
+@Suppress("DataClassShouldBeImmutable")
 data class FilterUI(
     val country: String? = null,
     val region: String? = null,

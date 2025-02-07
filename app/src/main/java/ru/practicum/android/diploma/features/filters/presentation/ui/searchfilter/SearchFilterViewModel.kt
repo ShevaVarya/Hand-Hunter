@@ -83,8 +83,6 @@ class SearchFilterViewModel(
         return currentSearchFilter.toUI() != latestSearchFilterUI
     }
 
-
-
     fun deletePlaceOfWork() {
         filterInteractor.deleteCountryData()
         filterInteractor.deleteRegionData()
