@@ -24,7 +24,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.state.SearchFilterState
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 

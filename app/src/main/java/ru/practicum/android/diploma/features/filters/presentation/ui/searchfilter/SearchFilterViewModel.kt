@@ -53,7 +53,7 @@ class SearchFilterViewModel(
 
     fun resetAllChanges() {
         viewModelScope.launch {
-            currentSearchFilter?.let {
+            currentSearchFilter.let {
                 if (it.country == null && it.region == null) {
                     deletePlaceOfWork()
                 } else {
