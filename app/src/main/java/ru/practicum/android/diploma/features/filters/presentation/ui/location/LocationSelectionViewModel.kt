@@ -125,6 +125,7 @@ class LocationSelectionViewModel(
         return region.areas?.any { isParentFind(it, areaId) } ?: false
     }
 
+    @Suppress("ReturnCount")
     private fun findRegionById(areas: List<Region>, areaId: String): Region? {
         areas.forEach { area ->
             if (area.id == areaId) return area
