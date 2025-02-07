@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.features.filters.presentation.ui.specialization
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,29 +17,32 @@ class SpecializationSelectionViewModel(
     private val specializationInteractor: SpecializationInteractor
 ) : ViewModel() {
 
-    init {
-        getIndustries()
-    }
+    private val _savedSelectedIndustry = MutableStateFlow<IndustryUI?>(null)
+    val savedSelectedIndustry = _savedSelectedIndustry.asStateFlow()
 
     private var fullIndustriesList: List<IndustryUI> = emptyList()
 
-    val selectedIndustry = MutableLiveData<IndustryUI?>(null)
+    private val _industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
+    val industriesState = _industriesState.asStateFlow()
 
-    private val industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
-    fun getIndustriesState() = industriesState.asStateFlow()
+    fun updateSelectedIndustry(industry: IndustryUI) {
+        _savedSelectedIndustry.value = industry
+    }
 
-    private fun getIndustries() {
+    fun getIndustries() {
         viewModelScope.launch {
             specializationInteractor.getIndustriesList(mapOf())
                 .onSuccess { list ->
                     fullIndustriesList = list.map { it.toUI() }
-                    industriesState.value = IndustriesState.Content(fullIndustriesList)
+
+                    _industriesState.value = IndustriesState.Content(fullIndustriesList)
                 }
                 .onFailure { handleError(it) }
         }
     }
 
     fun selectAndSaveIndustry(industry: IndustryUI) {
+        _savedSelectedIndustry.value = industry
         viewModelScope.launch {
             specializationInteractor.setIndustry(industry.toDomain())
         }
@@ -55,13 +57,13 @@ class SpecializationSelectionViewModel(
             }
         }
 
-        industriesState.value = IndustriesState.Content(filteredList)
+        _industriesState.value = IndustriesState.Content(filteredList)
     }
 
     private fun handleError(error: Throwable) {
         when (error) {
             is CustomException.RequestError, CustomException.NetworkError, CustomException.ServerError -> {
-                industriesState.value = IndustriesState.Error
+                _industriesState.value = IndustriesState.Error
             }
 
             is CancellationException -> throw error
@@ -69,4 +71,3 @@ class SpecializationSelectionViewModel(
         }
     }
 }
-
