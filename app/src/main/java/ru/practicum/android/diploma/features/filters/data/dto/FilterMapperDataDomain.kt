@@ -13,9 +13,9 @@ import ru.practicum.android.diploma.features.filters.domain.model.Region
 // методы из SharedPref в domain
 fun FilterMainDataEntity.toDomain(): FilterMainData {
     return FilterMainData(
-        country = country.toDomain(),
-        region = region.toDomain(),
-        industry = industry.toDomain(),
+        country = country?.toDomain(),
+        region = region?.toDomain(),
+        industry = industry?.toDomain(),
         salary = salary,
         isNeedToHideVacancyWithoutSalary = isNeedToHideVacancyWithoutSalary
     )
@@ -23,8 +23,8 @@ fun FilterMainDataEntity.toDomain(): FilterMainData {
 
 fun FullLocationDataEntity.toDomain(): FullLocationData {
     return FullLocationData(
-        country = country.toDomain(),
-        region = region.toDomain()
+        country = country?.toDomain(),
+        region = region?.toDomain()
     )
 }
 

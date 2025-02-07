@@ -50,7 +50,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .distinctUntilChanged()
             .onEach { filterUI ->
-            processFilterResult(filterUI)
+                processFilterResult(filterUI)
                 setupClearButton(
                     filterUI,
                     viewBinding.placeOfWorkContainer
@@ -179,6 +179,20 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private fun processFilterResult(state: SearchFilterState) {
         with(viewBinding) {
+            setButtonVisibility(filter)
+            if (filter?.isDefault == false) {
+                processArea(filter.country, filter.region)
+                industryEditText.setText(filter.industry ?: "")
+                withoutSalary.isChecked = filter.onlyWithSalary
+                val newSalary = filter.salary
+                if (newSalary != viewModel.oldSalary) {
+                    salaryEditText.setText(newSalary)
+                }
+            } else {
+                placeOfWorkEditText.text = null
+                industryEditText.text = null
+                withoutSalary.isChecked = false
+                salaryEditText.text = null
             when(state) {
                 is SearchFilterState.Filter -> {
                     setButtonVisibility(state.filterUI)

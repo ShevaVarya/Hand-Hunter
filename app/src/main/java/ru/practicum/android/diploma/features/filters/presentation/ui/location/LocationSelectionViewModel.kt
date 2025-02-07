@@ -32,7 +32,7 @@ class LocationSelectionViewModel(
 
     init {
         if (isCountry.not()) {
-            countryId = locationInteractor.getCountryId()
+            countryId = locationInteractor.getCountryId() ?: ""
         }
         getData()
     }
@@ -82,8 +82,11 @@ class LocationSelectionViewModel(
     }
 
     private fun saveRegionCountry(item: RegionUI) {
-        val country = originalAreasList.firstOrNull { isParentFind(it, item.id) }?.toUI() ?: return
-        locationInteractor.setCountry(Country(id = country.id, name = country.name))
+        item.id?.let {
+            val country = originalAreasList.firstOrNull { isParentFind(it, item.id) }?.toUI() ?: return
+            locationInteractor.setCountry(Country(id = country.id, name = country.name))
+        }
+
     }
 
     private fun isParentFind(region: Region, cityId: String): Boolean {
@@ -140,7 +143,9 @@ class LocationSelectionViewModel(
         return if (text.isEmpty()) {
             regionList
         } else {
-            regionList.filter { it.name.contains(text, ignoreCase = true) }
+            regionList.filter { item ->
+                item.name?.contains(text, ignoreCase = true) ?: false
+            }
         }
     }
 }

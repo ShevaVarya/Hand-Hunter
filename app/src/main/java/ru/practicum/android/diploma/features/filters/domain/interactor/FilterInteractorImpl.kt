@@ -15,7 +15,7 @@ class FilterInteractorImpl(
         repository.setIsNeedToHideVacancyWithoutSalary(check)
     }
 
-    override fun loadFilter(): FilterMainData {
+    override fun loadFilter(): FilterMainData? {
         return repository.getFilterMainData()
     }
 

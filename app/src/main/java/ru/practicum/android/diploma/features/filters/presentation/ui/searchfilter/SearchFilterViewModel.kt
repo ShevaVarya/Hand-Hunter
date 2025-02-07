@@ -38,6 +38,8 @@ class SearchFilterViewModel(
             onlyWithSalary = loadedData.onlyWithSalary
         )
         _stateFlowFilterUI.value = SearchFilterState.Filter()
+        latestSearchFilterUI = filterInteractor.loadFilter()?.toUI() ?: FilterUI()
+        _stateFlowFilterUI.value = latestSearchFilterUI
     }
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
