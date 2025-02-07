@@ -51,14 +51,16 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     override fun observeData() {
         lifecycleScope.launch {
-            viewModel.industriesState.collectWithLifecycle(this@SpecializationSelectionFragment) { state ->
+            viewModel.industriesState.collectWithLifecycle(this@SpecializationSelectionFragment
+            ) { state ->
                 renderState(state)
             }
         }
 
         lifecycleScope.launch {
-            viewModel.savedSelectedIndustry.collectWithLifecycle(this@SpecializationSelectionFragment) { selectedIndustry ->
-                specializationAdapter?.updateItems(
+            viewModel.savedSelectedIndustry
+                .collectWithLifecycle(this@SpecializationSelectionFragment
+                ) { selectedIndustry -> specializationAdapter?.updateItems(
                     (viewModel.industriesState.value as? IndustriesState.Content)?.industries ?: emptyList(),
                     selectedIndustry
                 )
