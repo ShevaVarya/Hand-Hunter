@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.features.filters.presentation.model.ui.Filte
 
 sealed interface SearchFilterState {
     data class Content(
-        val data: FilterUI?,
+        val data: FilterUI,
         val isButtonsVisible: Boolean = false,
     )
 }

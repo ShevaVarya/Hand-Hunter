@@ -22,22 +22,22 @@ class SearchFilterViewModel(
     private val _stateFlowFilterUI = MutableStateFlow(SearchFilterState.Content(FilterUI()))
     val stateFlowFilterUI = _stateFlowFilterUI.asStateFlow()
 
-    private val currentSearchFilter: FilterMainData? = filterInteractor.loadFilter()
-    private var latestSearchFilterUI: FilterUI? = FilterUI()
+    private var currentSearchFilter: FilterMainData = filterInteractor.loadFilter()
+    private var latestSearchFilterUI: FilterUI = FilterUI()
     var oldSalary: String? = null
         private set
 
     fun getData() {
-        latestSearchFilterUI = filterInteractor.loadFilter()?.toUI() ?: FilterUI()
+        latestSearchFilterUI = filterInteractor.loadFilter().toUI()
         val isVisible = isVisibleAcceptButton()
         _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisible)
     }
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-        latestSearchFilterUI = latestSearchFilterUI?.copy(onlyWithSalary = onlyWithSalary)
+        latestSearchFilterUI = latestSearchFilterUI.copy(onlyWithSalary = onlyWithSalary)
         _stateFlowFilterUI.value =
             SearchFilterState.Content(
-                latestSearchFilterUI ?: FilterUI(),
+                latestSearchFilterUI,
                 isVisibleAcceptButton()
             )
         filterInteractor.saveWithoutSalary(check = onlyWithSalary)
@@ -45,8 +45,8 @@ class SearchFilterViewModel(
 
     private fun setSalary(salary: String?) {
         if (!salary.isNullOrBlank()) {
-            latestSearchFilterUI = latestSearchFilterUI?.copy(salary = salary)
-            _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI ?: FilterUI())
+            latestSearchFilterUI = latestSearchFilterUI.copy(salary = salary)
+            _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
             filterInteractor.saveSalary(salary = salary)
         }
     }
@@ -80,39 +80,41 @@ class SearchFilterViewModel(
     }
 
     private fun isVisibleAcceptButton(): Boolean {
-        return currentSearchFilter?.toUI() != latestSearchFilterUI
+        return currentSearchFilter.toUI() != latestSearchFilterUI
     }
+
+
 
     fun deletePlaceOfWork() {
         filterInteractor.deleteCountryData()
         filterInteractor.deleteRegionData()
-        _stateFlowFilterUI.value = SearchFilterState.Content(
-            latestSearchFilterUI
-            ?.copy(country = null, region = null) ?: FilterUI())
+        latestSearchFilterUI = latestSearchFilterUI.copy(country = null, region = null)
+        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
     fun deleteIndustry() {
         filterInteractor.deleteIndustry()
-        _stateFlowFilterUI.value = SearchFilterState.Content(
-            latestSearchFilterUI
-            ?.copy(industry = null) ?: FilterUI())
+        latestSearchFilterUI = latestSearchFilterUI.copy(industry = null)
+        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
     fun deleteSalary() {
         filterInteractor.deleteSalary()
-        _stateFlowFilterUI.value = SearchFilterState.Content(
-            latestSearchFilterUI
-            ?.copy(salary = null) ?: FilterUI()
-        )
+        latestSearchFilterUI = latestSearchFilterUI.copy(salary = null)
+        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
     fun deleteShowWithoutSalary() {
         filterInteractor.deleteShowWithoutSalaryFlag()
+        latestSearchFilterUI = latestSearchFilterUI.copy(onlyWithSalary = false)
+        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
     fun clearFilter() {
         filterInteractor.deleteFilter()
-        _stateFlowFilterUI.value = SearchFilterState.Content(FilterUI())
+        latestSearchFilterUI = FilterUI()
+        currentSearchFilter = filterInteractor.loadFilter()
+        _stateFlowFilterUI.value = SearchFilterState.Content(FilterUI(), isVisibleAcceptButton())
     }
 
     fun salaryEnterTextChanged(text: CharSequence?) {

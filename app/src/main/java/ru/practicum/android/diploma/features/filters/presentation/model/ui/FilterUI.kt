@@ -16,6 +16,7 @@ data class FilterUI(
     val salary: String? = null,
     val onlyWithSalary: Boolean = false
 ) {
+    var placeOfWork: String? = null
     val isDefault: Boolean
         get() = country == null && region == null && industry == null && !onlyWithSalary && salary == null
 }

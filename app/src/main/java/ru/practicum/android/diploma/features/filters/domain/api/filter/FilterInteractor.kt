@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 interface FilterInteractor {
     fun saveSalary(salary: String)
     fun saveWithoutSalary(check: Boolean)
-    fun loadFilter(): FilterMainData?
+    fun loadFilter(): FilterMainData
     fun deleteFilter()
     fun deleteCountryData()
     fun deleteRegionData()
