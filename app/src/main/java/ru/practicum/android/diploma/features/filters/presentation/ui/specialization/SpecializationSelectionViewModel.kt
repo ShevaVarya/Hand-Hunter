@@ -29,6 +29,15 @@ class SpecializationSelectionViewModel(
         _savedSelectedIndustry.value = industry
     }
 
+    fun loadSavedIndustry() {
+        viewModelScope.launch {
+            val savedIndustry = specializationInteractor.getSavedIndustry()
+            if (savedIndustry != null) {
+                _savedSelectedIndustry.value = savedIndustry.toUI()
+            }
+        }
+    }
+
     fun getIndustries() {
         viewModelScope.launch {
             specializationInteractor.getIndustriesList(mapOf())

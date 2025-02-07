@@ -41,6 +41,10 @@ class FilterRepositoryImpl(
         return filterStorage.getFullLocationData()?.toDomain()
     }
 
+    override fun getSavedIndustry(): Industry? {
+        return filterStorage.getSavedIndustry()?.toDomain()
+    }
+
     override fun getCountryId(): String? {
         return filterStorage.getCountryId()
     }

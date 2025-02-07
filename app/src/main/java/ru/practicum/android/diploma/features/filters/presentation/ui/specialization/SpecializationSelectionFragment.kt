@@ -39,6 +39,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getIndustries()
+        viewModel.loadSavedIndustry()
         Log.d(TAG, "COCKTAIL: ")
     }
 
