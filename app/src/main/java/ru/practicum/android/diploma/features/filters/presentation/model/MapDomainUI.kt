@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.features.filters.presentation.model
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
-import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
@@ -17,8 +16,8 @@ fun CountryUI.toDomain(): Country {
     )
 }
 
-fun RegionUI.toDomain(): FilterRegion {
-    return FilterRegion(
+fun RegionUI.toDomain(): Region {
+    return Region(
         id = id,
         parentId = parentId,
         name = name

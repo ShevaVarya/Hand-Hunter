@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.features.filters.domain.api.workplace
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
-import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
+import ru.practicum.android.diploma.features.filters.domain.model.Region
 
 interface SelectWorkplaceInteractor {
     fun getFullLocationData(): FullLocationData?
@@ -11,5 +11,5 @@ interface SelectWorkplaceInteractor {
     fun deleteRegionData()
 
     fun setCountry(country: Country)
-    fun setRegion(region: FilterRegion)
+    fun setRegion(region: Region)
 }
