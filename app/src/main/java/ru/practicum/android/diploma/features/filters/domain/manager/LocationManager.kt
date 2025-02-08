@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.filters.domain
+package ru.practicum.android.diploma.features.filters.domain.manager
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

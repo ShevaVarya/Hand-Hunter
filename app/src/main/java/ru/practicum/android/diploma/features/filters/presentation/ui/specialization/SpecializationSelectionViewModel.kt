@@ -16,8 +16,6 @@ import kotlin.coroutines.cancellation.CancellationException
 class SpecializationSelectionViewModel(
     private val specializationInteractor: SpecializationInteractor
 ) : ViewModel() {
-    private var savedIndustry: IndustryUI? = null
-
     private val _savedSelectedIndustry = MutableStateFlow<IndustryUI?>(null)
     val savedSelectedIndustry = _savedSelectedIndustry.asStateFlow()
 
@@ -32,9 +30,8 @@ class SpecializationSelectionViewModel(
 
     fun loadSavedIndustry() {
         viewModelScope.launch {
-            savedIndustry = specializationInteractor.getSavedIndustry()?.toUI()
-            savedIndustry?.let {
-                _savedSelectedIndustry.value = savedIndustry
+            specializationInteractor.getSavedIndustry()?.toUI()?.let {
+                _savedSelectedIndustry.value = it
             }
         }
     }
@@ -51,7 +48,7 @@ class SpecializationSelectionViewModel(
         }
     }
 
-    fun selectAndSaveIndustry(industry: IndustryUI) {
+    fun acceptChanges(industry: IndustryUI) {
         _savedSelectedIndustry.value = industry
         viewModelScope.launch {
             specializationInteractor.setIndustry(industry.toDomain())
@@ -68,14 +65,6 @@ class SpecializationSelectionViewModel(
         }
 
         _industriesState.value = IndustriesState.Content(filteredList)
-    }
-
-    fun resetAllChanges() {
-        viewModelScope.launch {
-            savedIndustry?.let {
-                specializationInteractor.setIndustry(savedIndustry!!.toDomain())
-            }
-        }
     }
 
     private fun handleError(error: Throwable) {

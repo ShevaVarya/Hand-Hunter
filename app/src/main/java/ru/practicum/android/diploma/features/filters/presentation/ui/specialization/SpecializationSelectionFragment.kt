@@ -112,17 +112,12 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     private fun initListeners() {
         setupToolbar()
         onTextChanged()
-
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            viewModel.resetAllChanges()
-            findNavController().popBackStack()
-        }
     }
 
     private fun initChooseButtonListener() {
         viewBinding.chooseButton.setOnClickListener {
             viewModel.savedSelectedIndustry.value?.let { industry ->
-                viewModel.selectAndSaveIndustry(industry)
+                viewModel.acceptChanges(industry)
                 goBack()
             }
         }
@@ -130,7 +125,6 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     private fun setupToolbar() {
         viewBinding.toolbar.setOnClickListener {
-            viewModel.resetAllChanges()
             goBack()
         }
     }
