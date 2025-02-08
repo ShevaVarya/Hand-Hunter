@@ -7,4 +7,6 @@ interface SpecializationInteractor {
     suspend fun getIndustriesList(params: Map<String, String>): Result<List<Industry>>
 
     fun setIndustry(industry: Industry)
+
+    suspend fun getSavedIndustry(): Industry?
 }
