@@ -51,6 +51,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .distinctUntilChanged()
             .onEach { filterUI ->
                 processFilterResult(filterUI)
+                viewBinding.resetButton.isVisible = filterUI.data.isDefault.not()
                 setupClearButton(
                     filterUI.data.placeOfWork,
                     viewBinding.placeOfWorkContainer
@@ -184,7 +185,6 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
     private fun setButtonVisibility(isVisible: Boolean) {
         with(viewBinding) {
-            resetButton.isVisible = isVisible
             acceptButton.isVisible = isVisible
         }
     }
