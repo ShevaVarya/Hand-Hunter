@@ -5,7 +5,6 @@ import ru.practicum.android.diploma.features.common.data.network.dto.area.Countr
 import ru.practicum.android.diploma.features.common.data.network.dto.industry.IndustryEntity
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
-import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.Region
@@ -35,11 +34,11 @@ private fun FilterCountryEntity.toDomain(): Country {
     )
 }
 
-private fun FilterRegionEntity.toDomain(): FilterRegion {
-    return FilterRegion(
+private fun FilterRegionEntity.toDomain(): Region {
+    return Region(
         id = id,
         name = name,
-        parentId = parentId
+        parentId = parentId,
     )
 }
 
@@ -82,7 +81,7 @@ fun Country.toEntity(): FilterCountryEntity {
     )
 }
 
-fun FilterRegion.toEntity(): FilterRegionEntity {
+fun Region.toEntity(): FilterRegionEntity {
     return FilterRegionEntity(
         id = id,
         name = name,
