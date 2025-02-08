@@ -17,7 +17,6 @@ import androidx.core.util.TypedValueCompat.dpToPx
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.FitCenter
