@@ -15,6 +15,7 @@ interface FilterStorage {
     fun setIndustry(value: FilterIndustryEntity)
     fun setSalary(value: String)
     fun setIsNeedToHideVacancyWithoutSalary(value: Boolean)
+    fun getSavedIndustry(): FilterIndustryEntity?
 
     fun deleteFilterMainData()
     fun deleteIndustry()
@@ -83,6 +84,16 @@ class FilterStorageImpl(
             null
         } else {
             FilterMainDataEntity(country, region, industry, salary, isNeedToHideVacancyWithoutSalary)
+        }
+    }
+
+    override fun getSavedIndustry(): FilterIndustryEntity? {
+        val id = sharedPrefs.getString(INDUSTRY_ID, null)
+        val name = sharedPrefs.getString(INDUSTRY_NAME, null)
+        return if (id.isNullOrEmpty() && name.isNullOrEmpty()) {
+            null
+        } else {
+            FilterIndustryEntity(id, name)
         }
     }
 

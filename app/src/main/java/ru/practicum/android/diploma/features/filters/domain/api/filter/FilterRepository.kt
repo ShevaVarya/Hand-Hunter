@@ -16,6 +16,7 @@ interface FilterRepository {
     fun saveData(data: FilterMainData)
     fun getFilterMainData(): FilterMainData?
     fun getFullLocationData(): FullLocationData?
+    fun getSavedIndustry(): Industry?
     fun deleteFilterMainData()
     fun deleteIndustry()
     fun deleteSalary()
