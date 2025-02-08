@@ -2,12 +2,14 @@ package ru.practicum.android.diploma.features.filters.presentation.model
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
+import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.IndustryUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.RegionUI
+import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 
 fun CountryUI.toDomain(): Country {
     return Country(
@@ -63,3 +65,9 @@ fun FilterMainData.toUI(): FilterUI {
     )
 }
 
+fun FullLocationData.toUI(): WorkplaceLocationUI {
+    return WorkplaceLocationUI(
+        country = country?.name,
+        city = region?.name
+    )
+}

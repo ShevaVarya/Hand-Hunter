@@ -33,6 +33,10 @@ class FilterRepositoryImpl(
         filterStorage.setIsNeedToHideVacancyWithoutSalary(value)
     }
 
+    override fun saveData(data: FilterMainData) {
+
+    }
+
     override fun getFilterMainData(): FilterMainData? {
         return filterStorage.getFilterMainData()?.toDomain()
     }
@@ -51,6 +55,10 @@ class FilterRepositoryImpl(
 
     override fun deleteRegionData() {
         filterStorage.deleteRegionData()
+    }
+
+    override fun deleteData() {
+
     }
 
     override fun deleteFilterMainData() {

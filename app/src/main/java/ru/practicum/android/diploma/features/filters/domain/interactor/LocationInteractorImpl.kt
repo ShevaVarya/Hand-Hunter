@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.features.filters.domain.interactor
 
-import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
+import ru.practicum.android.diploma.features.filters.domain.FilterManager
+import ru.practicum.android.diploma.features.filters.domain.LocationManager
 import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.location.LocationRepository
 import ru.practicum.android.diploma.features.filters.domain.model.Country
@@ -8,7 +9,7 @@ import ru.practicum.android.diploma.features.filters.domain.model.Region
 
 class LocationInteractorImpl(
     private val locationRepository: LocationRepository,
-    private val filterRepository: FilterRepository
+    private val locationManager: LocationManager
 ) : LocationInteractor {
     override suspend fun getCountriesList(params: Map<String, String>): Result<List<Country>> {
         return locationRepository.getCountriesList(params)
@@ -30,6 +31,10 @@ class LocationInteractorImpl(
         return filterRegionsList(listWithoutOtherRegions, newList).sortedBy { it.name }
     }
 
+    override fun getCountryId(): String? {
+        return locationManager.getCountryId()
+    }
+
     private fun filterRegionsList(
         list: List<Region>,
         newList: MutableList<Region>
@@ -45,19 +50,11 @@ class LocationInteractorImpl(
     }
 
     override fun setCountry(country: Country) {
-        filterRepository.setCountry(country)
+        locationManager.keepCountry(country)
     }
 
-    override fun setRegion(region: Region) {
-        filterRepository.setRegion(region)
-    }
-
-    override fun getCountryId(): String? {
-        return filterRepository.getCountryId()
-    }
-
-    override fun deleteRegionWhenChangeCountry() {
-        filterRepository.deleteRegionData()
+    override fun setRegion(country: Country, region: Region) {
+        locationManager.keepRegion(country, region)
     }
 
     companion object {

@@ -13,6 +13,7 @@ interface FilterRepository {
     fun setIndustry(value: Industry)
     fun setSalary(value: String)
     fun setIsNeedToHideVacancyWithoutSalary(value: Boolean)
+    fun saveData(data: FilterMainData)
     fun getFilterMainData(): FilterMainData?
     fun getFullLocationData(): FullLocationData?
     fun deleteFilterMainData()
@@ -22,4 +23,5 @@ interface FilterRepository {
     fun getCountryId(): String?
     fun deleteCountryData()
     fun deleteRegionData()
+    fun deleteData()
 }
