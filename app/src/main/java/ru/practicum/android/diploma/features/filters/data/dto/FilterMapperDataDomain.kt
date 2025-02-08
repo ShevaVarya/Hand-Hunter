@@ -43,11 +43,12 @@ private fun FilterRegionEntity.toDomain(): FilterRegion {
     )
 }
 
-private fun FilterIndustryEntity.toDomain(): Industry {
-    return Industry(
-        id = id,
-        name = name
-    )
+fun FilterIndustryEntity.toDomain(): Industry? {
+    return if (id.isNullOrEmpty() && name.isNullOrEmpty()) {
+        null
+    } else {
+        Industry(id = id, name = name)
+    }
 }
 
 // методы из сети в domain
