@@ -51,7 +51,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     override fun initUi() {
         viewModel.getFilters()
-        initSearchDebounce()
+        isShouldStartSearch()
         initClickDebounce()
         initAdapters()
         initListeners()
@@ -332,9 +332,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
+    private fun isShouldStartSearch() {
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+        val isReturning = savedStateHandle?.get<Boolean>(IS_RETURNING) ?: false
+
+        if (!isReturning) {
+            initSearchDebounce()
+        } else {
+            savedStateHandle?.set(IS_RETURNING, false)
+        }
+    }
+
     private companion object {
         private const val EMPTY_TEXT = ""
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 100L
+        private const val IS_RETURNING = "isReturning"
     }
 }
