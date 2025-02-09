@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.features.filters.presentation.model
 
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
-import ru.practicum.android.diploma.features.filters.domain.model.FilterRegion
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.CountryUI
@@ -17,8 +16,8 @@ fun CountryUI.toDomain(): Country {
     )
 }
 
-fun RegionUI.toDomain(): FilterRegion {
-    return FilterRegion(
+fun RegionUI.toDomain(): Region {
+    return Region(
         id = id,
         parentId = parentId,
         name = name
@@ -54,21 +53,20 @@ fun Region.toUI(): RegionUI {
     )
 }
 
-fun FilterRegion.toUI(): RegionUI {
-    return RegionUI(
-        id = id,
-        name = name,
-        parentId = parentId
-    )
-}
-
 fun FilterMainData.toUI(): FilterUI {
     return FilterUI(
-        country = country.toUI().name,
-        region = region.toUI().name,
-        industry = industry.toUI().name,
+        country = country?.name,
+        region = region?.name,
+        industry = industry?.name,
         salary = salary,
         onlyWithSalary = isNeedToHideVacancyWithoutSalary,
     )
 }
 
+fun getPlaceOfWork(country: String?, region: String?): String? {
+    return country?.let {
+        var placeOfWork = country
+        if (region != null) placeOfWork += ", $region"
+        placeOfWork
+    }
+}

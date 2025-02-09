@@ -2,14 +2,18 @@ package ru.practicum.android.diploma.features.filters.presentation.ui.specializa
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSpecializationSelectionBinding
@@ -32,6 +36,12 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         return FragmentSpecializationSelectionBinding.inflate(inflater, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getIndustries()
+        viewModel.loadSavedIndustry()
+    }
+
     override fun initUi() {
         initAdapter()
         initSearchDebounce()
@@ -40,12 +50,23 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     }
 
     override fun observeData() {
-        viewModel.getIndustriesState().collectWithLifecycle(this) { state ->
-            renderState(state)
+        lifecycleScope.launch {
+            viewModel.industriesState.collectWithLifecycle(
+                this@SpecializationSelectionFragment
+            ) { state ->
+                renderState(state)
+            }
         }
-        viewModel.selectedIndustry.observe(viewLifecycleOwner) { industryUI ->
-            industryUI?.let {
-                updateChooseButtonVisibility(true)
+
+        lifecycleScope.launch {
+            viewModel.savedSelectedIndustry.collectWithLifecycle(
+                this@SpecializationSelectionFragment
+            ) { selectedIndustry ->
+                specializationAdapter?.updateItems(
+                    (viewModel.industriesState.value as? IndustriesState.Content)?.industries ?: emptyList(),
+                    selectedIndustry
+                )
+                updateChooseButtonVisibility(selectedIndustry != null)
             }
         }
     }
@@ -55,11 +76,14 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         specializationAdapter = null
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
         specializationAdapter = SpecializationSelectionAdapter(
             onItemClick = { industryUI, position ->
-                viewModel.selectedIndustry.value = industryUI
+                viewModel.updateSelectedIndustry(industryUI)
                 specializationAdapter?.updateSelectedItemPosition(position)
+                hideKeyBoard()
+                viewBinding.specializationEditText.clearFocus()
             },
             onSelectionChanged = { isSelected ->
                 updateChooseButtonVisibility(isSelected)
@@ -67,6 +91,12 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
         )
         viewBinding.specializationRecyclerView.adapter = specializationAdapter
         viewBinding.specializationRecyclerView.itemAnimator = null
+
+        viewBinding.specializationRecyclerView.setOnTouchListener { _, _ ->
+            hideKeyBoard()
+            viewBinding.specializationEditText.clearFocus()
+            false
+        }
     }
 
     private fun initSearchDebounce() {
@@ -82,11 +112,16 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
     private fun initListeners() {
         setupToolbar()
         onTextChanged()
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
+        }
     }
 
     private fun initChooseButtonListener() {
         viewBinding.chooseButton.setOnClickListener {
-            viewModel.selectedIndustry.value?.let { industry ->
+            viewModel.savedSelectedIndustry.value?.let { industry ->
                 viewModel.selectAndSaveIndustry(industry)
                 goBack()
             }
@@ -95,6 +130,7 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     private fun setupToolbar() {
         viewBinding.toolbar.setOnClickListener {
+            viewModel.resetAllChanges()
             goBack()
         }
     }
@@ -179,14 +215,11 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             when (state) {
                 is IndustriesState.Content -> {
                     specializationRecyclerView.isVisible = true
-                    progressBar.isVisible = false
-                    specializationAdapter?.updateItems(state.industries)
+                    specializationAdapter?.updateItems(state.industries, viewModel.savedSelectedIndustry.value)
                 }
-
                 is IndustriesState.Loading -> {
                     progressBar.isVisible = true
                 }
-
                 is IndustriesState.Error -> {
                     errorsTextView.isVisible = true
                     errorsImageView.isVisible = true

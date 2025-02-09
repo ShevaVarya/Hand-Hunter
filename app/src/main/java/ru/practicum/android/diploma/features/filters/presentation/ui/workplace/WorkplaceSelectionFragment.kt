@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
@@ -23,13 +24,17 @@ import ru.practicum.android.diploma.features.filters.presentation.ui.location.Lo
 class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBinding>() {
 
     private val viewModel by viewModel<WorkplaceSelectionViewModel>()
-    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentWorkplaceSelectionBinding {
+    override fun createViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWorkplaceSelectionBinding {
         return FragmentWorkplaceSelectionBinding.inflate(layoutInflater)
     }
 
     override fun initUi() {
         viewBinding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
         }
 
         viewBinding.chooseButton.setOnClickListener {
@@ -61,6 +66,10 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             false
         )
         viewModel.isWorkPlaceShowNeeded()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.resetAllChanges()
+            findNavController().popBackStack()
+        }
     }
 
     override fun observeData() {
@@ -108,10 +117,10 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             countryTextInput.isEndIconVisible = true
             regionTextInput.isEndIconVisible = true
 
-            switchForwardClearIcon(viewBinding.countryTextInput, country.isEmpty())
-            switchForwardClearIcon(viewBinding.regionTextInput, city.isEmpty())
+            switchForwardClearIcon(viewBinding.countryTextInput, country.isNullOrEmpty())
+            switchForwardClearIcon(viewBinding.regionTextInput, city.isNullOrEmpty())
 
-            chooseButton.isVisible = country.isNotEmpty() || city.isNotEmpty()
+            chooseButton.isVisible = country.isNullOrEmpty().not() || city.isNullOrEmpty().not()
         }
     }
 
