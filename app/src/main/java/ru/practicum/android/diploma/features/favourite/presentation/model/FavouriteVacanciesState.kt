@@ -16,5 +16,5 @@ sealed interface FavouriteVacanciesState {
 
     data object DeleteError : FavouriteVacanciesState
 
-    data object DeletedFavourites: FavouriteVacanciesState
+    data object DeletedFavourites : FavouriteVacanciesState
 }
