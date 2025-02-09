@@ -71,3 +71,11 @@ fun FullLocationData.toUI(): WorkplaceLocationUI {
         city = region?.name
     )
 }
+
+fun getPlaceOfWork(country: String?, region: String?): String? {
+    return country?.let {
+        var placeOfWork = country
+        if (region != null) placeOfWork += ", $region"
+        placeOfWork
+    }
+}

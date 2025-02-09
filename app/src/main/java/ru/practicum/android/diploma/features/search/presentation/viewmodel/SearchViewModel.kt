@@ -85,7 +85,13 @@ class SearchViewModel(
 
     fun getFilters() {
         filters = interactor.getFilters()
-        isSearchWithFilters.value = filters != null
+        isSearchWithFilters.value =
+            filters?.let { filters?.region != null ||
+                filters?.country != null ||
+                filters?.industry != null ||
+                filters?.salary != null ||
+                filters?.isNeedToHideVacancyWithoutSalary == true
+            } == true
     }
 
     private suspend fun handleSuccess(vacancies: Vacancies, isPagination: Boolean) {

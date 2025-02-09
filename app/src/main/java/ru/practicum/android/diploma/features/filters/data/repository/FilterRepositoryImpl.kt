@@ -33,6 +33,8 @@ class FilterRepositoryImpl(
         filterStorage.setIsNeedToHideVacancyWithoutSalary(value)
     }
 
+    override fun getFilterMainData(): FilterMainData {
+        return filterStorage.getFilterMainData().toDomain()
     override fun saveData(data: FilterMainData) {
 
     }
