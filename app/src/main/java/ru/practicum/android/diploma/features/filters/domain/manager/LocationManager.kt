@@ -32,9 +32,9 @@ class LocationManagerImpl(
     }
 
     override fun keepRegion(country: Country, region: Region) {
-        flow.value = (flow.value.copy(
+        flow.value = flow.value.copy(
             country = country, region = region
-        ))
+        )
     }
 
     override fun keepCountry(country: Country) {

@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.features.filters.domain.interactor
 
 import kotlinx.coroutines.flow.Flow
-import ru.practicum.android.diploma.features.filters.domain.manager.LocationManager
 import ru.practicum.android.diploma.features.filters.domain.api.workplace.SelectWorkplaceInteractor
+import ru.practicum.android.diploma.features.filters.domain.manager.LocationManager
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 
 class SelectWorkplaceInteractorImpl(
@@ -12,7 +12,7 @@ class SelectWorkplaceInteractorImpl(
         locationManager.clearManager()
     }
 
-    override fun subscribeLocationData(): Flow<FullLocationData?>{
+    override fun subscribeLocationData(): Flow<FullLocationData?> {
         return locationManager.subscribeLocationData()
     }
 

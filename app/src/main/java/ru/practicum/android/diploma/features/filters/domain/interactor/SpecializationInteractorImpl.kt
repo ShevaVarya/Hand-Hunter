@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.features.filters.domain.interactor
 
-import ru.practicum.android.diploma.features.filters.domain.manager.SpecializationManager
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationRepository
+import ru.practicum.android.diploma.features.filters.domain.manager.SpecializationManager
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 
 class SpecializationInteractorImpl(

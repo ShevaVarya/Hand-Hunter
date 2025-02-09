@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.features.filters.domain.interactor
 
-import ru.practicum.android.diploma.features.filters.domain.manager.LocationManager
 import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
 import ru.practicum.android.diploma.features.filters.domain.api.location.LocationRepository
+import ru.practicum.android.diploma.features.filters.domain.manager.LocationManager
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.Region
 

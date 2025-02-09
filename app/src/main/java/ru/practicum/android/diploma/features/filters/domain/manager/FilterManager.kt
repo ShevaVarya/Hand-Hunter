@@ -8,6 +8,7 @@ import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 import ru.practicum.android.diploma.features.filters.domain.model.Industry
 
+@Suppress("TooManyFunctions")
 interface FilterManager {
     fun subscribeData(): Flow<FilterMainData>
     fun getIndustry(): Industry?

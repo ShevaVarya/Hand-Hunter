@@ -11,8 +11,8 @@ interface SpecializationManager {
 
 class SpecializationManagerImpl(
     private val filterManager: FilterManager
-): SpecializationManager {
-    private var industry: Industry = getIndustryFromManager()  ?: Industry (
+) : SpecializationManager {
+    private var industry: Industry = getIndustryFromManager() ?: Industry(
         id = null,
         name = null
     )
@@ -30,7 +30,7 @@ class SpecializationManagerImpl(
     }
 
     override fun clearManager() {
-        industry = getIndustryFromManager() ?: Industry (
+        industry = getIndustryFromManager() ?: Industry(
             id = null,
             name = null
         )
