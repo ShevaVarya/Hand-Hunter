@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -22,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchFiltersBinding
 import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
+import ru.practicum.android.diploma.features.filters.presentation.model.state.SearchFilterState
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
@@ -50,12 +51,13 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .distinctUntilChanged()
             .onEach { filterUI ->
                 processFilterResult(filterUI)
+                viewBinding.resetButton.isVisible = filterUI.data.isDefault.not()
                 setupClearButton(
-                    filterUI?.country,
+                    filterUI.data.placeOfWork,
                     viewBinding.placeOfWorkContainer
                 ) { viewModel.deletePlaceOfWork() }
                 setupClearButton(
-                    filterUI?.industry,
+                    filterUI.data.industry,
                     viewBinding.industryContainer
                 ) { viewModel.deleteIndustry() }
             }
@@ -74,7 +76,13 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             toolbar.setNavigationOnClickListener {
+                viewModel.resetAllChanges()
                 findNavController().navigateUp()
+            }
+
+            requireActivity().onBackPressedDispatcher.addCallback(this@SearchFiltersFragment) {
+                viewModel.resetAllChanges()
+                findNavController().popBackStack()
             }
 
             resetButton.setOnClickListener {
@@ -92,6 +100,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
 
             withoutSalary.setOnClickListener {
                 viewModel.setOnlyWithSalary(withoutSalary.isChecked)
+                setCheckedIcon(withoutSalary.isChecked)
             }
 
             @Suppress("LabeledExpression")
@@ -149,19 +158,18 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
         } else {
             til.setEndIconDrawable(R.drawable.arrow_forward_24px)
-            til.isEndIconVisible = false
             til.isEndIconVisible = true
         }
     }
 
-    private fun processFilterResult(filter: FilterUI?) {
+    private fun processFilterResult(state: SearchFilterState.Content) {
         with(viewBinding) {
-            setButtonVisibility(filter)
-            if (filter?.isDefault == false) {
-                processArea(filter.country, filter.region)
-                industryEditText.setText(filter.industry ?: "")
-                withoutSalary.isChecked = filter.onlyWithSalary
-                val newSalary = filter.salary
+            setButtonVisibility(state.isButtonsVisible)
+            if (state.data.isDefault == false) {
+                viewBinding.placeOfWorkEditText.setText(state.data.placeOfWork)
+                industryEditText.setText(state.data.industry)
+                withoutSalary.isChecked = state.data.onlyWithSalary
+                val newSalary = state.data.salary
                 if (newSalary != viewModel.oldSalary) {
                     salaryEditText.setText(newSalary)
                 }
@@ -172,34 +180,26 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                 salaryEditText.text = null
             }
         }
-        setCheckedIcon(filter?.onlyWithSalary ?: false)
+        setCheckedIcon(state.data.onlyWithSalary)
     }
 
-    private fun processArea(country: String?, region: String?) {
-        var result = ""
-        if (country != null) result += country
-        if (region != null) result += ", $region"
-        viewBinding.placeOfWorkEditText.setText(result)
-    }
-
-    private fun setButtonVisibility(filterUI: FilterUI?) {
-        val isVisible = filterUI != FilterUI()
+    private fun setButtonVisibility(isVisible: Boolean) {
         with(viewBinding) {
-            resetButton.isVisible = isVisible
             acceptButton.isVisible = isVisible
         }
     }
 
     private fun setCheckedIcon(isChecked: Boolean) {
         with(viewBinding) {
-            if (isChecked) {
-                withoutSalary.icon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.check_box_on_24px)
-            } else {
-                withoutSalary.icon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.check_box_off_24px)
-                viewModel.deleteShowWithoutSalary()
-            }
+            withoutSalary.icon =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    if (isChecked) {
+                        R.drawable.check_box_on_24px
+                    } else {
+                        R.drawable.check_box_off_24px
+                    }
+                )
         }
     }
 }

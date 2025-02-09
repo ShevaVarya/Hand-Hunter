@@ -21,7 +21,7 @@ interface FilterStorage {
     fun deleteIndustry()
     fun deleteSalary()
     fun deleteShowWithoutSalaryFlag()
-    fun getFilterMainData(): FilterMainDataEntity?
+    fun getFilterMainData(): FilterMainDataEntity
     fun getFullLocationData(): FullLocationDataEntity?
     fun getCountryId(): String?
 
@@ -68,23 +68,13 @@ class FilterStorageImpl(
     }
 
     @Suppress("ComplexCondition")
-    override fun getFilterMainData(): FilterMainDataEntity? {
+    override fun getFilterMainData(): FilterMainDataEntity {
         val country = getCountryFromPrefs()
         val region = getRegionFromPrefs()
         val industry = getIndustryFromPrefs()
         val salary = sharedPrefs.getString(SALARY, null)
         val isNeedToHideVacancyWithoutSalary = sharedPrefs.getBoolean(SHOW_WITHOUT_SALARY_FLAG, false)
-
-        return if (
-            isCountryAndRegionNull(country, region) &&
-            industry == null &&
-            salary.isNullOrEmpty() &&
-            isNeedToHideVacancyWithoutSalary.not()
-        ) {
-            null
-        } else {
-            FilterMainDataEntity(country, region, industry, salary, isNeedToHideVacancyWithoutSalary)
-        }
+        return FilterMainDataEntity(country, region, industry, salary, isNeedToHideVacancyWithoutSalary)
     }
 
     override fun getSavedIndustry(): FilterIndustryEntity? {

@@ -63,3 +63,10 @@ fun FilterMainData.toUI(): FilterUI {
     )
 }
 
+fun getPlaceOfWork(country: String?, region: String?): String? {
+    return country?.let {
+        var placeOfWork = country
+        if (region != null) placeOfWork += ", $region"
+        placeOfWork
+    }
+}
