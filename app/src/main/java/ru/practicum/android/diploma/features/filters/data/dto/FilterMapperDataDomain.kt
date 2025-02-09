@@ -75,14 +75,24 @@ fun IndustryEntity.toDomain(): Industry {
 }
 
 // методы из domain в SharedPref
-fun Country.toEntity(): FilterCountryEntity {
+fun FilterMainData.toEntity(): FilterMainDataEntity {
+    return FilterMainDataEntity(
+        country = country?.toEntity(),
+        region = region?.toEntity(),
+        industry = industry?.toEntity(),
+        salary = salary,
+        isNeedToHideVacancyWithoutSalary = isNeedToHideVacancyWithoutSalary
+    )
+}
+
+private fun Country.toEntity(): FilterCountryEntity {
     return FilterCountryEntity(
         id = id,
         name = name
     )
 }
 
-fun Region.toEntity(): FilterRegionEntity {
+private fun Region.toEntity(): FilterRegionEntity {
     return FilterRegionEntity(
         id = id,
         name = name,
@@ -90,7 +100,7 @@ fun Region.toEntity(): FilterRegionEntity {
     )
 }
 
-fun Industry.toEntity(): FilterIndustryEntity {
+private fun Industry.toEntity(): FilterIndustryEntity {
     return FilterIndustryEntity(
         id = id,
         name = name

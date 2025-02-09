@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -116,10 +114,8 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
 
     private fun initChooseButtonListener() {
         viewBinding.chooseButton.setOnClickListener {
-            viewModel.savedSelectedIndustry.value?.let { industry ->
-                viewModel.acceptChanges(industry)
-                goBack()
-            }
+            viewModel.acceptChanges()
+            goBack()
         }
     }
 
@@ -211,9 +207,11 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
                     specializationRecyclerView.isVisible = true
                     specializationAdapter?.updateItems(state.industries, viewModel.savedSelectedIndustry.value)
                 }
+
                 is IndustriesState.Loading -> {
                     progressBar.isVisible = true
                 }
+
                 is IndustriesState.Error -> {
                     errorsTextView.isVisible = true
                     errorsImageView.isVisible = true

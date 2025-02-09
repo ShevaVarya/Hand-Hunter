@@ -8,6 +8,10 @@ import ru.practicum.android.diploma.features.filters.domain.model.FullLocationDa
 class SelectWorkplaceInteractorImpl(
     private val locationManager: LocationManager
 ) : SelectWorkplaceInteractor {
+    override fun clearData() {
+        locationManager.clearManager()
+    }
+
     override fun subscribeLocationData(): Flow<FullLocationData?>{
         return locationManager.subscribeLocationData()
     }

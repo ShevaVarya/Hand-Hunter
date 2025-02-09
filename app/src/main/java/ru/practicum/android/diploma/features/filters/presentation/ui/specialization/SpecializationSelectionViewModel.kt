@@ -24,7 +24,12 @@ class SpecializationSelectionViewModel(
     private val _industriesState = MutableStateFlow<IndustriesState>(IndustriesState.Loading)
     val industriesState = _industriesState.asStateFlow()
 
+    init {
+        specializationInteractor.clearManager()
+    }
+
     fun updateSelectedIndustry(industry: IndustryUI) {
+        specializationInteractor.setIndustry(industry.toDomain())
         _savedSelectedIndustry.value = industry
     }
 
@@ -48,11 +53,8 @@ class SpecializationSelectionViewModel(
         }
     }
 
-    fun acceptChanges(industry: IndustryUI) {
-        _savedSelectedIndustry.value = industry
-        viewModelScope.launch {
-            specializationInteractor.setIndustry(industry.toDomain())
-        }
+    fun acceptChanges() {
+        specializationInteractor.acceptData()
     }
 
     fun search(text: String) {

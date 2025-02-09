@@ -7,11 +7,15 @@ import ru.practicum.android.diploma.features.filters.domain.model.Industry
 
 class SpecializationInteractorImpl(
     private val specializationRepository: SpecializationRepository,
-    private val specializationManager: SpecializationManager
+    private val manager: SpecializationManager
 ) : SpecializationInteractor {
 
     override fun setIndustry(industry: Industry) {
-        specializationManager.keepIndustry(industry)
+        manager.keepIndustry(industry)
+    }
+
+    override fun acceptData() {
+        manager.acceptData()
     }
 
     override suspend fun getIndustriesList(params: Map<String, String>): Result<List<Industry>> {
@@ -19,7 +23,11 @@ class SpecializationInteractorImpl(
     }
 
     override suspend fun getSavedIndustry(): Industry? {
-        val industry = specializationManager.getIndustry()
+        val industry = manager.getIndustry()
         return if (industry.id != null && industry.name != null) industry else null
+    }
+
+    override fun clearManager() {
+        manager.clearManager()
     }
 }

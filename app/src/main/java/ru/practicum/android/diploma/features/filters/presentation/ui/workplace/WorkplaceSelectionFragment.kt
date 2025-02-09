@@ -113,7 +113,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
             switchForwardClearIcon(viewBinding.countryTextInput, location.country.isNullOrEmpty())
             switchForwardClearIcon(viewBinding.regionTextInput, location.city.isNullOrEmpty())
 
-            chooseButton.isVisible = location.city.isNullOrEmpty().not() || location.city.isNullOrEmpty().not()
+            chooseButton.isVisible = location.country.isNullOrEmpty().not() || location.city.isNullOrEmpty().not()
         }
     }
 
@@ -144,7 +144,7 @@ class WorkplaceSelectionFragment : BaseFragment<FragmentWorkplaceSelectionBindin
     private fun switchForwardClearIcon(textInputLayout: TextInputLayout, isTextEmpty: Boolean) {
         val image = ContextCompat.getDrawable(
             requireContext(),
-            if (isTextEmpty.not()) R.drawable.close_24px else R.drawable.arrow_forward_24px
+            if (isTextEmpty) R.drawable.arrow_forward_24px else R.drawable.close_24px
         )
 
         textInputLayout.endIconDrawable = image

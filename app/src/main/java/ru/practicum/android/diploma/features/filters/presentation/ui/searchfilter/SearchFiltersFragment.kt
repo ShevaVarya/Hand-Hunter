@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -16,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,6 +24,7 @@ import ru.practicum.android.diploma.features.common.presentation.ui.BaseFragment
 import ru.practicum.android.diploma.features.filters.presentation.model.state.SearchFilterState
 
 class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
+    private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -34,28 +33,23 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
         return FragmentSearchFiltersBinding.inflate(inflater, container, false)
     }
 
-    private val viewModel: SearchFilterViewModel by viewModel<SearchFilterViewModel>()
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getData()
-    }
-
     override fun initUi() {
         initializeViews()
+        viewModel.subscribeData()
     }
 
     override fun observeData() {
         viewModel.stateFlowFilterUI
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-            .distinctUntilChanged()
             .onEach { filterUI ->
                 processFilterResult(filterUI)
                 viewBinding.resetButton.isVisible = filterUI.data.isDefault.not()
+
                 setupClearButton(
                     filterUI.data.placeOfWork,
                     viewBinding.placeOfWorkContainer
                 ) { viewModel.deletePlaceOfWork() }
+
                 setupClearButton(
                     filterUI.data.industry,
                     viewBinding.industryContainer
@@ -76,20 +70,15 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             }
 
             toolbar.setNavigationOnClickListener {
-                viewModel.resetAllChanges()
                 findNavController().navigateUp()
             }
 
-            requireActivity().onBackPressedDispatcher.addCallback(this@SearchFiltersFragment) {
-                viewModel.resetAllChanges()
-                findNavController().popBackStack()
-            }
-
             resetButton.setOnClickListener {
-                viewModel.clearFilter()
+                viewModel.resetFilter()
             }
 
             acceptButton.setOnClickListener {
+                viewModel.acceptChanges()
                 findNavController().navigateUp()
             }
 
@@ -165,7 +154,7 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
     private fun processFilterResult(state: SearchFilterState.Content) {
         with(viewBinding) {
             setButtonVisibility(state.isButtonsVisible)
-            if (state.data.isDefault == false) {
+            if (state.data.isDefault.not()) {
                 viewBinding.placeOfWorkEditText.setText(state.data.placeOfWork)
                 industryEditText.setText(state.data.industry)
                 withoutSalary.isChecked = state.data.onlyWithSalary

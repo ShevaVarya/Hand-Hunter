@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.features.filters.domain.manager
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import ru.practicum.android.diploma.features.filters.domain.model.Country
 import ru.practicum.android.diploma.features.filters.domain.model.FullLocationData
 import ru.practicum.android.diploma.features.filters.domain.model.Region
@@ -19,49 +19,57 @@ interface LocationManager {
     fun deleteRegion()
 
     fun acceptData()
+    fun clearManager()
 }
 
 class LocationManagerImpl(
-    private val filterRepository: FilterRepository,
     private val filterManager: FilterManager
 ) : LocationManager {
-    private var data: FullLocationData = getLocationData() ?: FullLocationData(
-        country = null,
-        region = null
-    )
+    private val flow: MutableStateFlow<FullLocationData> = MutableStateFlow(getLocationData())
 
     override fun subscribeLocationData(): Flow<FullLocationData?> {
-        return flowOf(data)
+        return flow.asStateFlow()
     }
 
     override fun keepRegion(country: Country, region: Region) {
-        data = data.copy(country = country, region = region)
+        flow.value = (flow.value.copy(
+            country = country, region = region
+        ))
     }
 
     override fun keepCountry(country: Country) {
-        data = data.copy(country = country)
-        data.region?.let {
-            data = data.copy(region = null)
+        var newValue = flow.value.copy(
+            country = country
+        )
+
+        flow.value.region?.let {
+            newValue = newValue.copy(region = null)
         }
+
+        flow.value = newValue
     }
 
     override fun getCountryId(): String? {
-        return data.country?.id
+        return flow.value.country?.id
     }
 
     override fun deleteCountry() {
-        data = data.copy(country = null, region = null)
+        flow.value = flow.value.copy(country = null, region = null)
     }
 
     override fun deleteRegion() {
-        data = data.copy(region = null)
+        flow.value = flow.value.copy(region = null)
     }
 
     override fun acceptData() {
-        filterManager.keepWorkplace(data)
+        filterManager.keepWorkplace(flow.value)
     }
 
-    private fun getLocationData(): FullLocationData? {
-        return filterRepository.getFullLocationData()
+    override fun clearManager() {
+        flow.value = filterManager.getLocationData()
+    }
+
+    private fun getLocationData(): FullLocationData {
+        return filterManager.getLocationData()
     }
 }

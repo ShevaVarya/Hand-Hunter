@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.workplace.SelectWorkplaceInteractor
 import ru.practicum.android.diploma.features.filters.presentation.model.state.WorkplaceLocationState
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
-import ru.practicum.android.diploma.features.filters.presentation.model.ui.WorkplaceLocationUI
 
 class WorkplaceSelectionViewModel(
     private val interactor: SelectWorkplaceInteractor
@@ -16,11 +15,15 @@ class WorkplaceSelectionViewModel(
     private val workplaceLocationState = MutableStateFlow<WorkplaceLocationState>(WorkplaceLocationState.Init)
     fun getWorkplaceLocationState() = workplaceLocationState.asStateFlow()
 
+    init {
+        interactor.clearData()
+    }
+
     fun subscribeLocationData() {
         viewModelScope.launch {
             interactor.subscribeLocationData().collect { data ->
-                data?.let {
-                    updateWorkplaceLocationState(data.toUI())
+                data?.let { location ->
+                    workplaceLocationState.emit(WorkplaceLocationState.Content(location.toUI()))
                 }
             }
         }
@@ -40,11 +43,5 @@ class WorkplaceSelectionViewModel(
 
     fun acceptLocation() {
         interactor.acceptLocationData()
-    }
-
-    private fun updateWorkplaceLocationState(location: WorkplaceLocationUI) {
-        viewModelScope.launch {
-            workplaceLocationState.emit(WorkplaceLocationState.Content(location))
-        }
     }
 }
