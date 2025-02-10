@@ -2,6 +2,8 @@ package ru.practicum.android.diploma.features.filters.presentation.ui.searchfilt
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -44,6 +46,9 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
             .onEach { filterUI ->
                 processFilterResult(filterUI)
                 viewBinding.resetButton.isVisible = filterUI.data.isDefault.not()
+
+                renderEditTextColor(viewBinding.placeOfWorkContainer, filterUI.data.placeOfWork)
+                renderEditTextColor(viewBinding.industryContainer, filterUI.data.industry)
 
                 setupClearButton(
                     filterUI.data.placeOfWork,
@@ -189,6 +194,17 @@ class SearchFiltersFragment : BaseFragment<FragmentSearchFiltersBinding>() {
                         R.drawable.check_box_off_24px
                     }
                 )
+        }
+    }
+
+    private fun renderEditTextColor(view: TextInputLayout, text: CharSequence?) {
+        val typedValue = TypedValue()
+        if (!text.isNullOrEmpty()) {
+            requireContext().theme.resolveAttribute(R.attr.mainEditTextColor, typedValue, true)
+            view.defaultHintTextColor = ColorStateList.valueOf(typedValue.data)
+        } else {
+            requireContext().theme.resolveAttribute(R.attr.hintEditTextColor, typedValue, true)
+            view.defaultHintTextColor = ColorStateList.valueOf(typedValue.data)
         }
     }
 }
