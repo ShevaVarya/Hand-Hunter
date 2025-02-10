@@ -96,24 +96,24 @@ class LocationSelectionViewModel(
             val country = countriesDomainList.firstOrNull { it.id == region.id }
             country?.let {
                 locationInteractor.setCountry(country)
-                locationInteractor.deleteRegionWhenChangeCountry()
             }
         } else {
             region.id?.let { id ->
                 val area: Region? = findRegionById(areasDomainList, id)
 
                 area?.let {
-                    locationInteractor.setRegion(area)
-                    saveRegionCountry(area)
+                    val result = getRegionCountry(area) ?: return
+                    val country = Country(id = result.id, name = result.name)
+
+                    locationInteractor.setRegion(country, area)
                 }
             }
         }
     }
 
-    private fun saveRegionCountry(area: Region) {
-        area.id?.let {
-            val country = areasDomainList.firstOrNull { isParentFind(it, area.id) } ?: return
-            locationInteractor.setCountry(Country(id = country.id, name = country.name))
+    private fun getRegionCountry(area: Region): Region? {
+        return area.id?.let {
+            areasDomainList.firstOrNull { isParentFind(it, area.id) }
         }
     }
 

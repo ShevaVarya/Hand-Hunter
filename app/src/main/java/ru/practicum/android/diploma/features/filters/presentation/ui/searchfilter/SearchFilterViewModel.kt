@@ -6,106 +6,64 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.features.filters.domain.api.filter.FilterInteractor
-import ru.practicum.android.diploma.features.filters.domain.api.location.LocationInteractor
-import ru.practicum.android.diploma.features.filters.domain.api.specialization.SpecializationInteractor
 import ru.practicum.android.diploma.features.filters.domain.model.FilterMainData
 import ru.practicum.android.diploma.features.filters.presentation.model.state.SearchFilterState
 import ru.practicum.android.diploma.features.filters.presentation.model.toUI
 import ru.practicum.android.diploma.features.filters.presentation.model.ui.FilterUI
 
 class SearchFilterViewModel(
-    private val filterInteractor: FilterInteractor,
-    private val specializationInteractor: SpecializationInteractor,
-    private val locationInteractor: LocationInteractor,
+    private val filterInteractor: FilterInteractor
 ) : ViewModel() {
 
     private val _stateFlowFilterUI = MutableStateFlow(SearchFilterState.Content(FilterUI()))
     val stateFlowFilterUI = _stateFlowFilterUI.asStateFlow()
 
-    private var currentSearchFilter: FilterMainData = filterInteractor.loadFilter()
-    private var latestSearchFilterUI: FilterUI = FilterUI()
+    private var currentSearchFilter: FilterMainData = filterInteractor.getDataFromPrefs()
     var oldSalary: String? = null
         private set
 
-    fun getData() {
-        latestSearchFilterUI = filterInteractor.loadFilter().toUI()
-        val isVisible = isVisibleAcceptButton()
-        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisible)
+    init {
+        filterInteractor.clearManager()
     }
 
-    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-        latestSearchFilterUI = latestSearchFilterUI.copy(onlyWithSalary = onlyWithSalary)
-        _stateFlowFilterUI.value = SearchFilterState.Content(
-            latestSearchFilterUI,
-            isVisibleAcceptButton()
-        )
-        filterInteractor.saveWithoutSalary(check = onlyWithSalary)
-    }
-
-    private fun setSalary(salary: String?) {
-        if (!salary.isNullOrBlank()) {
-            latestSearchFilterUI = latestSearchFilterUI.copy(salary = salary)
-            _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
-            filterInteractor.saveSalary(salary = salary)
-        }
-    }
-
-    fun resetAllChanges() {
+    fun subscribeData() {
         viewModelScope.launch {
-            currentSearchFilter.let {
-                if (it.country == null && it.region == null) {
-                    deletePlaceOfWork()
-                } else {
-                    it.country?.let {
-                        locationInteractor.setCountry(it)
-                    }
-                    it.region?.let {
-                        locationInteractor.setRegion(it)
-                    }
-                }
-                if (it.industry != null) {
-                    specializationInteractor.setIndustry(it.industry)
-                } else {
-                    deleteIndustry()
-                }
-                if (it.salary.isNullOrEmpty()) {
-                    deleteSalary()
-                } else {
-                    setSalary(it.salary)
-                }
-                setOnlyWithSalary(it.isNeedToHideVacancyWithoutSalary)
+            filterInteractor.subscribeData().collect { data ->
+                val newData = data.toUI()
+                _stateFlowFilterUI.value = SearchFilterState.Content(newData, isVisibleAcceptButton(newData))
             }
         }
     }
 
-    private fun isVisibleAcceptButton(): Boolean {
-        return currentSearchFilter.toUI() != latestSearchFilterUI
+    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
+        filterInteractor.keepWithoutSalaryFlag(onlyWithSalary)
+    }
+
+    private fun setSalary(salary: String?) {
+        if (!salary.isNullOrBlank()) {
+            filterInteractor.keepSalary(salary)
+        }
     }
 
     fun deletePlaceOfWork() {
-        filterInteractor.deleteCountryData()
-        filterInteractor.deleteRegionData()
-        latestSearchFilterUI = latestSearchFilterUI.copy(country = null, region = null)
-        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
+        filterInteractor.deleteWorkplace()
     }
 
     fun deleteIndustry() {
         filterInteractor.deleteIndustry()
-        latestSearchFilterUI = latestSearchFilterUI.copy(industry = null)
-        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
     fun deleteSalary() {
         filterInteractor.deleteSalary()
-        latestSearchFilterUI = latestSearchFilterUI.copy(salary = null)
-        _stateFlowFilterUI.value = SearchFilterState.Content(latestSearchFilterUI, isVisibleAcceptButton())
     }
 
-    fun clearFilter() {
-        filterInteractor.deleteFilter()
-        latestSearchFilterUI = FilterUI()
-        currentSearchFilter = filterInteractor.loadFilter()
-        _stateFlowFilterUI.value = SearchFilterState.Content(FilterUI(), isVisibleAcceptButton())
+    fun acceptChanges() {
+        filterInteractor.saveData()
+    }
+
+    fun resetFilter() {
+        filterInteractor.resetData()
+        currentSearchFilter = filterInteractor.getDataFromPrefs()
     }
 
     fun salaryEnterTextChanged(text: CharSequence?) {
@@ -115,5 +73,9 @@ class SearchFilterViewModel(
             oldSalary = newSalary
             setSalary(newSalary)
         }
+    }
+
+    private fun isVisibleAcceptButton(data: FilterUI): Boolean {
+        return currentSearchFilter.toUI() != data
     }
 }
