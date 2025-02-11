@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.features.filters.presentation.ui.location
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -105,6 +106,7 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
     private fun showNetworkError() {
         with(viewBinding) {
             errorContainer.isVisible = true
+            viewBinding.searchEditText.isVisible = isCountry?.not() == true
             messageErrorTextView.setText(R.string.location_server_error)
             errorImageView.setImageResource(R.drawable.something_went_wrong)
         }
