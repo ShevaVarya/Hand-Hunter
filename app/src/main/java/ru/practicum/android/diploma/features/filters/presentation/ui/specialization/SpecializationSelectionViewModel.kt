@@ -57,6 +57,7 @@ class SpecializationSelectionViewModel(
         specializationInteractor.acceptData()
     }
 
+    @Suppress("LabeledExpression")
     fun search(text: String) {
         viewModelScope.launch {
             val filteredList = if (text.isBlank()) {
