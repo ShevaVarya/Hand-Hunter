@@ -37,15 +37,30 @@ class LocationSelectionViewModel(
     }
 
     fun search(text: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val filteredList = filterListByText(text.trim())
-            withContext(Dispatchers.Main) {
-                if (filteredList.isEmpty()) {
-                    _state.value = LocationSelectionState.NoRegionError
-                } else {
-                    _state.value = LocationSelectionState.ContentRegion(filteredList)
+        viewModelScope.launch {
+            val params: Map<String, String> = mapOf()
+            val result = locationInteractor.getOriginalAreasList(params)
+            result
+                .onSuccess {
+                    areasDomainList = result.getOrNull() ?: listOf()
+                    if (areasDomainList.isEmpty().not()) {
+                        regionList = locationInteractor.getSortedFilteredRegionsList(
+                            areasDomainList,
+                            mutableListOf(),
+                            countryId.ifEmpty { null }
+                        )
+                            .filter { it.parentId.isNullOrEmpty().not() }
+                            .map { it.toUI() }
+
+                        val filteredList = filterListByText(text.trim())
+                        if (filteredList.isEmpty()) {
+                            _state.value = LocationSelectionState.NoRegionError
+                        } else {
+                            _state.value = LocationSelectionState.ContentRegion(filteredList)
+                        }
+                    }
                 }
-            }
+                .onFailure { handleError(it) }
         }
     }
 
