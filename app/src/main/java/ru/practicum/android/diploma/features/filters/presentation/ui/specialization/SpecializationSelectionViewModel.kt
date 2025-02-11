@@ -75,6 +75,7 @@ class SpecializationSelectionViewModel(
                     item.name?.contains(text, ignoreCase = true) ?: false
                 }
             }
+            if (fullIndustriesList.isEmpty()) return@launch
             _industriesState.value = IndustriesState.Content(filteredList)
         }
     }
