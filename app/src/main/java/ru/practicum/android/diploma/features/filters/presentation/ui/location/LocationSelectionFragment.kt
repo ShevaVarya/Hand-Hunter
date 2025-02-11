@@ -72,30 +72,34 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         when (state) {
             is LocationSelectionState.ContentCountry -> showContent(true, state.countries)
             is LocationSelectionState.ContentRegion -> showContent(false, state.regions)
-            is LocationSelectionState.Loading -> showLoading()
+            is LocationSelectionState.Loading -> isCountry?.let { showLoading(it) }
             is LocationSelectionState.NetworkError -> showNetworkError()
             is LocationSelectionState.NoRegionError -> showNoRegionError()
         }
+    }
+
+    private fun setTittleText(isCountry: Boolean): String {
+        return getString(
+            if (isCountry) {
+                R.string.location_country_toolbar_title
+            } else {
+                R.string.location_region_toolbar_title
+            }
+        )
     }
 
     private fun showContent(isCountry: Boolean, list: List<Regionable>) {
         with(viewBinding) {
             locationAdapter?.submitList(list)
             contentRecyclerView.isVisible = true
-            toolbar.title = getString(
-                if (isCountry) {
-                    R.string.location_country_toolbar_title
-                } else {
-                    R.string.location_region_toolbar_title
-                }
-            )
+            toolbar.title = setTittleText(isCountry)
             searchEditText.isVisible = isCountry.not()
         }
     }
 
-    private fun showLoading() {
+    private fun showLoading(isCountry: Boolean) {
         viewBinding.progressBar.isVisible = true
-        viewBinding.toolbar.title = EMPTY_STRING
+        viewBinding.toolbar.title = setTittleText(isCountry)
     }
 
     private fun showNetworkError() {
@@ -250,7 +254,6 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
         private const val SEARCH_DEBOUNCE_DELAY = 500L
         private const val IS_COUNTRY = "is_country"
         private const val COUNTRY_ID = "country_id"
-        private const val EMPTY_STRING = ""
 
         fun createArgs(isCountry: Boolean): Bundle {
             return androidx.core.os.bundleOf(
