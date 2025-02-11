@@ -200,12 +200,12 @@ class SpecializationSelectionFragment : BaseFragment<FragmentSpecializationSelec
             progressBar.isVisible = false
             errorsTextView.isVisible = false
             errorsImageView.isVisible = false
-            chooseButton.isVisible = false
 
             when (state) {
                 is IndustriesState.Content -> {
                     specializationRecyclerView.isVisible = true
                     specializationAdapter?.updateItems(state.industries, viewModel.savedSelectedIndustry.value)
+                    updateChooseButtonVisibility(viewModel.savedSelectedIndustry.value != null)
                 }
 
                 is IndustriesState.Loading -> {
