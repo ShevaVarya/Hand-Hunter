@@ -58,15 +58,25 @@ class SpecializationSelectionViewModel(
     }
 
     fun search(text: String) {
-        val filteredList = if (text.isBlank()) {
-            fullIndustriesList
-        } else {
-            fullIndustriesList.filter { item ->
-                item.name?.contains(text, ignoreCase = true) ?: false
-            }
-        }
+        viewModelScope.launch {
+            val filteredList = if (text.isBlank()) {
+                fullIndustriesList
+            } else {
+                if (fullIndustriesList.isEmpty()) {
+                    specializationInteractor.getIndustriesList(mapOf())
+                        .onSuccess { list ->
+                            fullIndustriesList = list.map { it.toUI() }
 
-        _industriesState.value = IndustriesState.Content(filteredList)
+                            _industriesState.value = IndustriesState.Content(fullIndustriesList)
+                        }
+                        .onFailure { handleError(it) }
+                }
+                fullIndustriesList.filter { item ->
+                    item.name?.contains(text, ignoreCase = true) ?: false
+                }
+            }
+            _industriesState.value = IndustriesState.Content(filteredList)
+        }
     }
 
     private fun handleError(error: Throwable) {
