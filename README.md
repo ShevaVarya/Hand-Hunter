@@ -55,7 +55,7 @@
 
 | Поиск                            | Фильтры                             | Избранное                               | Подробности                            |
 | -------------------------------- | ----------------------------------- | --------------------------------------- | -------------------------------------- |
-| ![Поиск](screenshots/search.png) | ![Фильтры](screenshots/filters.png) | ![Избранное](screenshots/favorites.png) | ![Подробности](screenshots/detail.png) |
+| ![Поиск](screenshots/search.png) | ![Фильтры](screenshots/search_filter.png) | ![Избранное](screenshots/favorites.png) | ![Подробности](screenshots/vacancy_details.png) |
 
 > Скриншоты хранятся в папке `screenshots/`
 
